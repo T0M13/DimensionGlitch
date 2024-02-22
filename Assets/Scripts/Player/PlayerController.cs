@@ -27,7 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 CurrentVelocity = Vector2.zero;
 
     PackedMovementMode CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
-    
+
+    public PackedMovementMode GetCurrentMovementMode() => CurrentMovementMode;
+    public Vector2 GetCurrentVelocity() => CurrentVelocity;
     public event Action OnDash;
     
     void Start()
@@ -45,6 +47,14 @@ public class PlayerController : MonoBehaviour
         Dash.action.performed -= DoDash;
         Walk.action.canceled -= ResetMovementState;
     }
+    void ResetMovementState(InputAction.CallbackContext _)
+    {
+        CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
+        CurrentVelocity = Vector2.zero;
+        MovementTime = 0.0f;
+    }
+    
+#region Walking
 
     void MovePlayer()
     {
@@ -60,17 +70,16 @@ public class PlayerController : MonoBehaviour
             //add the movement vector multiplied by the progress of acceleration time
             float SpeedMultiplier = (Mathf.Clamp01(MovementTime / TimeToReachMaxSpeed));
             CurrentVelocity = CurrentPlayerInput * (Speed * Time.deltaTime * SpeedMultiplier);
-       
+           
             PlayerRb.MovePosition(CurrentPlayerPosition + CurrentVelocity);
             CurrentMovementMode = MovementModeFactory.GetWalkingMovementMode();
         }
     }
-    void ResetMovementState(InputAction.CallbackContext _)
-    {
-        CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
-        CurrentVelocity = Vector2.zero;
-        MovementTime = 0.0f;
-    }
+
+#endregion
+
+#region Dash
+
     void DoDash(InputAction.CallbackContext CallbackContext)
     {
         if(!IsAllowedToDash()) return;
@@ -85,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DashRoutine()
     {
-        float TravelledDistance = 0.0f;
+        //float Travelled Distance maybe we can implement this for a blend tree to set animation frame
         float DashSpeed = DashDistance / DashTime;
         float PassedTime = 0.0f;
         Vector2 DashDirection = CurrentVelocity.normalized;
@@ -100,9 +109,9 @@ public class PlayerController : MonoBehaviour
             Vector2 NewPlayerPos = PreviousPlayerPos + DashVector;
             
             //Move the player rb to the new position
-           PlayerRb.MovePosition(NewPlayerPos);
-           PassedTime += Time.deltaTime;
-           yield return new WaitForFixedUpdate();
+            PlayerRb.MovePosition(NewPlayerPos);
+            PassedTime += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
         }
 
         CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
@@ -111,4 +120,6 @@ public class PlayerController : MonoBehaviour
     {
         return CurrentMovementMode.bCanDash && Time.time - LastDashTime > DashCd;
     }
+
+#endregion
 }
