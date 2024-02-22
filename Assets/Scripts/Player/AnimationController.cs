@@ -78,7 +78,6 @@ public class AnimationController : MonoBehaviour
         // MyAnimator.SetBool(HashedDashingState, true);
 
         float DashProgress = CachedPlayerController.GetDashProgress();
-        Debug.Log(DashProgress);
         MyAnimator.Play(HashedDashingState, 0, DashProgress);
     }
 }
