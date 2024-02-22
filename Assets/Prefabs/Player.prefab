@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7624120542809958917}
   - component: {fileID: 1985691604761454891}
+  - component: {fileID: 7147802832222152995}
+  - component: {fileID: 6629177911874635645}
   - component: {fileID: 4856677469131246988}
   - component: {fileID: 2898256376286033036}
   - component: {fileID: 6946738078845725280}
@@ -58,6 +60,45 @@ MonoBehaviour:
   MovementTime: 0
   LastDashTime: 0
   CurrentVelocity: {x: 0, y: 0}
+--- !u!114 &7147802832222152995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893319486378076228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15082beab63c4c43884da9818a3bd66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyAnimator: {fileID: 6629177911874635645}
+  IdleState: IsIdle
+  WalkingState: IsWalking
+  WalkingParamX: WalkingX
+  WalkingParamY: WalkingY
+  DashingState: IsDashing
+--- !u!95 &6629177911874635645
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893319486378076228}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 392d8bef2b85bc74bab71071b4356c50, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &4856677469131246988
 Rigidbody2D:
   serializedVersion: 4

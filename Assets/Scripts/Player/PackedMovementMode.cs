@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public struct PackedMovementMode
@@ -9,14 +10,14 @@ public struct PackedMovementMode
       Idle,
       Dashing
    }
-   public PackedMovementMode(bool bCanWalk, bool bCanDash, EMovementModes CurrentMovementMode)
+   public PackedMovementMode(bool bCanWalk, bool bCanDash, EMovementModes currentMovementState)
    {
       this.bCanWalk = bCanWalk;
       this.bCanDash = bCanDash;
-      this.MovementMode = CurrentMovementMode;
+      this.MovementState = currentMovementState;
    }
 
    public bool bCanWalk;
    public bool bCanDash;
-   public EMovementModes MovementMode;
+   public EMovementModes MovementState;
 }

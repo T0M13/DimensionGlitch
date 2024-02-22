@@ -8,7 +8,7 @@ public class GameManager : BaseSingleton<GameManager>
    
    PlayerController GlobalPlayerControllerRef;
 
-   PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+   public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
    
    private void Start()
    {
