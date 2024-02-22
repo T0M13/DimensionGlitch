@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 628389509067955375}
   - component: {fileID: 4018055620537943487}
   - component: {fileID: 1619402488917361983}
+  - component: {fileID: 6812400852883774540}
   m_Layer: 0
   m_Name: Fragment
   m_TagString: Untagged
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 709489977
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.4198113, g: 1, b: 0.9564223, a: 1}
@@ -97,5 +98,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c5ea6a7973bd54a8f6e0cc19294f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRange: 0.5
+  interactionRange: 0.35
+  fragmentType: 100
+  fragmentCollider: {fileID: 6812400852883774540}
   showGizmos: 1
+--- !u!58 &6812400852883774540
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3682559168981378892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.7

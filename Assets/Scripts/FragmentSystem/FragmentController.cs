@@ -33,6 +33,7 @@ public class FragmentController : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         if (notCollectedFragments.Count <= 0)
@@ -72,27 +73,54 @@ public class FragmentController : MonoBehaviour
 
     private void RepositionFragment(GameObject fragment)
     {
-        FragmentPoint randFragmentPoint = GetRandomFragmentPos(GetRandomDimension());
+        FragmentPoint randFragmentPoint = null;
+        GridDimension randGridDimension = null;
+        bool foundPosition = false;
+
+
+        var tempGridDimension = gridDimensions;
+
+        // Attempt to find a non-occupied position for the fragment
+        while (!foundPosition)
+        {
+            randGridDimension = GetRandomDimension(tempGridDimension);
+            var activeFragmentPoints = GetRandomActiveFragmentPoints(randGridDimension);
+
+            if (activeFragmentPoints.Count > 0)
+            {
+                randFragmentPoint = activeFragmentPoints[Random.Range(0, activeFragmentPoints.Count)];
+                foundPosition = true; // Break the loop if a position is found
+            }
+            else
+            {
+                //Remove the gridDimension with no active points to avoid infinite loop
+                tempGridDimension.Remove(randGridDimension);
+                if (gridDimensions.Count <= 0)
+                {
+                    Debug.LogError("Ran out of grid dimensions to place fragments.");
+                    return; // Or handle this case as needed
+                }
+            }
+        }
+
         fragment.transform.position = randFragmentPoint.transform.position;
         fragment.gameObject.SetActive(true);
         randFragmentPoint.gameObject.SetActive(false);
+
+
+
     }
 
-    private GridDimension GetRandomDimension()
+    private GridDimension GetRandomDimension(List<GridDimension> gridDimensions)
     {
         return gridDimensions[Random.Range(0, gridDimensions.Count)];
     }
 
-    private FragmentPoint GetRandomFragmentPos(GridDimension gridDimension)
+    private List<FragmentPoint> GetRandomActiveFragmentPoints(GridDimension gridDimension)
     {
         // Filter out all inactive FragmentPoints
-        var activeFragmentPoints = gridDimension.FragmentPoints.Where(fp => fp.gameObject.activeSelf).ToList();
-
-        // Return a random active FragmentPoint
-        return activeFragmentPoints[Random.Range(0, activeFragmentPoints.Count)];
+        return gridDimension.FragmentPoints.Where(fp => fp.gameObject.activeSelf).ToList();
     }
-
-
 
 
 

@@ -5,15 +5,31 @@ using UnityEngine;
 public class Fragment : MonoBehaviour
 {
     [Header("Fragment Settings")]
-    [SerializeField] private float interactionRange = .5f;
+    [SerializeField] private float interactionRange = .3f;
     [SerializeField] private FragmentType fragmentType = FragmentType.NotCollected;
+    [Header("Collider Settings")]
+    [SerializeField] private CircleCollider2D fragmentCollider;
     [Header("Gizmos Settings")]
     [SerializeField] private bool showGizmos;
 
 
+    private void OnValidate()
+    {
+        SetCollider();
+
+    }
+
     private void Awake()
     {
+        SetCollider();
         fragmentType = FragmentType.NotCollected;
+    }
+
+    private void SetCollider()
+    {
+        fragmentCollider = GetComponent<CircleCollider2D>();
+
+        fragmentCollider.radius = interactionRange * 2;
     }
 
     private void Collect(Collider2D collision)
