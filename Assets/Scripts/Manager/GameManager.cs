@@ -8,7 +8,7 @@ public class GameManager : BaseSingleton<GameManager>
    
    PlayerController GlobalPlayerControllerRef;
 
-   public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+    public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
    
    private void Awake()
    {

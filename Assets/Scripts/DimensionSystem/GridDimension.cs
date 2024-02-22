@@ -11,17 +11,26 @@ public class GridDimension : MonoBehaviour
     [Header("Fragment of Grid Settings")]
     [SerializeField] private Transform fragmentPointsParent;
     [SerializeField] private List<FragmentPoint> fragmentPoints;
+    [SerializeField] private List<Fragment> currentFragmentsInDimension;
+    [Header("Dimension Portal Settings")]
+    [SerializeField] private Transform portalsParent;
+    [SerializeField] private List<DimensionPortal> portals;
 
     public List<FragmentPoint> FragmentPoints { get => fragmentPoints; set => fragmentPoints = value; }
+    public List<Fragment> CurrentFragmentsInDimension { get => currentFragmentsInDimension; set => currentFragmentsInDimension = value; }
+    public List<DimensionPortal> Portals { get => portals; set => portals = value; }
 
     private void OnValidate()
     {
         GetFragmentPoints();
+        GetPortals();
     }
 
     private void Awake()
     {
         GetFragmentPoints();
+        GetPortals();
+        currentFragmentsInDimension = new List<Fragment>();
     }
 
     private void GetFragmentPoints()
@@ -34,11 +43,33 @@ public class GridDimension : MonoBehaviour
         }
     }
 
+    private void GetPortals()
+    {
+        Portals = new List<DimensionPortal>();
+        for (int i = 0; i < portalsParent.childCount; i++)
+        {
+            Portals.Add(portalsParent.GetChild(i).GetComponent<DimensionPortal>());
+        }
+    }
+
     public void ResetFragmenPoints()
     {
         foreach (var fragmentpoint in fragmentPoints)
         {
             fragmentpoint.gameObject.SetActive(true);
+        }
+    }
+
+    public void ResetFragmentsInDimension()
+    {
+        currentFragmentsInDimension.Clear();
+    }
+
+    public void ResetPortals()
+    {
+        foreach (var portal in Portals)
+        {
+            portal.ResetTraveledThrough();
         }
     }
 

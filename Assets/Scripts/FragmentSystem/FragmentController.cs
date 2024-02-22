@@ -18,6 +18,11 @@ public class FragmentController : MonoBehaviour
     [SerializeField] private float fragmentShiftTimerCooldown = 4f;
     [SerializeField] private float fragmentShiftTimer;
 
+    [Header("Dimension Settings")]
+    [SerializeField] private float chanceToSelectDimensionWithFragment = 0.5f;
+    [SerializeField] private int consecutiveSelectionsWithoutFragments = 0;
+
+
 
     private void Awake()
     {
@@ -62,6 +67,7 @@ public class FragmentController : MonoBehaviour
         foreach (var gridDimension in gridDimensions)
         {
             gridDimension.ResetFragmenPoints();
+            gridDimension.ResetFragmentsInDimension();
         }
 
         //Reposition Every Fragment
@@ -105,6 +111,8 @@ public class FragmentController : MonoBehaviour
 
         fragment.transform.position = randFragmentPoint.transform.position;
         fragment.gameObject.SetActive(true);
+        Fragment fragmentScript = fragment.GetComponent<Fragment>();
+        randGridDimension.CurrentFragmentsInDimension.Add(fragmentScript);
         randFragmentPoint.gameObject.SetActive(false);
 
 
@@ -122,6 +130,54 @@ public class FragmentController : MonoBehaviour
         return gridDimension.FragmentPoints.Where(fp => fp.gameObject.activeSelf).ToList();
     }
 
+
+    public void TravelToDifferentDimension(Collider2D collision, GridDimension excludeDimension)
+    {
+        // Adjust chance based on previous outcomes
+        float dynamicChance = Mathf.Clamp(chanceToSelectDimensionWithFragment + (0.1f * consecutiveSelectionsWithoutFragments), 0f, 1f);
+
+        // Separate the dimensions into those with and without fragments
+        List<GridDimension> dimensionsWithFragments = gridDimensions
+            .Where(gd => gd.CurrentFragmentsInDimension.Count > 0 && gd != excludeDimension).ToList();
+        List<GridDimension> dimensionsWithoutFragments = gridDimensions
+            .Where(gd => gd.CurrentFragmentsInDimension.Count == 0 && gd != excludeDimension).ToList();
+
+        List<GridDimension> chosenList;
+        if (Random.Range(0f, 1f) <= dynamicChance)
+        {
+            chosenList = dimensionsWithFragments.Any() ? dimensionsWithFragments : dimensionsWithoutFragments;
+        }
+        else
+        {
+            chosenList = dimensionsWithoutFragments.Any() ? dimensionsWithoutFragments : dimensionsWithFragments;
+        }
+
+        GridDimension gridTravelDimension = chosenList[Random.Range(0, chosenList.Count)];
+
+        // Check the selection and adjust the consecutiveSelectionsWithoutFragments counter
+        if (gridTravelDimension.CurrentFragmentsInDimension.Count == 0)
+        {
+            consecutiveSelectionsWithoutFragments++;
+        }
+        else
+        {
+            consecutiveSelectionsWithoutFragments = 0; // Reset counter if a dimension with fragments is selected
+        }
+
+        // Reset Portals before traveling
+        excludeDimension.ResetPortals();
+        DimensionPortal portal = GetRandomPortal(gridTravelDimension);
+        if (collision != null)
+        {
+            collision.transform.position = portal.transform.position;
+            portal.SetHasBeenTraveledThrough();
+        }
+    }
+
+    private DimensionPortal GetRandomPortal(GridDimension gridDimension)
+    {
+        return gridDimension.Portals[Random.Range(0, gridDimension.Portals.Count)];
+    }
 
 
 }
