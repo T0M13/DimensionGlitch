@@ -47,6 +47,9 @@ TagManager:
   - name: Portal
     uniqueID: 2402280713
     locked: 0
+  - name: Player
+    uniqueID: 427029401
+    locked: 0
   - name: Fragments
     uniqueID: 709489977
     locked: 0
