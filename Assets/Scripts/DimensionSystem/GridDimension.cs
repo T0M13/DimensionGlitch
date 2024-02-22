@@ -10,11 +10,9 @@ public class GridDimension : MonoBehaviour
     [SerializeField] private Transform wallDecosTileMap;
     [Header("Fragment of Grid Settings")]
     [SerializeField] private Transform fragmentPointsParent;
-    [SerializeField] private List<FragmentPoint> notTakenFragmentPoints;
-    [SerializeField] private List<FragmentPoint> takenFragmentPoints;
+    [SerializeField] private List<FragmentPoint> fragmentPoints;
 
-    public List<FragmentPoint> NotTakenFragmentPoints { get => notTakenFragmentPoints; set => notTakenFragmentPoints = value; }
-    public List<FragmentPoint> TakenFragmentPoints { get => takenFragmentPoints; set => takenFragmentPoints = value; }
+    public List<FragmentPoint> FragmentPoints { get => fragmentPoints; set => fragmentPoints = value; }
 
     private void OnValidate()
     {
@@ -28,12 +26,19 @@ public class GridDimension : MonoBehaviour
 
     private void GetFragmentPoints()
     {
-        NotTakenFragmentPoints = new List<FragmentPoint>();
-        TakenFragmentPoints = new List<FragmentPoint>();
+        FragmentPoints = new List<FragmentPoint>();
 
         for (int i = 0; i < fragmentPointsParent.childCount; i++)
         {
-            NotTakenFragmentPoints.Add(fragmentPointsParent.GetChild(i).GetComponent<FragmentPoint>());
+            FragmentPoints.Add(fragmentPointsParent.GetChild(i).GetComponent<FragmentPoint>());
+        }
+    }
+
+    public void ResetFragmenPoints()
+    {
+        foreach (var fragmentpoint in fragmentPoints)
+        {
+            fragmentpoint.gameObject.SetActive(true);
         }
     }
 

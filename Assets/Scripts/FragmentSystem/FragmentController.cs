@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FragmentController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private FragmentController fragmentController;
     [SerializeField] private List<GridDimension> gridDimensions;
 
     [Header("Fragments Settings")]
@@ -33,14 +33,20 @@ public class FragmentController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-
-    }
-
     private void Update()
     {
+        if (notCollectedFragments.Count <= 0)
+        {
+            Debug.Log("No more Fragments to be collected");
+            return;
+        }
+
+        if (gridDimensions.Count <= 0)
+        {
+            Debug.Log("No GridDimensions");
+            return;
+        }
+
         fragmentShiftTimer += Time.deltaTime;
         if (fragmentShiftTimer >= fragmentShiftTimerCooldown)
         {
@@ -54,12 +60,7 @@ public class FragmentController : MonoBehaviour
         //Clear FragmentPoints --> So they can be taken
         foreach (var gridDimension in gridDimensions)
         {
-            gridDimension.NotTakenFragmentPoints = new List<FragmentPoint>();
-
-            foreach (var fragmentpoint in gridDimension.TakenFragmentPoints)
-            {
-              
-            }
+            gridDimension.ResetFragmenPoints();
         }
 
         //Reposition Every Fragment
@@ -71,13 +72,10 @@ public class FragmentController : MonoBehaviour
 
     private void RepositionFragment(GameObject fragment)
     {
-        GridDimension randGridDimension = GetRandomDimension();
-        FragmentPoint randFragmentPoint = GetRandomFragmentPos(randGridDimension);
-
-        if(randFragmentPoint.FragmentPointType == FragmentPointType.Taken)
-
-        fragment.transform.position = randFragmentPoint;
-
+        FragmentPoint randFragmentPoint = GetRandomFragmentPos(GetRandomDimension());
+        fragment.transform.position = randFragmentPoint.transform.position;
+        fragment.gameObject.SetActive(true);
+        randFragmentPoint.gameObject.SetActive(false);
     }
 
     private GridDimension GetRandomDimension()
@@ -87,7 +85,11 @@ public class FragmentController : MonoBehaviour
 
     private FragmentPoint GetRandomFragmentPos(GridDimension gridDimension)
     {
-        return gridDimension.FragmentPoints[Random.Range(0, gridDimension.FragmentPoints.Count)];
+        // Filter out all inactive FragmentPoints
+        var activeFragmentPoints = gridDimension.FragmentPoints.Where(fp => fp.gameObject.activeSelf).ToList();
+
+        // Return a random active FragmentPoint
+        return activeFragmentPoints[Random.Range(0, activeFragmentPoints.Count)];
     }
 
 
