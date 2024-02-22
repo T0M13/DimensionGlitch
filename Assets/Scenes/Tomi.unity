@@ -541,7 +541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &475201861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,6 +561,8 @@ MonoBehaviour:
   fragmentPoints:
   - {fileID: 788290221}
   - {fileID: 521939572}
+  - {fileID: 2116384386}
+  - {fileID: 2063077820}
 --- !u!156049354 &475201862
 Grid:
   m_ObjectHideFlags: 0
@@ -5157,6 +5159,7 @@ MonoBehaviour:
   gridDimensions:
   - {fileID: 1136561276}
   - {fileID: 1551730690}
+  - {fileID: 475201861}
   fragmentPrefab: {fileID: 3682559168981378892, guid: f28ee090176164749be7b1f6cc67a79e, type: 3}
   fragmentAmount: 3
   notCollectedFragments: []
