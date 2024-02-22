@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 1042224551
+    locked: 0
+  - name: Fragments
+    uniqueID: 709489977
+    locked: 0
+  - name: Items
+    uniqueID: 1270261013
+    locked: 0
+  - name: Walls
+    uniqueID: 1638853599
+    locked: 0
+  - name: Wall Deco
+    uniqueID: 898890923
+    locked: 0
