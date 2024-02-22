@@ -10,12 +10,17 @@ public class AnimationController : MonoBehaviour
 
     int HashedIdleState = 0;
     int HashedWalkingState = 0;
-    private int HashedDashingState = 0;
+    int HashedDashingState = 0;
+
+    private PlayerController CachedPlayerController = null;
+    
     void Start()
     {
         HashedIdleState = Animator.StringToHash(IdleState);
         HashedWalkingState = Animator.StringToHash(WalkingState);
         HashedDashingState = Animator.StringToHash(DashingState);
+
+        CachedPlayerController = GameManager.Instance.GetPlayerControllerRef;
     }
     void Update()
     {
@@ -51,22 +56,29 @@ public class AnimationController : MonoBehaviour
     {
         MyAnimator.SetBool(HashedIdleState, true);
         MyAnimator.SetBool(HashedWalkingState, false);
-        MyAnimator.SetBool(HashedDashingState, false);
+        // MyAnimator.SetBool(HashedDashingState, false);
     }
 
     void SetWalkingState(Vector2 CurrentVelocity)
     {
         MyAnimator.SetBool(HashedIdleState, false);
-        MyAnimator.SetBool(HashedWalkingState, false);
-        MyAnimator.SetBool(HashedDashingState, false);
-
-        SpriteRenderer.flipY = CurrentVelocity.x >= 0;
+        MyAnimator.SetBool(HashedWalkingState, true);
+        // MyAnimator.SetBool(HashedDashingState, false);
+        
+        if (CurrentVelocity.x != 0)
+        {
+            SpriteRenderer.flipX = CurrentVelocity.x <= 0;
+        }
     }
 
     void SetDashingState()
     {
         MyAnimator.SetBool(HashedIdleState, false);
         MyAnimator.SetBool(HashedWalkingState,false);
-        MyAnimator.SetBool(HashedDashingState, true);
+        // MyAnimator.SetBool(HashedDashingState, true);
+
+        float DashProgress = CachedPlayerController.GetDashProgress();
+        Debug.Log(DashProgress);
+        MyAnimator.Play(HashedDashingState, 0, DashProgress);
     }
 }

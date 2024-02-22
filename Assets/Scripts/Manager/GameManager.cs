@@ -10,7 +10,7 @@ public class GameManager : BaseSingleton<GameManager>
 
    public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
    
-   private void Start()
+   private void Awake()
    {
       SpawnPlayer();
    }

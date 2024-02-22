@@ -26,8 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float LastDashTime = 0.0f;
     [SerializeField] Vector2 CurrentVelocity = Vector2.zero;
 
+    private float TravelledDashDistance = 0.0f;
     PackedMovementMode CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
 
+    public float GetDashProgress() => CurrentMovementMode.MovementState == PackedMovementMode.EMovementModes.Dashing ? TravelledDashDistance / DashDistance : 0;
     public PackedMovementMode GetCurrentMovementMode() => CurrentMovementMode;
     public Vector2 GetCurrentVelocity() => CurrentVelocity;
     public event Action OnDash;
@@ -107,7 +109,8 @@ public class PlayerController : MonoBehaviour
             Vector2 PreviousPlayerPos = PlayerRb.position;
             //Get the new pos for the player dash vector added
             Vector2 NewPlayerPos = PreviousPlayerPos + DashVector;
-            
+
+            TravelledDashDistance += Vector2.Distance(PreviousPlayerPos, NewPlayerPos);
             //Move the player rb to the new position
             PlayerRb.MovePosition(NewPlayerPos);
             PassedTime += Time.deltaTime;
@@ -115,6 +118,7 @@ public class PlayerController : MonoBehaviour
         }
 
         CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
+        TravelledDashDistance = 0;
     }
     bool IsAllowedToDash()
     {
