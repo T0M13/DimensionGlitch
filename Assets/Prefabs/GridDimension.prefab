@@ -3079,6 +3079,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6832184489407684107, guid: 39fec7291fa0109488459cdef8324895, type: 3}
+      propertyPath: fragmentController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6832184489407684107, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: gridDimensionParent
       value: 
       objectReference: {fileID: 7479606303198010650}
@@ -3264,6 +3268,10 @@ PrefabInstance:
     - target: {fileID: 6173287869728607647, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6832184489407684107, guid: 39fec7291fa0109488459cdef8324895, type: 3}
+      propertyPath: fragmentController
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6832184489407684107, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: gridDimensionParent

@@ -173,6 +173,13 @@ public class FragmentController : MonoBehaviour
 
     public void TravelToDifferentDimension(Collider2D collision, GridDimension excludeDimension)
     {
+
+        if(gridDimensions.Count <= 1)
+        {
+            Debug.Log("Only One Dimension. Can't Travel to other");
+            return;
+        }
+
         // Adjust chance based on previous outcomes
         dynamicChanceToSelectDimensionWithFragment = Mathf.Clamp(chanceToSelectDimensionWithFragment + (0.1f * consecutiveSelectionsWithoutFragments), 0f, 1f);
 
