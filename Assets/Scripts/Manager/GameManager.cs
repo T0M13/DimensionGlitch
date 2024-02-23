@@ -10,8 +10,9 @@ public class GameManager : BaseSingleton<GameManager>
 
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
    
-   private void Awake()
+   protected override void Awake()
    {
+      base.Awake();
       SpawnPlayer();
    }
 

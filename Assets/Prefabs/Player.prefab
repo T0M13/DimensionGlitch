@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4856677469131246988}
   - component: {fileID: 2898256376286033036}
   - component: {fileID: 6946738078845725280}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df8140f233f0a44d9863a9f34d58645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerStats: {fileID: -9056713177491291113}
   Speed: 5
   TimeToReachMaxSpeed: 0.2
   PlayerRb: {fileID: 4856677469131246988}
@@ -91,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealhtPoints: 3
+  MyFraction: 0
 --- !u!95 &6629177911874635645
 Animator:
   serializedVersion: 5

@@ -20,7 +20,7 @@ public class DamageTrigger : MonoBehaviour
       Debug.Log("Damaged the player");
       if (other.TryGetComponent(out Stats Stats))
       {
-         if (!Stats.IsDead())
+         if (!Stats.IsDamageable())
          {
             Stats.RecieveDmg();
          } 

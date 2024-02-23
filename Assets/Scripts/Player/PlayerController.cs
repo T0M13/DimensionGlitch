@@ -5,8 +5,11 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Stats))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] Stats PlayerStats;
+    
     [Header("Walk")]
     [SerializeField, Min(0)] float Speed = 10;//meters
     [SerializeField, Min(0)] float TimeToReachMaxSpeed = 1;
@@ -86,12 +89,13 @@ public class PlayerController : MonoBehaviour
     {
         if(!IsAllowedToDash()) return;
 
-        Debug.Log("Dashing");
+        PlayerStats.SetInvincibility(true);
+        StartCoroutine(DashRoutine());
+        
         LastDashTime = Time.time;
-        OnDash?.Invoke();
         CurrentMovementMode = MovementModeFactory.GetDashMovementMode();
         
-        StartCoroutine(DashRoutine());
+        OnDash?.Invoke();
     }
 
     IEnumerator DashRoutine()
@@ -118,6 +122,7 @@ public class PlayerController : MonoBehaviour
         }
 
         CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
+        PlayerStats.SetInvincibility(false);
         TravelledDashDistance = 0;
     }
     bool IsAllowedToDash()
