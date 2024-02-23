@@ -4,6 +4,8 @@
 public class DirectionContainer
 {
     [SerializeField] EDirections DirectionMask;
+
+    public EDirections GetDirectionMask() => DirectionMask;
     
     [System.Flags]
     public enum EDirections : byte
@@ -36,6 +38,37 @@ public class DirectionContainer
         if ((DirectionMask & EDirections.Right) != 0)
         {
             OutDirection += Vector2.right;
+        }
+
+        return OutDirection;
+    }
+
+    public Vector2 GetDirectionForMaskValue(EDirections InDirection)
+    {
+        Vector2 OutDirection = Vector2.zero;
+        
+        if ((InDirection & EDirections.Up) != 0)
+        {
+            OutDirection = Vector2.up;
+            return OutDirection;
+        }
+
+        if ((InDirection & EDirections.Down) != 0)
+        {
+            OutDirection = Vector2.down;
+            return OutDirection;
+        }
+
+        if ((InDirection & EDirections.Left) != 0)
+        {
+            OutDirection = Vector2.left;
+            return OutDirection;
+        }
+
+        if ((InDirection & EDirections.Right) != 0)
+        {
+            OutDirection = Vector2.right;
+            return OutDirection;
         }
 
         return OutDirection;

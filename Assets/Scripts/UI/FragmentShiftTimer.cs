@@ -16,7 +16,6 @@ public class FragmentShiftTimer : MonoBehaviour
 
    float CurrentTimerValue = 0.0f;
    float MaxTimerValue = 0.0f;
-   private float Speed = 0.0f;
    StringBuilder StringBuilder = new StringBuilder();
    
    private void Start()
