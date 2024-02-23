@@ -1,18 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ArrowTrap : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] TrapTrigger TrapTrigger;
+    [SerializeField] Projectile ProjectileToShoot;
+
     void Start()
     {
-        
+        TrapTrigger.OnTrapTriggerTriggered += ShootProjectile;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        TrapTrigger.OnTrapTriggerTriggered -= ShootProjectile;
+    }
+    void ShootProjectile()
+    {
+        Projectile ProjectileToShoot = Instantiate(this.ProjectileToShoot, transform.position, Quaternion.identity);
+        ProjectileToShoot.InitProjectile(transform.right, EFraction.Player, gameObject);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        if (TrapTrigger)
+        {
+            Gizmos.DrawLine(transform.position, TrapTrigger.transform.position);
+        }
     }
 }
