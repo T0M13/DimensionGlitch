@@ -29,12 +29,7 @@ public class PathPointFollower : MonoBehaviour
     {
         StartCoroutine(FollowPath());
     }
-
-    private void Start()
-    {
-        StartCoroutine(FollowPath());
-    }
-
+    
     float GetDistanceToNextPoint()
     {
         Vector2 CurrentPointPosition = PathPoints[CurrentPathPoint].position;
