@@ -20,6 +20,11 @@ public class PathPointFollower : MonoBehaviour
         transform.position = PathPoints[0].position;
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(FollowPath());
+    }
+
     private void Start()
     {
         StartCoroutine(FollowPath());
