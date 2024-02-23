@@ -11,6 +11,11 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] private FragmentController fragmentController;
     [SerializeField] private VolumeManager volumeManager;
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+   protected override void Awake()
+   {
+      base.Awake();
+      SpawnPlayer();
+   }
 
     public FragmentController FragmentController { get => fragmentController; set => fragmentController = value; }
     public VolumeManager VolumeManager { get => volumeManager; set => volumeManager = value; }
