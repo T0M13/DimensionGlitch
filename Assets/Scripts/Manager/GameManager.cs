@@ -27,13 +27,6 @@ public class GameManager : BaseSingleton<GameManager>
         GetVolumeManager();
     }
 
-    private void Awake()
-    {
-        GetFragmentController();
-        GetVolumeManager();
-        SpawnPlayer();
-
-    }
 
     void SpawnPlayer()
     {
