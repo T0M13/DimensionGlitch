@@ -15,7 +15,7 @@ public class Stats : MonoBehaviour
    public event Action<int> OnDamage;
    public event Action OnDeath;
    
-   public void RecieveDmg()
+   public virtual void RecieveDmg()
    {
       HealhtPoints--;
       OnDamage?.Invoke(HealhtPoints);

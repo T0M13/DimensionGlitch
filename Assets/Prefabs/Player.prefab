@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7624120542809958917}
   - component: {fileID: 1985691604761454891}
+  - component: {fileID: 754652138578632799}
   - component: {fileID: 7147802832222152995}
-  - component: {fileID: -9056713177491291113}
   - component: {fileID: 6629177911874635645}
   - component: {fileID: 4823713372748356527}
   - component: {fileID: 4856677469131246988}
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df8140f233f0a44d9863a9f34d58645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStats: {fileID: -9056713177491291113}
+  PlayerStats: {fileID: 754652138578632799}
   Speed: 5
   TimeToReachMaxSpeed: 0.2
   PlayerRb: {fileID: 4856677469131246988}
@@ -63,6 +63,23 @@ MonoBehaviour:
   MovementTime: 0
   LastDashTime: 0
   CurrentVelocity: {x: 0, y: 0}
+--- !u!114 &754652138578632799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893319486378076228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c285ca7fd6654dc7bde95887af800410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealhtPoints: 3
+  MyFraction: 0
+  InvincibilityTime: 1
+  TimesToBlink: 8
+  SpriteRenderer: {fileID: 6946738078845725280}
 --- !u!114 &7147802832222152995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,20 +98,6 @@ MonoBehaviour:
   WalkingState: IsWalking
   DashingState: Dash
   AudioSource: {fileID: 4823713372748356527}
---- !u!114 &-9056713177491291113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5893319486378076228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealhtPoints: 3
-  MyFraction: 0
 --- !u!95 &6629177911874635645
 Animator:
   serializedVersion: 5
@@ -323,7 +326,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 427029401
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

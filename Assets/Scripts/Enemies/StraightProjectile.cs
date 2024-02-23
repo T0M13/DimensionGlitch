@@ -19,6 +19,12 @@ public class StraightProjectile : Projectile
 
     protected override void ProjectileBehaviour()
     {
+        if (!Owner.gameObject.activeSelf)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         Vector2 CurrentProjectilePosition = ProjectileRb.position;
         Vector2 DirectionOfMovement = MovementDirection * (ProjectileSpeed * Time.deltaTime);
         ProjectileRb.MovePosition(CurrentProjectilePosition + DirectionOfMovement);

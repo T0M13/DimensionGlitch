@@ -87,8 +87,7 @@ public class PlayerController : MonoBehaviour
     void DoDash(InputAction.CallbackContext CallbackContext)
     {
         if(!IsAllowedToDash()) return;
-
-        PlayerStats.SetInvincibility(true);
+        
         StartCoroutine(DashRoutine());
         
         LastDashTime = Time.time;
@@ -106,6 +105,8 @@ public class PlayerController : MonoBehaviour
         
         while (PassedTime < DashTime)
         {
+            PlayerStats.SetInvincibility(true);
+            
             //Get the dash movement
             Vector2 DashVector = DashDirection * (DashSpeed * Time.deltaTime);
             //Get the current player pos

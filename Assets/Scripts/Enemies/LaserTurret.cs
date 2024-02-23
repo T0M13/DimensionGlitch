@@ -12,13 +12,16 @@ public class LaserTurret : MonoBehaviour
    [SerializeField] Transform[] LaserSpawnPoints;
    [SerializeField] LineRenderer[] LaserLineRenderers;
    [SerializeField] LayerMask HittableLayer;
-
+   
    private void OnValidate()
    {
-      InitLaserPoints();
+      if (!Application.isPlaying)
+      {
+         InitLaserPoints();
+      }
    }
 
-   private void Update()
+   private void FixedUpdate()
    {
       ShootLasers();
       //shoot lasers into four directions
@@ -46,10 +49,10 @@ public class LaserTurret : MonoBehaviour
                LaserSpawnPoints[i].gameObject.SetActive(true);
                LaserSpawnPoints[i].transform.position = Position;
                LaserSpawnPoints[i].transform.rotation = Quaternion.AngleAxis(CurrentRotation, Vector3.forward);
-               LaserLineRenderers[i].SetPosition(0, LaserSpawnPoints[i].gameObject.transform.position);
-               LaserLineRenderers[i].SetPosition(1, LaserDefaultEndPosition);
                LaserLineRenderers[i].startWidth = LaserThickness;
                LaserLineRenderers[i].endWidth = LaserThickness;
+               
+               SetLineRenderersPositions(i, Position, LaserDefaultEndPosition);
             }
          }
          else if (i < LaserSpawnPoints.Length && i < LaserLineRenderers.Length)
@@ -75,21 +78,37 @@ public class LaserTurret : MonoBehaviour
 
          if (Hit)
          {
-            Debug.Log("hit");
-            LaserLineRenderers[i].SetPosition(1, Hit.point);
+            SetLineRenderersPositions(i, RayStartPosition, Hit.point);
+
+            if (Hit.transform.gameObject.TryGetComponent(out Stats Stats))
+            {
+               if (Stats.IsDamageable())
+               {
+                  Stats.RecieveDmg();
+               }
+            }
          }
          else
          {
-            LaserLineRenderers[i].SetPosition(1, RayStartPosition + RayDirection * LaserMaxDistance);
+            SetLineRenderersPositions(i, RayStartPosition, RayStartPosition + RayDirection * LaserMaxDistance);
          }
       }
    }
+
+   void SetLineRenderersPositions(int LineRendererIndex, Vector2 StartPosition, Vector2 EndPosition)
+   {
+      LaserLineRenderers[LineRendererIndex].SetPosition(0, StartPosition);
+      LaserLineRenderers[LineRendererIndex].SetPosition(1, EndPosition);
+   }
    private void OnDrawGizmosSelected()
    {
-      RectangleBounds.center = transform.position;
-      
-      InitLaserPoints();
-      Gizmos.color = Color.green;
-      Gizmos.DrawWireCube(RectangleBounds.center, RectangleBounds.size);
+      if (!Application.isPlaying)
+      {
+         RectangleBounds.center = transform.position;
+
+         InitLaserPoints();
+         Gizmos.color = Color.green;
+         Gizmos.DrawWireCube(RectangleBounds.center, RectangleBounds.size);
+      }
    }
 }
