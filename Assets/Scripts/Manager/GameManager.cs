@@ -10,25 +10,21 @@ public class GameManager : BaseSingleton<GameManager>
     [Header("References")]
     [SerializeField] private FragmentController fragmentController;
     [SerializeField] private VolumeManager volumeManager;
-    [SerializeField] private UIManager uiManager;
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
     protected override void Awake()
     {
         GetFragmentController();
         GetVolumeManager();
-         GetUIManager();
         SpawnPlayer();
     }
 
     public FragmentController FragmentController { get => fragmentController; set => fragmentController = value; }
     public VolumeManager VolumeManager { get => volumeManager; set => volumeManager = value; }
-    public UIManager UiManager { get => uiManager; set => uiManager = value; }
 
     private void OnValidate()
     {
         GetFragmentController();
         GetVolumeManager();
-        GetUIManager();
     }
     void SpawnPlayer()
     {
@@ -55,11 +51,5 @@ public class GameManager : BaseSingleton<GameManager>
     {
         if (VolumeManager == null)
             VolumeManager = FindAnyObjectByType<VolumeManager>();
-    }
-
-    private void GetUIManager()
-    {
-        if (UiManager == null)
-            UiManager = FindAnyObjectByType<UIManager>();
     }
 }
