@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public class GridDimension : MonoBehaviour
@@ -19,6 +20,7 @@ public class GridDimension : MonoBehaviour
     [Header("Volume Settings")]
     [SerializeField] private Volume dimensionVolume;
 
+    public UnityEvent onDimensionChange;
 
     public List<FragmentPoint> FragmentPoints { get => fragmentPoints; set => fragmentPoints = value; }
     public List<Fragment> CurrentFragmentsInDimension { get => currentFragmentsInDimension; set => currentFragmentsInDimension = value; }

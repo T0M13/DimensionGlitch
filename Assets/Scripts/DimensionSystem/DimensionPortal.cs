@@ -9,6 +9,7 @@ public class DimensionPortal : MonoBehaviour
     [SerializeField] private GridDimension gridDimensionParent;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Color[] colors;
+    [SerializeField] private Color usedPortalColor;
 
     [Header("Portal Settings")]
     [SerializeField] private bool hasBeenTraveledThrough;
@@ -54,6 +55,7 @@ public class DimensionPortal : MonoBehaviour
 
     public void SetHasBeenTraveledThrough()
     {
+        sprite.color = usedPortalColor;
         hasBeenTraveledThrough = true;
     }
 

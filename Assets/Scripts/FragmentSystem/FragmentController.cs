@@ -29,6 +29,10 @@ public class FragmentController : MonoBehaviour
     [Header("Actions")]
     public UnityEvent onBeforePlayerShifting;
     public UnityEvent onAfterPlayerShifting;
+    public UnityEvent onResetDimensionEffects;
+    public UnityEvent onFragmentShifting;
+
+    public float FragmentShiftTimer { get => fragmentShiftTimer; set => fragmentShiftTimer = value; }
 
     private void OnValidate()
     {
@@ -67,11 +71,11 @@ public class FragmentController : MonoBehaviour
             return;
         }
 
-        fragmentShiftTimer += Time.deltaTime;
-        if (fragmentShiftTimer >= fragmentShiftTimerCooldown)
+        FragmentShiftTimer += Time.deltaTime;
+        if (FragmentShiftTimer >= fragmentShiftTimerCooldown)
         {
             RepositionFragments();
-            fragmentShiftTimer = 0;
+            FragmentShiftTimer = 0;
         }
     }
 
@@ -82,12 +86,16 @@ public class FragmentController : MonoBehaviour
 
     private void RepositionFragments()
     {
+
         //Clear FragmentPoints --> So they can be taken
         foreach (var gridDimension in gridDimensions)
         {
             gridDimension.ResetFragmenPoints();
             gridDimension.ResetFragmentsInDimension();
         }
+
+        //Effect when shifting
+        onFragmentShifting?.Invoke();
 
         //Reposition Every Fragment
         foreach (var fragment in notCollectedFragments)
@@ -222,6 +230,12 @@ public class FragmentController : MonoBehaviour
 
         //after travelling - actions
         onAfterPlayerShifting?.Invoke();
+
+        //reset other dimension events
+        onResetDimensionEffects?.Invoke();
+
+        //trigger dimension event
+        gridTravelDimension.onDimensionChange?.Invoke();
 
     }
 
