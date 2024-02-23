@@ -27,6 +27,11 @@ public class GameManager : BaseSingleton<GameManager>
         GetFragmentController();
         GetVolumeManager();
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> bd5d15f42f11c717cab72d4a8da41b0c50e8d9a5
     void SpawnPlayer()
     {
         GlobalPlayerControllerRef = Instantiate(PlayerPrefab, PlayerSpawnPosition.transform.position, PlayerPrefab.transform.rotation);
