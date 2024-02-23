@@ -8,6 +8,9 @@ public class AnimationController : MonoBehaviour
     [SerializeField] private string WalkingState = "IsWalking";
     [SerializeField] private string DashingState = "IsDashing";
 
+    [Header("AnimationEvents")]
+    [SerializeField] AudioSource AudioSource;
+    
     int HashedIdleState = 0;
     int HashedWalkingState = 0;
     int HashedDashingState = 0;
@@ -80,4 +83,17 @@ public class AnimationController : MonoBehaviour
         float DashProgress = CachedPlayerController.GetDashProgress();
         MyAnimator.Play(HashedDashingState, 0, DashProgress);
     }
+
+#region AnimationEventFunctions
+
+public void PlaySound(AudioClip ClipToPlay)
+{
+    if (AudioSource)
+    {
+        AudioSource.PlayOneShot(ClipToPlay, AudioSource.volume);
+    }
+}    
+
+#endregion
+
 }
