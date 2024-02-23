@@ -12,13 +12,13 @@ public class Stats : MonoBehaviour
    public bool IsDamageable() => !IsInvincible && !IsDead();
    public bool IsDead() => HealhtPoints <= 0;
    public bool IsFraction(EFraction MyFraction) => this.MyFraction == MyFraction;
-   public event Action OnDamage;
+   public event Action<int> OnDamage;
    public event Action OnDeath;
    
    public void RecieveDmg()
    {
-      OnDamage?.Invoke();
       HealhtPoints--;
+      OnDamage?.Invoke(HealhtPoints);
       
       if(HealhtPoints <= 0)
       {

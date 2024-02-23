@@ -39,6 +39,7 @@ public class SpearTrap : MonoBehaviour
     {
         HashedAnimationStateName = Animator.StringToHash(AnimationStateName);
         TrapTrigger.OnTrapTriggerTriggered += DoStab;
+        SetSpearsEnbled(false);
     }
 
     private void OnDisable()
@@ -46,6 +47,11 @@ public class SpearTrap : MonoBehaviour
         TrapTrigger.OnTrapTriggerTriggered -= DoStab;
     }
 
+    void SetSpearsEnbled(bool Enabled)
+    {
+        UpperSpear.SetTrigger(Enabled);
+        LowerSpear.SetTrigger(Enabled);
+    }
     void DoStab()
     {
         StopAllCoroutines();
@@ -55,8 +61,13 @@ public class SpearTrap : MonoBehaviour
     {
         float SpearExtractionTime = TrapExecutionTime * 0.5f;
         
+        SetSpearsEnbled(true);
         yield return AnimateSpears(SpearExtractionTime, false);
+        
+        SetSpearsEnbled(false);
         yield return AnimateSpears(SpearExtractionTime, true);
+        
+       
     }
 
     IEnumerator AnimateSpears(float SpearExtractionTime, bool Reverse)
@@ -72,7 +83,6 @@ public class SpearTrap : MonoBehaviour
            
             UpperSpear.GetTriggerCollider().offset = new Vector2(0, Mathf.Lerp(0, TargetOffsetUpper, InterpValue));
             LowerSpear.GetTriggerCollider().offset = new Vector2(0, Mathf.Lerp(0, TargetOffsetLower, InterpValue));
-            Debug.Log(UpperSpear.GetTriggerCollider().offset);
             UpperSpearAnimator.Play(HashedAnimationStateName, 0, InterpValue);
             LowerSpearAnimator.Play(HashedAnimationStateName, 0, InterpValue);
             yield return new WaitForEndOfFrame();

@@ -4,18 +4,23 @@ public class GameManager : BaseSingleton<GameManager>
 {
     [Header("PlayerSetup")]
     [SerializeField] PlayerController PlayerPrefab;
+    [SerializeField] HUDManager HudPrefab;
     [SerializeField] GameObject PlayerSpawnPosition;
 
     PlayerController GlobalPlayerControllerRef;
+    HUDManager PlayerHud;
+    
     [Header("References")]
     [SerializeField] private FragmentController fragmentController;
     [SerializeField] private VolumeManager volumeManager;
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+    public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()
     {
         GetFragmentController();
         GetVolumeManager();
         SpawnPlayer();
+        SpawnHud();
     }
 
     public FragmentController FragmentController { get => fragmentController; set => fragmentController = value; }
@@ -35,6 +40,11 @@ public class GameManager : BaseSingleton<GameManager>
         GlobalPlayerControllerRef.transform.position = new Vector3(PlayerPosition.x, PlayerPosition.y, 0);
     }
 
+    void SpawnHud()
+    {
+        PlayerHud = Instantiate(HudPrefab, Vector2.zero, Quaternion.identity);
+        PlayerHud.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+    }
     void OnPlayerDie()
     {
         //Implement respawn logic or deathscreen etc
