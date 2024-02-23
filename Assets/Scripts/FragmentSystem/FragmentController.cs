@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class FragmentController : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private List<GridDimension> gridDimensions;
 
     [Header("Fragments Settings")]
@@ -24,10 +26,19 @@ public class FragmentController : MonoBehaviour
     [SerializeField] private float dynamicChanceToSelectDimensionWithFragment;
     [SerializeField] private int consecutiveSelectionsWithoutFragments = 0;
 
+    [Header("Actions")]
+    public UnityAction onBeforePlayerShifting;
+    public UnityAction onAfterPlayerShifting;
 
+    private void OnValidate()
+    {
+        GetGameManager();
+    }
 
     private void Awake()
     {
+        GetGameManager();
+
         notCollectedFragments = new List<GameObject>();
         collectedFragments = new List<GameObject>();
 
@@ -62,6 +73,11 @@ public class FragmentController : MonoBehaviour
             RepositionFragments();
             fragmentShiftTimer = 0;
         }
+    }
+
+    private void GetGameManager()
+    {
+        gameManager = GameManager.Instance;
     }
 
     private void RepositionFragments()
@@ -178,7 +194,9 @@ public class FragmentController : MonoBehaviour
         }
 
         gridTravelDimension.gameObject.SetActive(true);
-        
+
+        //before travelling - actions
+        onBeforePlayerShifting?.Invoke();
 
         // Reset Portals before traveling
         excludeDimension.ResetPortals();
@@ -194,6 +212,10 @@ public class FragmentController : MonoBehaviour
         {
             fragment.SetActive(fragment.GetComponent<Fragment>().CurrentDimension.gameObject.activeSelf);
         }
+
+        //after travelling - actions
+        onAfterPlayerShifting?.Invoke();
+
     }
 
     private DimensionPortal GetRandomPortal(GridDimension gridDimension)
