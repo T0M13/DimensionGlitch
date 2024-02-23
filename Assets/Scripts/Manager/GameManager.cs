@@ -13,8 +13,9 @@ public class GameManager : BaseSingleton<GameManager>
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
    protected override void Awake()
    {
-      base.Awake();
-      SpawnPlayer();
+       GetFragmentController();
+       GetVolumeManager();
+       SpawnPlayer();
    }
 
     public FragmentController FragmentController { get => fragmentController; set => fragmentController = value; }
@@ -26,15 +27,6 @@ public class GameManager : BaseSingleton<GameManager>
         GetFragmentController();
         GetVolumeManager();
     }
-
-    private void Awake()
-    {
-        GetFragmentController();
-        GetVolumeManager();
-        SpawnPlayer();
-
-    }
-
     void SpawnPlayer()
     {
         GlobalPlayerControllerRef = Instantiate(PlayerPrefab, PlayerSpawnPosition.transform.position, PlayerPrefab.transform.rotation);
