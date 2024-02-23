@@ -47,6 +47,9 @@ TagManager:
   - name: Portal
     uniqueID: 2402280713
     locked: 0
+  - name: Traps
+    uniqueID: 3222018493
+    locked: 0
   - name: Effects
     uniqueID: 2580755291
     locked: 0
