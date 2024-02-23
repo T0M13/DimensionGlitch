@@ -47,6 +47,9 @@ MonoBehaviour:
   gridDimensions:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   fragmentPrefab: {fileID: 3682559168981378892, guid: f28ee090176164749be7b1f6cc67a79e, type: 3}
   fragmentAmount: 3
   notCollectedFragments: []
@@ -54,4 +57,5 @@ MonoBehaviour:
   fragmentShiftTimerCooldown: 4
   fragmentShiftTimer: 4
   chanceToSelectDimensionWithFragment: 0.5
+  dynamicChanceToSelectDimensionWithFragment: 0
   consecutiveSelectionsWithoutFragments: 0

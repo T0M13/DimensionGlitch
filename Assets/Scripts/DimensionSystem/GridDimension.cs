@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GridDimension : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GridDimension : MonoBehaviour
     [Header("Dimension Portal Settings")]
     [SerializeField] private Transform portalsParent;
     [SerializeField] private List<DimensionPortal> portals;
+    [Header("Volume Settings")]
+    [SerializeField] private Volume dimensionVolume;
+
 
     public List<FragmentPoint> FragmentPoints { get => fragmentPoints; set => fragmentPoints = value; }
     public List<Fragment> CurrentFragmentsInDimension { get => currentFragmentsInDimension; set => currentFragmentsInDimension = value; }
@@ -73,19 +77,5 @@ public class GridDimension : MonoBehaviour
         }
     }
 
-
-    private void ActivateGrid()
-    {
-        floorTileMap.gameObject.SetActive(false);
-        wallTileMap.gameObject.SetActive(false);
-        wallDecosTileMap.gameObject.SetActive(false);
-    }
-
-    private void DeactivateGrid()
-    {
-        floorTileMap.gameObject.SetActive(false);
-        wallTileMap.gameObject.SetActive(false);
-        wallDecosTileMap.gameObject.SetActive(false);
-    }
 
 }

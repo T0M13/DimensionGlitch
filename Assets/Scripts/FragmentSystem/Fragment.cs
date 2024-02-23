@@ -5,24 +5,34 @@ using UnityEngine;
 public class Fragment : MonoBehaviour
 {
     [Header("Fragment Settings")]
+    [SerializeField] private FragmentController fragmentControllerParent;
+    [SerializeField] private GridDimension currentDimension;
     [SerializeField] private float interactionRange = .3f;
     [SerializeField] private FragmentType fragmentType = FragmentType.NotCollected;
     [Header("Collider Settings")]
     [SerializeField] private CircleCollider2D fragmentCollider;
     [Header("Gizmos Settings")]
     [SerializeField] private bool showGizmos;
-
+    public FragmentController FragmentControllerParent { get => fragmentControllerParent; set => fragmentControllerParent = value; }
+    public GridDimension CurrentDimension { get => currentDimension; set => currentDimension = value; }
 
     private void OnValidate()
     {
+        GetFragmentController();
         SetCollider();
-
     }
 
     private void Awake()
     {
+        GetFragmentController();
         SetCollider();
         fragmentType = FragmentType.NotCollected;
+    }
+
+    private void GetFragmentController()
+    {
+        if (fragmentControllerParent == null)
+            fragmentControllerParent = FindAnyObjectByType<FragmentController>();
     }
 
     private void SetCollider()

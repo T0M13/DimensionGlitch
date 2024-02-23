@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class FragmentController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class FragmentController : MonoBehaviour
 
     [Header("Dimension Settings")]
     [SerializeField] private float chanceToSelectDimensionWithFragment = 0.5f;
+    [SerializeField] private float dynamicChanceToSelectDimensionWithFragment;
     [SerializeField] private int consecutiveSelectionsWithoutFragments = 0;
 
 
@@ -34,6 +36,7 @@ public class FragmentController : MonoBehaviour
             GameObject fragment = Instantiate(fragmentPrefab);
             fragment.transform.parent = transform;
             fragment.SetActive(false);
+            fragment.GetComponent<Fragment>().FragmentControllerParent = this;
             notCollectedFragments.Add(fragment);
         }
     }
@@ -110,9 +113,10 @@ public class FragmentController : MonoBehaviour
         }
 
         fragment.transform.position = randFragmentPoint.transform.position;
-        fragment.gameObject.SetActive(true);
+        fragment.gameObject.SetActive(randGridDimension.gameObject.activeSelf);
         Fragment fragmentScript = fragment.GetComponent<Fragment>();
         randGridDimension.CurrentFragmentsInDimension.Add(fragmentScript);
+        fragmentScript.CurrentDimension = randGridDimension;
         randFragmentPoint.gameObject.SetActive(false);
 
 
@@ -134,7 +138,7 @@ public class FragmentController : MonoBehaviour
     public void TravelToDifferentDimension(Collider2D collision, GridDimension excludeDimension)
     {
         // Adjust chance based on previous outcomes
-        float dynamicChance = Mathf.Clamp(chanceToSelectDimensionWithFragment + (0.1f * consecutiveSelectionsWithoutFragments), 0f, 1f);
+        dynamicChanceToSelectDimensionWithFragment = Mathf.Clamp(chanceToSelectDimensionWithFragment + (0.1f * consecutiveSelectionsWithoutFragments), 0f, 1f);
 
         // Separate the dimensions into those with and without fragments
         List<GridDimension> dimensionsWithFragments = gridDimensions
@@ -143,7 +147,7 @@ public class FragmentController : MonoBehaviour
             .Where(gd => gd.CurrentFragmentsInDimension.Count == 0 && gd != excludeDimension).ToList();
 
         List<GridDimension> chosenList;
-        if (Random.Range(0f, 1f) <= dynamicChance)
+        if (Random.Range(0f, 1f) <= dynamicChanceToSelectDimensionWithFragment)
         {
             chosenList = dimensionsWithFragments.Any() ? dimensionsWithFragments : dimensionsWithoutFragments;
         }
@@ -164,6 +168,18 @@ public class FragmentController : MonoBehaviour
             consecutiveSelectionsWithoutFragments = 0; // Reset counter if a dimension with fragments is selected
         }
 
+        //before travelling - change volumes
+        //Camera.main.GetUniversalAdditionalCameraData().volumeTrigger = GameManager.Instance.GetPlayerControllerRef.transform;
+
+        //before travelling - make only the traveldimension visible
+        foreach (var gridDimension in gridDimensions)
+        {
+            gridDimension.gameObject.SetActive(false);
+        }
+
+        gridTravelDimension.gameObject.SetActive(true);
+        
+
         // Reset Portals before traveling
         excludeDimension.ResetPortals();
         DimensionPortal portal = GetRandomPortal(gridTravelDimension);
@@ -171,6 +187,12 @@ public class FragmentController : MonoBehaviour
         {
             collision.transform.position = portal.transform.position;
             portal.SetHasBeenTraveledThrough();
+        }
+
+        //set fragments
+        foreach (var fragment in notCollectedFragments)
+        {
+            fragment.SetActive(fragment.GetComponent<Fragment>().CurrentDimension.gameObject.activeSelf);
         }
     }
 
