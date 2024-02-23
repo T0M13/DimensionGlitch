@@ -8,15 +8,14 @@ public class DimensionPortal : MonoBehaviour
     [SerializeField] private FragmentController fragmentController;
     [SerializeField] private GridDimension gridDimensionParent;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Color[] colors;
 
     [Header("Portal Settings")]
     [SerializeField] private bool hasBeenTraveledThrough;
 
-    [SerializeField] private float interactionRange = .6f;
+    [SerializeField] private Vector2 interactionRange = new Vector2(0.8f, 1.5f);
     [Header("Collider Settings")]
-    [SerializeField] private CircleCollider2D portalCollider;
-    [Header("Gizmos Settings")]
-    [SerializeField] private bool showGizmos;
+    [SerializeField] private CapsuleCollider2D portalCollider;
 
     private void OnValidate()
     {
@@ -24,6 +23,8 @@ public class DimensionPortal : MonoBehaviour
         SetCollider();
         GetGridDimensionParent();
         GetFragmentController();
+        SetRandColor();
+        //RandRotation();
     }
 
     private void Awake()
@@ -32,6 +33,8 @@ public class DimensionPortal : MonoBehaviour
         SetCollider();
         GetGridDimensionParent();
         GetFragmentController();
+        SetRandColor();
+        //RandRotation();
         hasBeenTraveledThrough = false;
     }
 
@@ -51,21 +54,32 @@ public class DimensionPortal : MonoBehaviour
 
     public void SetHasBeenTraveledThrough()
     {
-        sprite.color = new Color(1f, 1f, 1f, .5f);
         hasBeenTraveledThrough = true;
     }
 
     public void ResetTraveledThrough()
     {
-        sprite.color = new Color(1f, 1f, 1f, 1f);
+        SetRandColor();
         hasBeenTraveledThrough = false;
+    }
+
+    private void SetRandColor()
+    {
+        sprite.color = colors[Random.Range(0, colors.Length)];
     }
 
     private void SetCollider()
     {
-        portalCollider = GetComponent<CircleCollider2D>();
+        portalCollider = GetComponent<CapsuleCollider2D>();
 
-        portalCollider.radius = interactionRange;
+        portalCollider.size = interactionRange;
+    }
+
+    private void RandRotation()
+    {
+        Quaternion temp = transform.rotation;
+        temp.z = Random.Range(0, 360);
+        transform.rotation = temp;
     }
 
     private void TravelDimension(Collider2D collision)
@@ -83,10 +97,4 @@ public class DimensionPortal : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!showGizmos) return;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
-    }
 }
