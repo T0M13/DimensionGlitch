@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7624120542809958917}
   - component: {fileID: 1985691604761454891}
   - component: {fileID: 7147802832222152995}
+  - component: {fileID: -9056713177491291113}
   - component: {fileID: 6629177911874635645}
   - component: {fileID: 4856677469131246988}
   - component: {fileID: 2898256376286033036}
@@ -77,6 +78,19 @@ MonoBehaviour:
   IdleState: IsIdle
   WalkingState: IsWalking
   DashingState: Dash
+--- !u!114 &-9056713177491291113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893319486378076228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealhtPoints: 3
 --- !u!95 &6629177911874635645
 Animator:
   serializedVersion: 5
