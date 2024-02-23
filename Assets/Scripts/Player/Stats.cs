@@ -5,6 +5,7 @@ public class Stats : MonoBehaviour
 {
    [SerializeField, Min(0)] int HealhtPoints = 3;
 
+   public bool IsDead() => HealhtPoints <= 0;
    public event Action OnDamage;
    public event Action OnDeath;
    
