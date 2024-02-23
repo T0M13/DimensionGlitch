@@ -78,7 +78,6 @@ public abstract class TurretBase : MonoBehaviour
         Vector2 RayDirection = GetDirectionToTargetNormalized();
         
         float RayDistance = Vector2.Distance(RayStartPosition, RayEndPosition);
-        Debug.DrawLine(RayStartPosition, RayStartPosition + RayDirection * RayDistance, Color.red);
         bool CanSeeTarget = Physics2D.Raycast(RayStartPosition, RayDirection, RayDistance, VisibilityBlockingMask);
         
         return !CanSeeTarget;
