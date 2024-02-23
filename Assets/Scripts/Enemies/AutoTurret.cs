@@ -5,10 +5,10 @@ public class AutoTurret : TurretBase
     protected override void ShootProjectile()
     {
         Projectile ProjectileRef = Instantiate(TurretProjectile, ProjetileSpawnPoint.position, Quaternion.identity);
-        ProjectileRef.InitProjectile(GetDirectionToTarget(), EFraction.Player, gameObject, CurrentTarget);
+        ProjectileRef.InitProjectile(GetDirectionToTargetNormalized(), EFraction.Player, gameObject, CurrentTarget);
     }
     protected override void Aim()
     {
-        AimingPoint.rotation =  Quaternion.LookRotation(AimingPoint.forward, GetDirectionToTarget());
+        AimingPoint.rotation =  Quaternion.LookRotation(AimingPoint.forward, GetDirectionToTargetNormalized());
     }
 }
