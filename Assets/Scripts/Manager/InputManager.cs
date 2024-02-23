@@ -26,7 +26,7 @@ public class InputManager : BaseSingleton<InputManager>
         PlayerDash.action.Enable();
     }
 
-    void DisableAllActions()
+    public void DisableAllActions()
     {
         PlayerWalk.action.Disable();
         PlayerDash.action.Disable();

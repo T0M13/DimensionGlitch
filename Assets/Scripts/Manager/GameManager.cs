@@ -18,5 +18,12 @@ public class GameManager : BaseSingleton<GameManager>
    void SpawnPlayer()
    {
       GlobalPlayerControllerRef = Instantiate(PlayerPrefab, PlayerSpawnPosition.transform.position, PlayerPrefab.transform.rotation);
+      GlobalPlayerControllerRef.GetComponent<Stats>().OnDeath += OnPlayerDie;
+   }
+
+   void OnPlayerDie()
+   {
+      //Implement respawn logic or deathscreen etc
+      Debug.Log("Player died");
    }
 }
