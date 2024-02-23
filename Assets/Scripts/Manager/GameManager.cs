@@ -7,21 +7,27 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] GameObject PlayerSpawnPosition;
 
     PlayerController GlobalPlayerControllerRef;
-
-    public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
-
     [Header("References")]
     [SerializeField] private FragmentController fragmentController;
+    [SerializeField] private VolumeManager volumeManager;
+    public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+
+    public FragmentController FragmentController { get => fragmentController; set => fragmentController = value; }
+    public VolumeManager VolumeManager { get => volumeManager; set => volumeManager = value; }
+
 
     private void OnValidate()
     {
         GetFragmentController();
+        GetVolumeManager();
     }
 
     private void Awake()
     {
         GetFragmentController();
+        GetVolumeManager();
         SpawnPlayer();
+
     }
 
     void SpawnPlayer()
@@ -41,7 +47,13 @@ public class GameManager : BaseSingleton<GameManager>
 
     private void GetFragmentController()
     {
-        if (fragmentController == null)
-            fragmentController = FindAnyObjectByType<FragmentController>();
+        if (FragmentController == null)
+            FragmentController = FindAnyObjectByType<FragmentController>();
+    }
+
+    private void GetVolumeManager()
+    {
+        if (VolumeManager == null)
+            VolumeManager = FindAnyObjectByType<VolumeManager>();
     }
 }

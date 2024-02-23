@@ -197,6 +197,8 @@ public class FragmentController : MonoBehaviour
 
         //before travelling - actions
         onBeforePlayerShifting?.Invoke();
+        if (gameManager != null)
+            gameManager.VolumeManager.StartTransitionToDifferentDimension();
 
         // Reset Portals before traveling
         excludeDimension.ResetPortals();
@@ -215,6 +217,9 @@ public class FragmentController : MonoBehaviour
 
         //after travelling - actions
         onAfterPlayerShifting?.Invoke();
+
+        //if (gameManager != null)
+        //    gameManager.VolumeManager.StartTransitionBack();
 
     }
 

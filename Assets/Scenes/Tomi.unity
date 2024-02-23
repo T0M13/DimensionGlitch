@@ -158,6 +158,22 @@ Transform:
   - {fileID: 1274991517}
   m_Father: {fileID: 1003771647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &127621142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
+  m_Name: ChromaticAberration(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.2
 --- !u!1 &161252578
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 218666982}
   - component: {fileID: 218666983}
+  - component: {fileID: 218666984}
   m_Layer: 6
   m_Name: GlobalVolume
   m_TagString: Untagged
@@ -277,7 +294,36 @@ MonoBehaviour:
   priority: 100
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: c4388ec06b17cf043986cfaa403f2ca1, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 62afbdd858682a542b415cd7a2e5c7ee, type: 2}
+--- !u!114 &218666984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218666981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e32bd1f72c72f34188bc834d6dd29d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 359850804}
+  volume: {fileID: 218666983}
+  bloom: {fileID: 1021207208}
+  chromaticAberration: {fileID: 127621142}
+  lensDistortion: {fileID: 805076669}
+  doBloom: 1
+  baseBloomIntensity: 1
+  maxBloomIntensity: 3
+  bloomTransitionSpeed: 0.3
+  doChromaticAberration: 1
+  baseChromaticIntensity: 0.2
+  maxChromaticIntensity: 0.5
+  chromaticTransitionSpeed: 0.1
+  doTransition: 1
+  transitionDuration: 0.2
+  transitionWaitTravelDuration: 1
+  transitionWaitBackDuration: 1
 --- !u!1 &224801985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,6 +2002,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1413449258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &359850804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 31229246520801372, guid: 07ba35bd9e4627c4491b01514e35a9e6, type: 3}
+  m_PrefabInstance: {fileID: 1994303957}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8aac4284cd56c4fac1c30fd70d208d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &416688188
 GameObject:
   m_ObjectHideFlags: 0
@@ -5734,6 +5791,34 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &805076669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
+  m_Name: LensDistortion(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+  xMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!1 &852953195
 GameObject:
   m_ObjectHideFlags: 0
@@ -6293,6 +6378,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1919632803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1021207208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+  m_Name: Bloom(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  skipIterations:
+    m_OverrideState: 0
+    m_Value: 1
+  threshold:
+    m_OverrideState: 0
+    m_Value: 0.9
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  scatter:
+    m_OverrideState: 0
+    m_Value: 0.7
+  clamp:
+    m_OverrideState: 0
+    m_Value: 65472
+  tint:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  highQualityFiltering:
+    m_OverrideState: 0
+    m_Value: 0
+  downscale:
+    m_OverrideState: 0
+    m_Value: 0
+  maxIterations:
+    m_OverrideState: 0
+    m_Value: 6
+  dirtTexture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+    dimension: 1
+  dirtIntensity:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!1 &1023308485
 GameObject:
   m_ObjectHideFlags: 0
