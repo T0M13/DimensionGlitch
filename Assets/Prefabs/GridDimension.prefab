@@ -1,5 +1,76 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1165566441058868119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1730388260674232888}
+  - component: {fileID: 8629413979547163015}
+  - component: {fileID: 3648612340812620377}
+  m_Layer: 6
+  m_Name: DimensionVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1730388260674232888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165566441058868119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6020572043570181784}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8629413979547163015
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165566441058868119}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 25.574593, y: 16.970228, z: 1}
+  m_Center: {x: 0.61925507, y: 0.5540688, z: 0}
+--- !u!114 &3648612340812620377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165566441058868119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 0
+  priority: 1
+  blendDistance: 1
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: be12d0ea705f6ca4486a81bf96a1592c, type: 2}
 --- !u!1 &1807033958218955461
 GameObject:
   m_ObjectHideFlags: 0
@@ -2988,7 +3059,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3048,7 +3119,7 @@ MonoBehaviour:
   fragmentController: {fileID: 0}
   gridDimensionParent: {fileID: 7479606303198010650}
   sprite: {fileID: 5723638039808191032}
-  hasBeenTraveledThrough: 1
+  hasBeenTraveledThrough: 0
   interactionRange: 0.6
   portalCollider: {fileID: 5248264957883271861}
   showGizmos: 1
@@ -3133,6 +3204,7 @@ Transform:
   - {fileID: 6254579061497815118}
   - {fileID: 2233970357163535419}
   - {fileID: 7825646169344205945}
+  - {fileID: 1730388260674232888}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &21901794322668962
@@ -3172,6 +3244,7 @@ MonoBehaviour:
   portals:
   - {fileID: 563774682748038342}
   - {fileID: 685114247114721061}
+  dimensionVolume: {fileID: 3648612340812620377}
 --- !u!1 &8115610614152228886
 GameObject:
   m_ObjectHideFlags: 0

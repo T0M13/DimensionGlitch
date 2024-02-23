@@ -27,8 +27,8 @@ public class FragmentController : MonoBehaviour
     [SerializeField] private int consecutiveSelectionsWithoutFragments = 0;
 
     [Header("Actions")]
-    public UnityAction onBeforePlayerShifting;
-    public UnityAction onAfterPlayerShifting;
+    public UnityEvent onBeforePlayerShifting;
+    public UnityEvent onAfterPlayerShifting;
 
     private void OnValidate()
     {
@@ -139,6 +139,13 @@ public class FragmentController : MonoBehaviour
 
     }
 
+    public void SetFragmentCollected(Fragment fragment)
+    {
+        notCollectedFragments.Remove(fragment.gameObject);
+        collectedFragments.Add(fragment.gameObject);
+        //if all collected --> game over victory
+    }
+
     private GridDimension GetRandomDimension(List<GridDimension> gridDimensions)
     {
         return gridDimensions[Random.Range(0, gridDimensions.Count)];
@@ -197,8 +204,6 @@ public class FragmentController : MonoBehaviour
 
         //before travelling - actions
         onBeforePlayerShifting?.Invoke();
-        if (gameManager != null)
-            gameManager.VolumeManager.StartTransitionToDifferentDimension();
 
         // Reset Portals before traveling
         excludeDimension.ResetPortals();
@@ -217,9 +222,6 @@ public class FragmentController : MonoBehaviour
 
         //after travelling - actions
         onAfterPlayerShifting?.Invoke();
-
-        //if (gameManager != null)
-        //    gameManager.VolumeManager.StartTransitionBack();
 
     }
 

@@ -46,13 +46,15 @@ public class Fragment : MonoBehaviour
     {
         fragmentType = FragmentType.Collected;
         //Remove from list 
+        fragmentControllerParent.SetFragmentCollected(this);
         //Maybe add to list where its been collected
+        this.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Check if its the player
-        Collect(collision);
+        if (collision.gameObject.GetComponent<PlayerController>() && fragmentType != FragmentType.Collected)
+            Collect(collision);
 
     }
 
