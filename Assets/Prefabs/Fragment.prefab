@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 628389509067955375}
   - component: {fileID: 4018055620537943487}
   - component: {fileID: 1619402488917361983}
-  - component: {fileID: 6812400852883774540}
+  - component: {fileID: 2462265705403771546}
+  - component: {fileID: 8536915299303079103}
   m_Layer: 0
   m_Name: Fragment
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.94, y: 1.02, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 709489977
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.4198113, g: 1, b: 0.9564223, a: 1}
+  m_Sprite: {fileID: 1805510243, guid: 1a4ef7a2026d5cc4d8153d891db0bf9c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,12 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fragmentControllerParent: {fileID: 0}
   currentDimension: {fileID: 0}
-  interactionRange: 0.35
   fragmentType: 100
-  fragmentCollider: {fileID: 6812400852883774540}
-  showGizmos: 1
---- !u!58 &6812400852883774540
-CircleCollider2D:
+  fragmentCollider: {fileID: 2462265705403771546}
+--- !u!70 &2462265705403771546
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,6 +135,27 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.7
+  m_Offset: {x: 0.0061593056, y: 0.006159365}
+  m_Size: {x: 0.36488247, y: 0.6933807}
+  m_Direction: 0
+--- !u!95 &8536915299303079103
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3682559168981378892}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 666dbe2fbde373b448c4fa42492a5ad2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

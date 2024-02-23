@@ -123,34 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &59087316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
-  m_Name: LensDistortion(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0
-  xMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
-  yMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
-  center:
-    m_OverrideState: 0
-    m_Value: {x: 0.5, y: 0.5}
-  scale:
-    m_OverrideState: 1
-    m_Value: 1
 --- !u!1 &153518854
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,11 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.69803923
       objectReference: {fileID: 0}
     - target: {fileID: 6173287869728607647, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_LocalPosition.x
@@ -413,9 +385,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 359850804}
   volume: {fileID: 218666983}
-  bloom: {fileID: 1351839320}
-  chromaticAberration: {fileID: 2123420854}
-  lensDistortion: {fileID: 59087316}
+  bloom: {fileID: 753818084}
+  chromaticAberration: {fileID: 1419401628}
+  lensDistortion: {fileID: 1834196544}
   doBloom: 1
   baseBloomIntensity: 1
   maxBloomIntensity: 3
@@ -552,11 +524,11 @@ PrefabInstance:
       objectReference: {fileID: -306879984, guid: 100a22d09c3cea242a0b137437f66107, type: 3}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.b
-      value: 0.7490196
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.8260877
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.r
@@ -701,11 +673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.g
-      value: 0.8260877
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.3254902
       objectReference: {fileID: 0}
     - target: {fileID: 6173287869728607647, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_LocalPosition.x
@@ -898,6 +870,53 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ccb2271df2645a4e9b6f19269f4b727, type: 3}
+--- !u!114 &753818084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+  m_Name: Bloom(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  skipIterations:
+    m_OverrideState: 0
+    m_Value: 1
+  threshold:
+    m_OverrideState: 0
+    m_Value: 0.9
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  scatter:
+    m_OverrideState: 0
+    m_Value: 0.7
+  clamp:
+    m_OverrideState: 0
+    m_Value: 65472
+  tint:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  highQualityFiltering:
+    m_OverrideState: 0
+    m_Value: 0
+  downscale:
+    m_OverrideState: 0
+    m_Value: 0
+  maxIterations:
+    m_OverrideState: 0
+    m_Value: 6
+  dirtTexture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+    dimension: 1
+  dirtIntensity:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!1 &757353790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,11 +1041,11 @@ PrefabInstance:
       objectReference: {fileID: -306879984, guid: 100a22d09c3cea242a0b137437f66107, type: 3}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.g
-      value: 0.6666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.r
@@ -1141,7 +1160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8efe7f85105b45440bfe158fb1cc77d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1351839320
+--- !u!114 &1419401628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1150,44 +1169,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
-  m_Name: Bloom(Clone)(Clone)
+  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
+  m_Name: ChromaticAberration(Clone)(Clone)
   m_EditorClassIdentifier: 
   active: 1
-  skipIterations:
-    m_OverrideState: 0
-    m_Value: 1
-  threshold:
-    m_OverrideState: 0
-    m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 1
-  scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
-  clamp:
-    m_OverrideState: 0
-    m_Value: 65472
-  tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-  highQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 0
-  downscale:
-    m_OverrideState: 0
-    m_Value: 0
-  maxIterations:
-    m_OverrideState: 0
-    m_Value: 6
-  dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
-    dimension: 1
-  dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_Value: 0.2
 --- !u!1001 &1458581878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1350,15 +1338,15 @@ PrefabInstance:
       objectReference: {fileID: -306879984, guid: 100a22d09c3cea242a0b137437f66107, type: 3}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.32156864
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.32156864
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
-      value: 0.69803923
+      value: 0.32156864
       objectReference: {fileID: 0}
     - target: {fileID: 6020572043570181784, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1599,7 +1587,7 @@ PrefabInstance:
       objectReference: {fileID: -306879984, guid: 100a22d09c3cea242a0b137437f66107, type: 3}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
-      value: 0.24313726
+      value: 0.7490196
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
@@ -1896,7 +1884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
-      value: 0.6666667
+      value: 0.8260877
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
@@ -1979,6 +1967,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7825646169344205945, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
   m_PrefabInstance: {fileID: 1750608551}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1834196544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
+  m_Name: LensDistortion(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+  xMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!1 &1846348213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,22 +2096,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07ba35bd9e4627c4491b01514e35a9e6, type: 3}
---- !u!114 &2123420854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
-  m_Name: ChromaticAberration(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0.2
 --- !u!1001 &853805529622429761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2245,6 +2245,10 @@ PrefabInstance:
       value: 0.99999243
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Size.x
       value: 0.78499997
       objectReference: {fileID: 0}
@@ -2258,15 +2262,15 @@ PrefabInstance:
       objectReference: {fileID: -306879984, guid: 100a22d09c3cea242a0b137437f66107, type: 3}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.8352941
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
-      value: 0.69803923
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6020572043570181784, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_LocalPosition.x

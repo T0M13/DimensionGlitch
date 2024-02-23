@@ -7,12 +7,10 @@ public class Fragment : MonoBehaviour
     [Header("Fragment Settings")]
     [SerializeField] private FragmentController fragmentControllerParent;
     [SerializeField] private GridDimension currentDimension;
-    [SerializeField] private float interactionRange = .3f;
     [SerializeField] private FragmentType fragmentType = FragmentType.NotCollected;
     [Header("Collider Settings")]
-    [SerializeField] private CircleCollider2D fragmentCollider;
-    [Header("Gizmos Settings")]
-    [SerializeField] private bool showGizmos;
+    [SerializeField] private CapsuleCollider2D fragmentCollider;
+
     public FragmentController FragmentControllerParent { get => fragmentControllerParent; set => fragmentControllerParent = value; }
     public GridDimension CurrentDimension { get => currentDimension; set => currentDimension = value; }
 
@@ -37,9 +35,7 @@ public class Fragment : MonoBehaviour
 
     private void SetCollider()
     {
-        fragmentCollider = GetComponent<CircleCollider2D>();
-
-        fragmentCollider.radius = interactionRange * 2;
+        fragmentCollider = GetComponent<CapsuleCollider2D>();
     }
 
     private void Collect(Collider2D collision)
@@ -58,10 +54,4 @@ public class Fragment : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!showGizmos) return;
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
-    }
 }
