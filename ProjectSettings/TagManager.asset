@@ -53,14 +53,14 @@ TagManager:
   - name: Effects
     uniqueID: 2580755291
     locked: 0
-  - name: Player
-    uniqueID: 427029401
+  - name: Items
+    uniqueID: 1270261013
     locked: 0
   - name: Fragments
     uniqueID: 709489977
     locked: 0
-  - name: Items
-    uniqueID: 1270261013
+  - name: Player
+    uniqueID: 427029401
     locked: 0
   - name: Walls
     uniqueID: 1638853599
