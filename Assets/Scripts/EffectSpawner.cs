@@ -40,8 +40,8 @@ public class EffectSpawner : BaseSingleton<EffectSpawner>
 
     public void SpawnFragmentShiftEffect(Transform positionGoal)
     {
-        List<GameObject> activeEffects = itemPickUpEffectList.Where(effect => !effect.gameObject.activeSelf).ToList();
-        var randEffect = activeEffects[Random.Range(0, itemPickUpEffectList.Count)];
+        List<GameObject> activeEffects = fragmentShiftEffectList.Where(effect => !effect.gameObject.activeSelf).ToList();
+        var randEffect = activeEffects[Random.Range(0, fragmentShiftEffectList.Count)];
         randEffect.transform.position = positionGoal.position;
         randEffect.SetActive(true);
     }

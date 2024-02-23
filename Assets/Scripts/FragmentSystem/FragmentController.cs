@@ -111,7 +111,6 @@ public class FragmentController : MonoBehaviour
         GridDimension randGridDimension = null;
         bool foundPosition = false;
 
-
         var tempGridDimension = gridDimensions;
 
         // Attempt to find a non-occupied position for the fragment
@@ -137,9 +136,14 @@ public class FragmentController : MonoBehaviour
             }
         }
 
+        //Vector3 tempEffectPos = fragment.transform.position;
+
         fragment.transform.position = randFragmentPoint.transform.position;
         fragment.gameObject.SetActive(randGridDimension.gameObject.activeSelf);
         Fragment fragmentScript = fragment.GetComponent<Fragment>();
+        //fragmentScript.FragmentShiftEffect.transform.position = tempEffectPos;
+        //fragmentScript.FragmentShiftEffect.SetActive( randGridDimension.gameObject.activeSelf);
+        fragmentScript.FragmentShiftEffect.GetComponent<Animator>().StartPlayback();
         randGridDimension.CurrentFragmentsInDimension.Add(fragmentScript);
         fragmentScript.CurrentDimension = randGridDimension;
         randFragmentPoint.gameObject.SetActive(false);
