@@ -33,6 +33,7 @@ public class FragmentController : MonoBehaviour
     public UnityEvent onFragmentShifting;
 
     public float FragmentShiftTimer { get => fragmentShiftTimer; set => fragmentShiftTimer = value; }
+    public float FragmentShiftTimerCooldown { get => fragmentShiftTimerCooldown; set => fragmentShiftTimerCooldown = value; }
 
     private void OnValidate()
     {
@@ -72,7 +73,7 @@ public class FragmentController : MonoBehaviour
         }
 
         FragmentShiftTimer += Time.deltaTime;
-        if (FragmentShiftTimer >= fragmentShiftTimerCooldown)
+        if (FragmentShiftTimer >= FragmentShiftTimerCooldown)
         {
             RepositionFragments();
             FragmentShiftTimer = 0;

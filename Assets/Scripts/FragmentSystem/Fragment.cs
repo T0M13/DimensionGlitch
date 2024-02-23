@@ -40,6 +40,10 @@ public class Fragment : MonoBehaviour
 
     private void Collect(Collider2D collision)
     {
+        //effect
+        if (EffectSpawner.Instance != null)
+            EffectSpawner.Instance.SpawnItemPickUpEffect(transform);
+
         fragmentType = FragmentType.Collected;
         //Remove from list 
         fragmentControllerParent.SetFragmentCollected(this);

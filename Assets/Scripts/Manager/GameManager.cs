@@ -42,8 +42,8 @@ public class GameManager : BaseSingleton<GameManager>
 
     void SpawnHud()
     {
-        PlayerHud = Instantiate(HudPrefab, Vector2.zero, Quaternion.identity);
-        PlayerHud.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+        //PlayerHud = Instantiate(HudPrefab, Vector2.zero, Quaternion.identity);
+        //PlayerHud.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
     }
     void OnPlayerDie()
     {
