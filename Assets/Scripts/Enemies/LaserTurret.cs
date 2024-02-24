@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class LaserTurret : MonoBehaviour
 {
    [SerializeField, Min(0)] float LaserMaxDistance = 10.0f;
@@ -14,14 +15,6 @@ public class LaserTurret : MonoBehaviour
    [SerializeField] LineRenderer[] LaserLineRenderers;
    [SerializeField] LayerMask HittableLayer;
    
-   private void OnValidate()
-   {
-      if (!Application.isPlaying)
-      {
-         InitLaserPoints();
-      }
-   }
-
    private void Start()
    {
       InitLaserPoints();
@@ -105,16 +98,5 @@ public class LaserTurret : MonoBehaviour
    {
       LaserLineRenderers[LineRendererIndex].SetPosition(0, StartPosition);
       LaserLineRenderers[LineRendererIndex].SetPosition(1, EndPosition);
-   }
-   private void OnDrawGizmos()
-   {
-      if (!Application.isPlaying)
-      {
-         RectangleBounds.center = transform.position;
-
-         InitLaserPoints();
-         Gizmos.color = Color.green;
-         Gizmos.DrawWireCube(RectangleBounds.center, RectangleBounds.size);
-      }
    }
 }

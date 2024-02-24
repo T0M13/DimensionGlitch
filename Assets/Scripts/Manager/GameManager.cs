@@ -70,7 +70,6 @@ public class GameManager : BaseSingleton<GameManager>
     void OnPlayerDie()
     {
         //Implement respawn logic or deathscreen etc
-        Debug.Log("Player died");
     }
 
     private void GetFragmentController()

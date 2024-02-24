@@ -34,7 +34,7 @@ public class HUDManager : MonoBehaviour
       PlayerStats.OnDeath += DisablePlayerHud;
       
       GameOverScreen.gameObject.SetActive(false);
-      WinScreen.gameObject.SetActive(true);
+      WinScreen.gameObject.SetActive(false);
    }
 
    private void OnDisable()
