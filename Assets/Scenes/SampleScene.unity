@@ -155,6 +155,7 @@ Transform:
   - {fileID: 780336289}
   - {fileID: 1578789544}
   - {fileID: 1031147643}
+  - {fileID: 183064453}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &54473532
@@ -418,6 +419,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &183064452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 54242136}
+    m_Modifications:
+    - target: {fileID: 1951678677127763490, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: MainAudioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 9062bdcb98faa8a45ba4d819f22cda4d, type: 2}
+    - target: {fileID: 1951678677127763490, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: PlayerLoopAudioSource
+      value: 
+      objectReference: {fileID: 1459595900}
+    - target: {fileID: 4254381708552592560, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176532320695760465, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+--- !u!4 &183064453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5571349505666614944, guid: 36f510db94b435a4ab1bf996d65cedfb, type: 3}
+  m_PrefabInstance: {fileID: 183064452}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &256427189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -655,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7963182016030071840, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
-      value: 0.7490196
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7963182016030071840, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
@@ -663,7 +738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7963182016030071840, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.69803923
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

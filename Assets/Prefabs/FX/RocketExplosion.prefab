@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6078269734498523171}
   - component: {fileID: 4694788326741632886}
   - component: {fileID: 6319786067362077119}
+  - component: {fileID: 9198961657080095494}
   m_Layer: 0
   m_Name: RocketExplosion
   m_TagString: Untagged
@@ -106,3 +107,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9198961657080095494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6938790674939236882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7440f0e6b3fb64db1b722d6da56b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinPitchValue: -1
+  MaxPitch: 2
+  Volume: 1
+  UseRandomPitch: 1
+  ClipToPlay: {fileID: 8300000, guid: 43541a5a585bc1a45954d2cb3e24ce5c, type: 3}
+  SoundGroup: 0

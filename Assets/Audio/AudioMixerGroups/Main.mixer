@@ -15,7 +15,9 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 4a4731a0578bf2841a4bd31a40a91909
+    name: VolumeMaster
   m_AudioMixerGroupViews:
   - guids:
     - 8c5b7681156daf24fb1572a604a5f5e4
@@ -61,7 +63,7 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: FadeMainAudio
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: e3dcd2b2c26745c4a902d74a0b826c75
   m_FloatValues:

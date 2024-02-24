@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class ObjectPool<T> : MonoBehaviour where T : Component
 {
-   [SerializeField] private int NumberOfObjectsToPool = 10;
+   [SerializeField] protected int NumberOfObjectsToPool = 10;
    [SerializeField] protected T ObjectPrefab;
    [SerializeField] protected List<T> PooledObjects;
    
@@ -46,7 +46,7 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
       
       PooledObjects.Clear();
    }
-   void InitPool()
+   protected virtual void InitPool()
    {
       if(!ObjectPrefab) return;
       
