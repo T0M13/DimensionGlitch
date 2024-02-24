@@ -28,6 +28,11 @@ public class AudioManager : BaseSingleton<AudioManager>
       IsFadingAudio = true;
       StartCoroutine(FadeLoopAudio(FadeTime, In));
    }
+
+   public void ResetMainAuido()
+   {
+      MainAudioMixer.SetFloat("VolumeMaster", DefaultAudioVolume);
+   }
    IEnumerator FadeLoopAudio(float FadeTime, bool In)
    {
       float PassedTime = 0.0f;
@@ -72,6 +77,11 @@ public class AudioManager : BaseSingleton<AudioManager>
       
       SourceToPlay.PlayOneShot(ClipToPlay, Volume);
 
+      if (!SourceToPlay)
+      {
+         Debug.Log("No source given");
+         return;
+      }
       StartCoroutine(DespawnAudioSourceAfterTime(SourceToPlay, ClipToPlay.length));
    }
 

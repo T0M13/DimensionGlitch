@@ -42,10 +42,12 @@ public class GameManager : BaseSingleton<GameManager>
 
     public void RestartGame()
     {
+        AudioManager.Instance.ResetMainAuido();
         SceneManager.LoadSceneAsync(GameplaySceneName);
     }
     public void ReturnToMainMenu()
     {
+        AudioManager.Instance.ResetMainAuido();
         SceneManager.LoadSceneAsync(MainMenuSceneName);
     }
     void SpawnPlayer()

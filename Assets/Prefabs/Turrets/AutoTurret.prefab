@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7440f0e6b3fb64db1b722d6da56b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinPitchValue: -1
-  MaxPitch: -1.5
+  MinPitchValue: 1
+  MaxPitch: 1.5
   Volume: 1
   UseRandomPitch: 1
   ClipToPlay: {fileID: 8300000, guid: 08b6833f1c74cc846836cb2fd6912288, type: 3}
@@ -243,7 +243,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
