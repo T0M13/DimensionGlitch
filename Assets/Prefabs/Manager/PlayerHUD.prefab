@@ -1619,7 +1619,7 @@ MonoBehaviour:
   MaxPitch: -1
   Volume: 0
   UseRandomPitch: 0
-  ClipToPlay: {fileID: 0}
+  ClipToPlay: {fileID: 8300000, guid: fc5682e61a9e6b54b85b12b73738c7be, type: 3}
   SoundGroup: 0
 --- !u!1 &8677754987119692003
 GameObject:
