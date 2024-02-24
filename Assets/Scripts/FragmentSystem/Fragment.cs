@@ -57,11 +57,12 @@ public class Fragment : MonoBehaviour
             EffectSpawner.Instance.SpawnItemPickUpEffect(transform);
 
         fragmentType = FragmentType.Collected;
-        //Remove from list 
-        fragmentControllerParent.SetFragmentCollected(this);
+        this.gameObject.SetActive(false);
         //Maybe add to list where its been collected
         OnFragmentCollected?.Invoke();
-        this.gameObject.SetActive(false);
+        //Remove from list 
+        fragmentControllerParent.SetFragmentCollected(this);
+    
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

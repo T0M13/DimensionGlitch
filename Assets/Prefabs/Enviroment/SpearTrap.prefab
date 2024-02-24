@@ -421,6 +421,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 3245752457126706743, guid: 61cd14e3b37680b4db38bef8d5d4b769, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4291834338978548512, guid: 61cd14e3b37680b4db38bef8d5d4b769, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

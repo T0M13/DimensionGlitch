@@ -237,9 +237,11 @@ public class FragmentController : MonoBehaviour
         foreach (var gridDimension in gridDimensions)
         {
             gridDimension.VisibilityBlack.gameObject.SetActive(true);
+            gridDimension.DimensionContainer.gameObject.SetActive(false);
         }
 
         gridTravelDimension.VisibilityBlack.gameObject.SetActive(false);
+        gridTravelDimension.DimensionContainer.gameObject.SetActive(true);
 
         //before travelling - actions
         onBeforePlayerShifting?.Invoke();

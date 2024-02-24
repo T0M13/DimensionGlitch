@@ -11,6 +11,7 @@ public class GridDimension : MonoBehaviour
     //[SerializeField] private Transform wallTileMap;
     //[SerializeField] private Transform wallDecosTileMap;
     [SerializeField] private Transform visibilityBlack;
+    [SerializeField] private Transform dimensionContainer;
     [Header("Fragment of Grid Settings")]
     [SerializeField] private Transform fragmentPointsParent;
     [SerializeField] private List<FragmentPoint> fragmentPoints;
@@ -27,6 +28,7 @@ public class GridDimension : MonoBehaviour
     public List<Fragment> CurrentFragmentsInDimension { get => currentFragmentsInDimension; set => currentFragmentsInDimension = value; }
     public List<DimensionPortal> Portals { get => portals; set => portals = value; }
     public Transform VisibilityBlack { get => visibilityBlack; set => visibilityBlack = value; }
+    public Transform DimensionContainer { get => dimensionContainer; set => dimensionContainer = value; }
 
     private void OnValidate()
     {

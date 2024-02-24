@@ -74,7 +74,7 @@ public class DimensionPortal : MonoBehaviour
     {
         portalCollider = GetComponent<CapsuleCollider2D>();
 
-        portalCollider.size = interactionRange;
+        //portalCollider.size = interactionRange;
     }
 
     private void RandRotation()
