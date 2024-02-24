@@ -49,9 +49,9 @@ public class VolumeManager : MonoBehaviour
     [SerializeField] private float transitionWaitTravelDuration = 1f;
     [SerializeField] private float transitionWaitBackDuration = 1f;
 
+    [Header("Fragment Shift Settings")]
     [SerializeField] private float fragmentShiftDuration = .2f;
-    [SerializeField] private float fragmentShiftIntensityMax = 1f;
-    [SerializeField] private float fragmentShiftScaleMax = 1f;
+    [SerializeField] private float fragmentShiftIntensityBase = 0f;
 
 
     private void OnValidate()
@@ -196,10 +196,45 @@ public class VolumeManager : MonoBehaviour
         lensDistortion.scale.value = transitionScaleBase; // Reset scale to default
     }
 
-
     public void StartFragmentShift()
     {
-        StartCoroutine(TransitionToDifferentDimension(fragmentShiftDuration, fragmentShiftIntensityMax, fragmentShiftScaleMax));
+        StartCoroutine(TransitionToInvertedColors(fragmentShiftDuration, fragmentShiftIntensityBase));
+    }
+
+    private IEnumerator TransitionToInvertedColors(float fragmentShiftDuration, float fragmentShiftBase)
+    {
+        float elapsedTime = 0f;
+        float startHue = colorAdjustments.hueShift.value; // Assuming we're using saturation for inversion
+
+        while (elapsedTime < fragmentShiftDuration)
+        {
+            // Lerp saturation to desired value for "inversion" effect
+            colorAdjustments.hueShift.value = Mathf.Lerp(startHue, colorAdjustments.hueShift.max, elapsedTime / fragmentShiftDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Optionally wait or do something here before starting the transition back
+        //yield return new WaitForSeconds(fragmentShiftDuration); 
+
+        StartCoroutine(TransitionInvertedBack(fragmentShiftDuration, startHue));
+    }
+
+    private IEnumerator TransitionInvertedBack(float transitionDuration, float transitionIntensityBase)
+    {
+        float elapsedTime = 0f;
+        float startHue = colorAdjustments.hueShift.value;
+
+        while (elapsedTime < transitionDuration)
+        {
+            // Lerp saturation back to default value
+            colorAdjustments.hueShift.value = Mathf.Lerp(startHue, transitionIntensityBase, elapsedTime / transitionDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure saturation is reset to base value
+        colorAdjustments.hueShift.value = transitionIntensityBase;
     }
 
     public void SetBlackAndWhite()
