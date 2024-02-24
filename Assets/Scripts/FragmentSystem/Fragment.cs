@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class Fragment : MonoBehaviour
     public GridDimension CurrentDimension { get => currentDimension; set => currentDimension = value; }
     public GameObject FragmentShiftEffect { get => fragmentShiftEffect; set => fragmentShiftEffect = value; }
 
+    static public event Action OnFragmentCollected;
     private void OnValidate()
     {
         GetFragmentController();
@@ -58,6 +60,7 @@ public class Fragment : MonoBehaviour
         //Remove from list 
         fragmentControllerParent.SetFragmentCollected(this);
         //Maybe add to list where its been collected
+        OnFragmentCollected?.Invoke();
         this.gameObject.SetActive(false);
     }
 

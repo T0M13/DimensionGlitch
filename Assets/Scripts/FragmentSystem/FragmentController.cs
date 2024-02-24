@@ -33,6 +33,7 @@ public class FragmentController : MonoBehaviour
     public UnityEvent onFragmentShifting;
     public UnityEvent onGameOverVictory;
 
+    public int GetAmountOfFragments() => fragmentAmount;
     public float FragmentShiftTimer { get => fragmentShiftTimer; set => fragmentShiftTimer = value; }
     public float FragmentShiftTimerCooldown { get => fragmentShiftTimerCooldown; set => fragmentShiftTimerCooldown = value; }
 

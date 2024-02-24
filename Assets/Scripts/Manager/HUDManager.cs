@@ -9,6 +9,7 @@ public class HUDManager : MonoBehaviour
    [SerializeField] FragmentShiftTimer FragmentShiftTimer;
    [SerializeField] FragmentShiftPopUp FragmentShiftPopUp;
    [SerializeField] GameOverScreen GameOverScreen;
+   [SerializeField] FragmentCounter FragmentCounter;
    [SerializeField] DashCDBar DashCDBar;
 
    FragmentController FragmentController;
@@ -49,6 +50,7 @@ public class HUDManager : MonoBehaviour
       FragmentShiftTimer.gameObject.SetActive(false);
       FragmentShiftPopUp.gameObject.SetActive(false);
       DashCDBar.gameObject.SetActive(false);
+      FragmentCounter.gameObject.SetActive(false);
       UnbindEvents();
    }
 
