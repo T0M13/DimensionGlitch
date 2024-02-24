@@ -31,6 +31,7 @@ public class FragmentController : MonoBehaviour
     public UnityEvent onAfterPlayerShifting;
     public UnityEvent onResetDimensionEffects;
     public UnityEvent onFragmentShifting;
+    public UnityEvent onGameOverVictory;
 
     public float FragmentShiftTimer { get => fragmentShiftTimer; set => fragmentShiftTimer = value; }
     public float FragmentShiftTimerCooldown { get => fragmentShiftTimerCooldown; set => fragmentShiftTimerCooldown = value; }
@@ -58,11 +59,21 @@ public class FragmentController : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        //Make sure only one / first dimension is the only one active
+        //foreach (var gridDimension in gridDimensions)
+        //{
+        //    if (gridDimension.gameObject.activeSelf) gridDimension.onDimensionChange?.Invoke();
+        //}
+    }
+
+
     private void Update()
     {
         if (notCollectedFragments.Count <= 0)
         {
-            Debug.Log("No more Fragments to be collected");
+            //Debug.Log("No more Fragments to be collected");
             return;
         }
 
@@ -157,6 +168,11 @@ public class FragmentController : MonoBehaviour
         notCollectedFragments.Remove(fragment.gameObject);
         collectedFragments.Add(fragment.gameObject);
         //if all collected --> game over victory
+        if(notCollectedFragments.Count <= 0 || collectedFragments.Count >= fragmentAmount)
+        {
+            //Game Over Victory
+            onGameOverVictory?.Invoke();
+        }
     }
 
     private GridDimension GetRandomDimension(List<GridDimension> gridDimensions)

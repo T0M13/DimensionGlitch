@@ -13,6 +13,10 @@ public class GameManager : BaseSingleton<GameManager>
     [Header("References")]
     [SerializeField] private FragmentController fragmentController;
     [SerializeField] private VolumeManager volumeManager;
+
+    [Header("Game Settings")]
+    [SerializeField] private float defaultTimeFlow = 1f;
+
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
     public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()
@@ -67,4 +71,18 @@ public class GameManager : BaseSingleton<GameManager>
         if (VolumeManager == null)
             VolumeManager = FindAnyObjectByType<VolumeManager>();
     }
+
+    public void ResetSettings()
+    {
+        //Time
+        Time.timeScale = defaultTimeFlow;
+
+    }
+
+    public void SetGameTime(float multiplier)
+    {
+        Time.timeScale = 1 * multiplier;
+    }
+
+
 }
