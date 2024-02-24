@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class LaserTurret : MonoBehaviour
 {
    [SerializeField, Min(0)] float LaserMaxDistance = 10.0f;
@@ -14,19 +13,18 @@ public class LaserTurret : MonoBehaviour
    [SerializeField] Transform[] LaserSpawnPoints;
    [SerializeField] LineRenderer[] LaserLineRenderers;
    [SerializeField] LayerMask HittableLayer;
-   
-   private void Start()
-   {
-      InitLaserPoints();
-   }
 
+#if UNITY_EDITOR
+  
+#endif
    private void FixedUpdate()
    {
       ShootLasers();
    }
 
-   void InitLaserPoints()
+   public void InitLaserPoints()
    {
+      RectangleBounds.center = transform.position;
       float RotationStep = 360 / LaserSpawnPoints.Length;
       float CurrentRotation = 0;
       
