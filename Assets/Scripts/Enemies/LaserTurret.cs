@@ -22,10 +22,14 @@ public class LaserTurret : MonoBehaviour
       }
    }
 
+   private void Start()
+   {
+      InitLaserPoints();
+   }
+
    private void FixedUpdate()
    {
       ShootLasers();
-      //shoot lasers into four directions
    }
 
    void InitLaserPoints()
