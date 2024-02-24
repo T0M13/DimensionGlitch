@@ -12,6 +12,7 @@ public class VolumeManager : MonoBehaviour
     [SerializeField] private Bloom bloom;
     [SerializeField] private ChromaticAberration chromaticAberration;
     [SerializeField] private LensDistortion lensDistortion;
+    [SerializeField] private ColorAdjustments colorAdjustments;
 
     [Header("Bloom Settings")]
     [SerializeField] private bool doBloom = true;
@@ -24,6 +25,12 @@ public class VolumeManager : MonoBehaviour
     [SerializeField] private float baseChromaticIntensity = 0.2f; 
     [SerializeField] private float maxChromaticIntensity = 0.5f; 
     [SerializeField] private float chromaticTransitionSpeed = .1f;
+
+    [Header("Color Adjustments Settings")]
+    [SerializeField] private bool doColorAdjustments = true;
+    [SerializeField] private float baseColorAdjustmentHue = 0.2f;
+    [SerializeField] private float baseColorAdjustmentSaturation = 0.2f;
+
 
     [Header("Transition Settings")]
     [SerializeField] private bool doTransition = true;
@@ -68,6 +75,12 @@ public class VolumeManager : MonoBehaviour
         {
             lensDistortion.intensity.value = 0f;
             lensDistortion.scale.value = 1f;
+        }
+
+        if (volume.profile.TryGet<ColorAdjustments>(out colorAdjustments))
+        {
+            colorAdjustments.hueShift.value = baseColorAdjustmentHue;
+            colorAdjustments.saturation.value = baseColorAdjustmentSaturation;
         }
     }
 
@@ -156,4 +169,22 @@ public class VolumeManager : MonoBehaviour
         lensDistortion.intensity.value = 0f; // Reset to default value
         lensDistortion.scale.value = 1f; // Reset scale to default
     }
+
+
+    public void SetBlackAndWhite()
+    {
+        colorAdjustments.saturation.value = colorAdjustments.saturation.min;
+    }
+
+    public void SetInvertedColors()
+    {
+        colorAdjustments.hueShift.value = colorAdjustments.hueShift.min;
+    }
+
+    public void ResetEffects()
+    {
+        colorAdjustments.saturation.value = baseColorAdjustmentSaturation;
+        colorAdjustments.hueShift.value = baseColorAdjustmentHue;
+    }
+
 }
