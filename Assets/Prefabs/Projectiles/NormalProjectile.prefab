@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6667606523696263915}
   - component: {fileID: -8744290560250526008}
+  - component: {fileID: 102951117090378930}
   - component: {fileID: 7063263355145165220}
   - component: {fileID: 7899382564509657795}
   - component: {fileID: 2357722633778188650}
@@ -51,6 +52,25 @@ MonoBehaviour:
   ProjectileSpeed: 3
   InitialLifetime: 5
   ProjectileRb: {fileID: 7899382564509657795}
+  ImpactAudio: {fileID: 102951117090378930}
+--- !u!114 &102951117090378930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615067176400561559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7440f0e6b3fb64db1b722d6da56b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinPitchValue: 1
+  MaxPitch: 1.5
+  Volume: 1
+  UseRandomPitch: 0
+  ClipToPlay: {fileID: 8300000, guid: 9a467b41dbdfefc41a7407916d234396, type: 3}
+  SoundGroup: 0
 --- !u!212 &7063263355145165220
 SpriteRenderer:
   m_ObjectHideFlags: 0

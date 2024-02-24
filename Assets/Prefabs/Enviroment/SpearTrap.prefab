@@ -132,7 +132,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.21954697}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -143,7 +143,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.28125, y: 0.46875}
+  m_Size: {x: 0.28, y: 0.5030502}
   m_EdgeRadius: 0
 --- !u!95 &3425508677015420432
 Animator:
@@ -215,6 +215,7 @@ MonoBehaviour:
   TriggerCD: 1
   TimeUntilTrapActivate: 0.5
   TriggerCollider: {fileID: 1333688047509634193}
+  TriggerSound: {fileID: 0}
 --- !u!212 &5050115289071528848
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -488,6 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1147126631537173715}
   - component: {fileID: 4601076323964605524}
+  - component: {fileID: 1733741677916307378}
   m_Layer: 0
   m_Name: SpearTrap
   m_TagString: Untagged
@@ -528,10 +530,29 @@ MonoBehaviour:
   OffsetToCenter: 2
   TrapExecutionTime: 1
   TargetOffsetUpper: 1.765625
-  TargetOffsetLower: 1.765625
+  TargetOffsetLower: 1.7484748
   TrapTrigger: {fileID: 255943464748342974}
   UpperSpear: {fileID: 2600462219791110518}
   LowerSpear: {fileID: 6273437035966016384}
+  SpearUnsheateSound: {fileID: 1733741677916307378}
   AnimationStateName: Stab
   UpperSpearAnimator: {fileID: 1364830775666740725}
   LowerSpearAnimator: {fileID: 3425508677015420432}
+--- !u!114 &1733741677916307378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5627955724336381808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7440f0e6b3fb64db1b722d6da56b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinPitchValue: 1.5
+  MaxPitch: 2
+  Volume: 1
+  UseRandomPitch: 1
+  ClipToPlay: {fileID: 8300000, guid: fbd4f1a7dc6cc514aa22a90bca794ece, type: 3}
+  SoundGroup: 0

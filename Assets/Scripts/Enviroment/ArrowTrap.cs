@@ -8,6 +8,7 @@ public class ArrowTrap : MonoBehaviour
     [SerializeField] TrapTrigger TrapTrigger;
     [SerializeField] ProjectilePool ProjectilePool;
     [SerializeField] SpriteFXPool FXPool;
+    [SerializeField] OneShotAudioPlayer ShootSound;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class ArrowTrap : MonoBehaviour
         ProjectileToShoot.InitProjectile( transform.right, EFraction.Player, gameObject);
         ProjectileToShoot.OnProjectileHit += FXPool.SpawnSpriteObjectAtPosition;
         
+        ShootSound.PlayOneShotAudioClip();
         ProjectileToShoot.gameObject.SetActive(true);
     }
     private void OnDrawGizmosSelected()

@@ -5,11 +5,12 @@ public class SpearTrap : MonoBehaviour
 {
     [SerializeField] float OffsetToCenter = 10;
     [SerializeField] float TrapExecutionTime = 2.0f;
-    [SerializeField] private float TargetOffsetUpper = 0.0f;
-    [SerializeField] private float TargetOffsetLower = 0.0f;
+    [SerializeField] float TargetOffsetUpper = 0.0f;
+    [SerializeField] float TargetOffsetLower = 0.0f;
     [SerializeField] TrapTrigger TrapTrigger;
-    [SerializeField] private DamageTrigger UpperSpear;
-    [SerializeField] private DamageTrigger LowerSpear;
+    [SerializeField] DamageTrigger UpperSpear;
+    [SerializeField] DamageTrigger LowerSpear;
+    [SerializeField] OneShotAudioPlayer SpearUnsheateSound;
     
     [Header("Animation")] 
     [SerializeField] string AnimationStateName = "Stab";
@@ -55,6 +56,7 @@ public class SpearTrap : MonoBehaviour
     void DoStab()
     {
         StopAllCoroutines();
+        SpearUnsheateSound.PlayOneShotAudioClip();
         StartCoroutine(Stab());
     }
     IEnumerator Stab()
@@ -74,6 +76,8 @@ public class SpearTrap : MonoBehaviour
     {
         float PassedTime = 0.0f;
         float Timer = Reverse ? SpearExtractionTime : 0;
+        float StartOffsetColliderYUpper = UpperSpear.GetTriggerCollider().offset.y;
+        float StartOffsetColliderYLower = LowerSpear.GetTriggerCollider().offset.y;
         
         while (PassedTime < SpearExtractionTime)
         {
@@ -81,8 +85,8 @@ public class SpearTrap : MonoBehaviour
             Timer += Reverse ? -Time.deltaTime : Time.deltaTime;
             float InterpValue = Timer / SpearExtractionTime;
            
-            UpperSpear.GetTriggerCollider().offset = new Vector2(0, Mathf.Lerp(0, TargetOffsetUpper, InterpValue));
-            LowerSpear.GetTriggerCollider().offset = new Vector2(0, Mathf.Lerp(0, TargetOffsetLower, InterpValue));
+            UpperSpear.GetTriggerCollider().offset = new Vector2(0, Mathf.Lerp(StartOffsetColliderYUpper, TargetOffsetUpper, InterpValue));
+            LowerSpear.GetTriggerCollider().offset = new Vector2(0, Mathf.Lerp(0, StartOffsetColliderYLower, InterpValue));
             UpperSpearAnimator.Play(HashedAnimationStateName, 0, InterpValue);
             LowerSpearAnimator.Play(HashedAnimationStateName, 0, InterpValue);
             yield return new WaitForEndOfFrame();

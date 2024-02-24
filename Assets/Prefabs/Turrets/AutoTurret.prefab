@@ -158,6 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662981541822578247}
   - component: {fileID: 4330935422012762357}
+  - component: {fileID: 7016931107012620511}
   - component: {fileID: 6475840899964795910}
   - component: {fileID: 2610839343016538682}
   - component: {fileID: 1746399149927860916}
@@ -208,6 +209,25 @@ MonoBehaviour:
   ProjetileSpawnPoint: {fileID: 8293255745998467073}
   ProjectilePool: {fileID: 953614806397779507}
   SpriteFXPool: {fileID: 5676372557094646084}
+  ShotSound: {fileID: 7016931107012620511}
+--- !u!114 &7016931107012620511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017518162934304744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7440f0e6b3fb64db1b722d6da56b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinPitchValue: -1
+  MaxPitch: -1.5
+  Volume: 1
+  UseRandomPitch: 1
+  ClipToPlay: {fileID: 8300000, guid: 08b6833f1c74cc846836cb2fd6912288, type: 3}
+  SoundGroup: 0
 --- !u!58 &6475840899964795910
 CircleCollider2D:
   m_ObjectHideFlags: 0

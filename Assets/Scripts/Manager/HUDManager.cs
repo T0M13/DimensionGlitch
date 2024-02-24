@@ -9,6 +9,7 @@ public class HUDManager : MonoBehaviour
    [SerializeField] FragmentShiftTimer FragmentShiftTimer;
    [SerializeField] FragmentShiftPopUp FragmentShiftPopUp;
    [SerializeField] GameOverScreen GameOverScreen;
+   [SerializeField] DashCDBar DashCDBar;
 
    FragmentController FragmentController;
    PlayerController PlayerController;
@@ -23,6 +24,7 @@ public class HUDManager : MonoBehaviour
       PlayerStats = PlayerController.GetPlayerStats();
       
       FragmentController.onFragmentShifting.AddListener(FragmentShiftPopUp.TriggerAnimation);
+      PlayerController.OnDash += DashCDBar.StartDashCD;
       PlayerStats.OnDamage += PlayerHealthBar.DeactivateHearts;
       PlayerStats.OnDeath += EnableGameOverScreen;
       PlayerStats.OnDeath += DisablePlayerHud;
@@ -46,11 +48,13 @@ public class HUDManager : MonoBehaviour
       PlayerHealthBar.gameObject.SetActive(false);
       FragmentShiftTimer.gameObject.SetActive(false);
       FragmentShiftPopUp.gameObject.SetActive(false);
+      DashCDBar.gameObject.SetActive(false);
       UnbindEvents();
    }
 
    void UnbindEvents()
    {
+      PlayerController.OnDash -= DashCDBar.StartDashCD;
       PlayerStats.OnDamage -= PlayerHealthBar.DeactivateHearts;
       PlayerStats.OnDeath -= DisablePlayerHud;
       PlayerStats.OnDeath -= EnableGameOverScreen;

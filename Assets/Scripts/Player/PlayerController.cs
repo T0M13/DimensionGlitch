@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     PackedMovementMode CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
 
     public float GetDashProgress() => CurrentMovementMode.MovementState == PackedMovementMode.EMovementModes.Dashing ? TravelledDashDistance / DashDistance : 0;
+    public float GetDashCD() => DashCd;
     public PackedMovementMode GetCurrentMovementMode() => CurrentMovementMode;
     public Vector2 GetCurrentVelocity() => CurrentVelocity;
     public Stats GetPlayerStats() => PlayerStats;

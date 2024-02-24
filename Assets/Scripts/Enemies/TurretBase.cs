@@ -13,6 +13,7 @@ public abstract class TurretBase : MonoBehaviour
     [SerializeField] protected Transform ProjetileSpawnPoint;
     [SerializeField] protected ProjectilePool ProjectilePool;
     [SerializeField] protected SpriteFXPool SpriteFXPool;
+    [SerializeField] protected OneShotAudioPlayer ShotSound;
 
     float LastTimeAttacked = 0.0f;
     float AttackCD = 0.0f;
@@ -49,6 +50,7 @@ public abstract class TurretBase : MonoBehaviour
         if (CanAttack())
         {
             LastTimeAttacked = Time.time;
+            ShotSound.PlayOneShotAudioClip();
             ShootProjectile();
         }
     }

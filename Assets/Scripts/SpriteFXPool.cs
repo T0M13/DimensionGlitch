@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class SpriteFXPool : ObjectPool<SpriteRenderer>
@@ -15,7 +16,6 @@ public class SpriteFXPool : ObjectPool<SpriteRenderer>
     public void SpawnSpriteObjectAtPosition(Vector2 Position)
     {
         SpriteRenderer spriteRenderer = GetObjectFromPool(Position);
-
         StartCoroutine(DeactivationTimer(spriteRenderer.gameObject));
     }
 
@@ -24,5 +24,19 @@ public class SpriteFXPool : ObjectPool<SpriteRenderer>
         yield return new WaitForSeconds(TimeUntilFXObjectReturnsToPool);
         
         GameObject.SetActive(false);
+    }
+
+    protected override void InitPool()
+    {
+        if(!ObjectPrefab) return;
+      
+        for (int i = 0; i < NumberOfObjectsToPool; i++)
+        {
+            SpriteRenderer SpawnedObject = (SpriteRenderer)PrefabUtility.InstantiatePrefab(ObjectPrefab, transform);
+            PooledObjects.Add(SpawnedObject);
+            SpawnedObject.transform.SetParent(transform);
+            SpawnedObject.transform.rotation = Quaternion.identity;
+            SpawnedObject.gameObject.SetActive(false);
+        }
     }
 }

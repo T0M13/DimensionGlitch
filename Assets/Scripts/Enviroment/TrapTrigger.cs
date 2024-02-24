@@ -8,6 +8,7 @@ public class TrapTrigger : MonoBehaviour
    [SerializeField] float TriggerCD = 1.0f;
    [SerializeField] float TimeUntilTrapActivate = 0.5f;
    [SerializeField] BoxCollider2D TriggerCollider;
+   [SerializeField] OneShotAudioPlayer TriggerSound;
    
    float LastTimeTriggered = 0.0f;
    
@@ -18,6 +19,7 @@ public class TrapTrigger : MonoBehaviour
       {
          if (stats.IsDamageable())
          {
+            TriggerSound.PlayOneShotAudioClip();
             StartCoroutine(TrapActivationRoutine());
          }
       }
