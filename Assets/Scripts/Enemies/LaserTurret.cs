@@ -8,6 +8,7 @@ public class LaserTurret : MonoBehaviour
    [SerializeField, Min(0)] float LaserMaxDistance = 10.0f;
    [SerializeField, Min(0)] float LaserThickness = 10.0f;
    [SerializeField] DirectionContainer DirectionsOfLaseres;
+   [SerializeField] OneShotAudioPlayer HitSound;
    [SerializeField] Bounds RectangleBounds;
    [SerializeField] Transform[] LaserSpawnPoints;
    [SerializeField] LineRenderer[] LaserLineRenderers;
@@ -85,6 +86,7 @@ public class LaserTurret : MonoBehaviour
                if (Stats.IsDamageable())
                {
                   Stats.RecieveDmg();
+                  HitSound.PlayOneShotAudioClip();
                }
             }
          }
