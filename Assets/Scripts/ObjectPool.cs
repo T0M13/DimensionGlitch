@@ -52,7 +52,7 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
       
       for (int i = 0; i < NumberOfObjectsToPool; i++)
       {
-         T SpawnedObject = Instantiate(ObjectPrefab, transform.position, Quaternion.identity);
+         T SpawnedObject = (T)PrefabUtility.InstantiatePrefab(ObjectPrefab, transform);
          PooledObjects.Add(SpawnedObject);
          SpawnedObject.transform.SetParent(transform);
          SpawnedObject.gameObject.SetActive(false);
