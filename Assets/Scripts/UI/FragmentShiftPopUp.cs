@@ -34,8 +34,7 @@ public class FragmentShiftPopUp : MonoBehaviour
          float InterpolationValue = PassedTime / AnimationTime;
 
          float ScaleXY = Mathf.Lerp(0, MaxScale, InterpolationValue);
-         float Alpha = Mathf.Lerp(255, 0, InterpolationValue);
-         
+        
          transform.localScale = new Vector2(ScaleXY, ScaleXY);
          ShiftText.color = Color.Lerp(DefaultColor, EndColor, InterpolationValue);
 

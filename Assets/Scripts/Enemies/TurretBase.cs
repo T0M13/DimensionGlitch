@@ -11,7 +11,8 @@ public abstract class TurretBase : MonoBehaviour
     [SerializeField] CircleCollider2D AttackRangeTrigger = null;
     [SerializeField] protected Transform AimingPoint;
     [SerializeField] protected Transform ProjetileSpawnPoint;
-    [SerializeField] protected Projectile TurretProjectile;
+    [SerializeField] protected ProjectilePool ProjectilePool;
+    [SerializeField] protected SpriteFXPool SpriteFXPool;
 
     float LastTimeAttacked = 0.0f;
     float AttackCD = 0.0f;

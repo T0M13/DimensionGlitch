@@ -74,7 +74,7 @@ public class LaserTurret : MonoBehaviour
          
          Vector2 RayStartPosition = LaserSpawnPoint.position;
          Vector2 RayDirection = LaserSpawnPoint.up;
-         RaycastHit2D Hit = Physics2D.Raycast(RayStartPosition, RayDirection, LaserMaxDistance);
+         RaycastHit2D Hit = Physics2D.Raycast(RayStartPosition, RayDirection, LaserMaxDistance, HittableLayer);
 
          if (Hit)
          {

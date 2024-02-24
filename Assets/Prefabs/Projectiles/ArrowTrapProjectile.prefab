@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7063263355145165220}
   - component: {fileID: 7899382564509657795}
   - component: {fileID: 2357722633778188650}
+  - component: {fileID: 6740685092903230939}
   m_Layer: 7
   m_Name: ArrowTrapProjectile
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2790dd8a1a9b0d645a6dff93190960d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectileSpeed: 6
-  InitialLifetime: 5
+  ProjectileSpeed: 10
+  InitialLifetime: 8
   ProjectileRb: {fileID: 7899382564509657795}
 --- !u!212 &7063263355145165220
 SpriteRenderer:
@@ -91,7 +92,7 @@ SpriteRenderer:
   m_SortingLayerID: -1072948803
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 162e257672039be45905737e9311e039, type: 2}
+  m_Sprite: {fileID: -1550012512, guid: c5a43ffe9022f164c9c6dcd978ba88f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,7 +162,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0041752756, y: -0.008350521}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -172,5 +173,26 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.57412356, y: 0.38206154}
   m_EdgeRadius: 0
+--- !u!95 &6740685092903230939
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615067176400561559}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e5fd0d9b4b00794e9d47e7743687b51, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

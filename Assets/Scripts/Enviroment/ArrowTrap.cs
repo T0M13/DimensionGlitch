@@ -6,7 +6,8 @@ using UnityEngine;
 public class ArrowTrap : MonoBehaviour
 {
     [SerializeField] TrapTrigger TrapTrigger;
-    [SerializeField] Projectile ProjectileToShoot;
+    [SerializeField] ProjectilePool ProjectilePool;
+    [SerializeField] SpriteFXPool FXPool;
 
     void Start()
     {
@@ -18,8 +19,11 @@ public class ArrowTrap : MonoBehaviour
     }
     void ShootProjectile()
     {
-        Projectile ProjectileToShoot = Instantiate(this.ProjectileToShoot, transform.position, Quaternion.identity);
-        ProjectileToShoot.InitProjectile(transform.right, EFraction.Player, gameObject);
+        Projectile ProjectileToShoot = ProjectilePool.GetObjectFromPool(transform.position);
+        ProjectileToShoot.InitProjectile( transform.right, EFraction.Player, gameObject);
+        ProjectileToShoot.OnProjectileHit += FXPool.SpawnSpriteObjectAtPosition;
+        
+        ProjectileToShoot.gameObject.SetActive(true);
     }
     private void OnDrawGizmosSelected()
     {

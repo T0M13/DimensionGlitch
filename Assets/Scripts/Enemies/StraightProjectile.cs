@@ -13,15 +13,17 @@ public class StraightProjectile : Projectile
     {
         FractionToHit = TargetFraction;
         MovementDirection = Direction;
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, MovementDirection);
+        Vector2 UpAxis = Vector3.Cross(Vector3.forward, MovementDirection);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, UpAxis);
         this.Owner = Owner;
+        
     }
 
     protected override void ProjectileBehaviour()
     {
-        if (!Owner.gameObject.activeSelf)
+        if (!Owner || !Owner.activeSelf)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             return;
         }
         

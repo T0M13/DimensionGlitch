@@ -29,8 +29,7 @@ public class HUDManager : MonoBehaviour
    private void OnDisable()
    { 
       FragmentController.onFragmentShifting.RemoveListener(FragmentShiftPopUp.TriggerAnimation);
-      PlayerStats.OnDamage -= PlayerHealthBar.DeactivateHearts;
-      PlayerStats.OnDeath -= DisablePlayerHud;
+      UnbindEvents();
    }
 
    void DisablePlayerHud()
@@ -38,6 +37,13 @@ public class HUDManager : MonoBehaviour
       PlayerHealthBar.gameObject.SetActive(false);
       FragmentShiftTimer.gameObject.SetActive(false);
       FragmentShiftPopUp.gameObject.SetActive(false);
+      UnbindEvents();
+   }
+
+   void UnbindEvents()
+   {
+      PlayerStats.OnDamage -= PlayerHealthBar.DeactivateHearts;
+      PlayerStats.OnDeath -= DisablePlayerHud;
    }
    void DisableHUD()
    {

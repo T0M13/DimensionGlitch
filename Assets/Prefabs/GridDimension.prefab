@@ -70,7 +70,7 @@ MonoBehaviour:
   priority: 1
   blendDistance: 1
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: be12d0ea705f6ca4486a81bf96a1592c, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!1 &1807033958218955461
 GameObject:
   m_ObjectHideFlags: 0
@@ -3219,15 +3219,15 @@ PrefabInstance:
       objectReference: {fileID: -306879984, guid: 100a22d09c3cea242a0b137437f66107, type: 3}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.b
-      value: 0.8352941
+      value: 0.7490196
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1980056537319366972, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6173287869728607647, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_LocalPosition.x
