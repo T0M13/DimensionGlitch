@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : BaseSingleton<GameManager>
 {
@@ -17,6 +18,9 @@ public class GameManager : BaseSingleton<GameManager>
     [Header("Game Settings")]
     [SerializeField] private float defaultTimeFlow = 1f;
 
+    [Header("SceneTravelling")] 
+    [SerializeField] string GameplaySceneName = "Game";
+    [SerializeField] string MainMenuSceneName = "MainMenu";
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
     public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()
@@ -35,6 +39,15 @@ public class GameManager : BaseSingleton<GameManager>
         GetFragmentController();
         GetVolumeManager();
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadSceneAsync(GameplaySceneName);
+    }
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadSceneAsync(MainMenuSceneName);
+    }
     void SpawnPlayer()
     {
         GlobalPlayerControllerRef = Instantiate(PlayerPrefab, PlayerSpawnPosition.transform.position, PlayerPrefab.transform.rotation);
@@ -43,7 +56,7 @@ public class GameManager : BaseSingleton<GameManager>
         Vector3 PlayerPosition = GlobalPlayerControllerRef.transform.position;
         GlobalPlayerControllerRef.transform.position = new Vector3(PlayerPosition.x, PlayerPosition.y, 0);
     }
-
+    
     void SpawnHud()
     {
         PlayerHud = Instantiate(HudPrefab, Vector2.zero, Quaternion.identity);
