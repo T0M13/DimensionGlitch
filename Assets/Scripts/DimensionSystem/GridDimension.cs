@@ -7,9 +7,10 @@ using UnityEngine.Rendering;
 public class GridDimension : MonoBehaviour
 {
     [Header("Grid Settings")]
-    [SerializeField] private Transform floorTileMap;
-    [SerializeField] private Transform wallTileMap;
-    [SerializeField] private Transform wallDecosTileMap;
+    //[SerializeField] private Transform floorTileMap;
+    //[SerializeField] private Transform wallTileMap;
+    //[SerializeField] private Transform wallDecosTileMap;
+    [SerializeField] private Transform visibilityBlack;
     [Header("Fragment of Grid Settings")]
     [SerializeField] private Transform fragmentPointsParent;
     [SerializeField] private List<FragmentPoint> fragmentPoints;
@@ -25,6 +26,7 @@ public class GridDimension : MonoBehaviour
     public List<FragmentPoint> FragmentPoints { get => fragmentPoints; set => fragmentPoints = value; }
     public List<Fragment> CurrentFragmentsInDimension { get => currentFragmentsInDimension; set => currentFragmentsInDimension = value; }
     public List<DimensionPortal> Portals { get => portals; set => portals = value; }
+    public Transform VisibilityBlack { get => visibilityBlack; set => visibilityBlack = value; }
 
     private void OnValidate()
     {

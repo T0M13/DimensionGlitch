@@ -101,16 +101,15 @@ public class FragmentController : MonoBehaviour
 
     private void RepositionFragments()
     {
+        //Effect when shifting
+        onFragmentShifting?.Invoke();
 
         //Clear FragmentPoints --> So they can be taken
         foreach (var gridDimension in gridDimensions)
         {
-            gridDimension.ResetFragmenPoints();
             gridDimension.ResetFragmentsInDimension();
+            gridDimension.ResetFragmenPoints();
         }
-
-        //Effect when shifting
-        onFragmentShifting?.Invoke();
 
         //Reposition Every Fragment
         foreach (var fragment in notCollectedFragments)
@@ -175,6 +174,7 @@ public class FragmentController : MonoBehaviour
         {
             //Game Over Victory
             onGameOverVictory?.Invoke();
+            
         }
     }
 
@@ -236,10 +236,10 @@ public class FragmentController : MonoBehaviour
         //before travelling - make only the traveldimension visible
         foreach (var gridDimension in gridDimensions)
         {
-            gridDimension.gameObject.SetActive(false);
+            gridDimension.VisibilityBlack.gameObject.SetActive(true);
         }
 
-        gridTravelDimension.gameObject.SetActive(true);
+        gridTravelDimension.VisibilityBlack.gameObject.SetActive(false);
 
         //before travelling - actions
         onBeforePlayerShifting?.Invoke();
@@ -255,11 +255,11 @@ public class FragmentController : MonoBehaviour
 
  
 
-        //set fragments
-        foreach (var fragment in notCollectedFragments)
-        {
-            fragment.SetActive(fragment.GetComponent<Fragment>().CurrentDimension.gameObject.activeSelf);
-        }
+        ////set fragments
+        //foreach (var fragment in notCollectedFragments)
+        //{
+        //    fragment.SetActive(fragment.GetComponent<Fragment>().CurrentDimension.gameObject.activeSelf);
+        //}
 
         //after travelling - actions
         onAfterPlayerShifting?.Invoke();

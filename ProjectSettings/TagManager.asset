@@ -68,3 +68,6 @@ TagManager:
   - name: Wall Deco
     uniqueID: 898890923
     locked: 0
+  - name: Visibility
+    uniqueID: 1266796857
+    locked: 0

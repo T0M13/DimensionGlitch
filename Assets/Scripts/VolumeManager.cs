@@ -31,12 +31,28 @@ public class VolumeManager : MonoBehaviour
     [SerializeField] private float baseColorAdjustmentHue = 0.2f;
     [SerializeField] private float baseColorAdjustmentSaturation = 0.2f;
 
+    [Header("LensDistortion Settings")]
+    [SerializeField] private float baseLensDistortionValue = 1f;
+    [SerializeField] private float minLensDistrtionValue = -.7f;
+    [SerializeField] private float maxLensDistrtionValue = .5f;
+
 
     [Header("Transition Settings")]
     [SerializeField] private bool doTransition = true;
-    [SerializeField] private float transitionDuration = 1f;
+    [SerializeField] private float transitionDuration = .3f;
+
+    [SerializeField] private float transitionIntensityMax = -1f;
+    [SerializeField] private float transitionIntensityBase = 0f;
+    [SerializeField] private float transitionScaleMax = 0.5f;
+    [SerializeField] private float transitionScaleBase = 1f;
+
     [SerializeField] private float transitionWaitTravelDuration = 1f;
     [SerializeField] private float transitionWaitBackDuration = 1f;
+
+    [SerializeField] private float fragmentShiftDuration = .2f;
+    [SerializeField] private float fragmentShiftIntensityMax = 1f;
+    [SerializeField] private float fragmentShiftScaleMax = 1f;
+
 
     private void OnValidate()
     {
@@ -122,15 +138,25 @@ public class VolumeManager : MonoBehaviour
 
     public void StartTransitionToDifferentDimension()
     {
-        StartCoroutine(TransitionToDifferentDimension());
+        StartCoroutine(TransitionToDifferentDimension(transitionDuration, transitionIntensityMax, transitionScaleMax));
     }
 
     public void StartTransitionBack()
     {
-        StartCoroutine(TransitionBack());
+        StartCoroutine(TransitionBack(transitionDuration, transitionIntensityBase, transitionScaleBase));
     }
 
-    private IEnumerator TransitionToDifferentDimension()
+    public void StartTransitionToDifferentDimension(float transitionDuration, float transitionIntensityMax, float transitionScaleMax)
+    {
+        StartCoroutine(TransitionToDifferentDimension(transitionDuration, transitionIntensityMax, transitionScaleMax));
+    }
+
+    public void StartTransitionBack(float transitionDuration, float transitionIntensityBase, float transitionScaleBase)
+    {
+        StartCoroutine(TransitionBack(transitionDuration, transitionIntensityBase, transitionScaleBase));
+    }
+
+    private IEnumerator TransitionToDifferentDimension(float transitionDuration, float transitionIntensityMax, float transitionScaleMax)
     {
         float elapsedTime = 0f;
         float startIntensity = lensDistortion.intensity.value;
@@ -145,13 +171,13 @@ public class VolumeManager : MonoBehaviour
             yield return null;
         }
 
-        lensDistortion.intensity.value = -1f; // Ensure final value is set
-        lensDistortion.scale.value = 0.5f; // Ensure final scale value is set
+        lensDistortion.intensity.value = transitionIntensityMax; // Ensure final value is set
+        lensDistortion.scale.value = transitionScaleMax; // Ensure final scale value is set
 
         StartTransitionBack();
     }
 
-    private IEnumerator TransitionBack()
+    private IEnumerator TransitionBack(float transitionDuration, float transitionIntensityBase, float transitionScaleBase)
     {
         float elapsedTime = 0f;
         float startIntensity = lensDistortion.intensity.value;
@@ -166,10 +192,15 @@ public class VolumeManager : MonoBehaviour
             yield return null;
         }
 
-        lensDistortion.intensity.value = 0f; // Reset to default value
-        lensDistortion.scale.value = 1f; // Reset scale to default
+        lensDistortion.intensity.value = transitionIntensityBase; // Reset to default value
+        lensDistortion.scale.value = transitionScaleBase; // Reset scale to default
     }
 
+
+    public void StartFragmentShift()
+    {
+        StartCoroutine(TransitionToDifferentDimension(fragmentShiftDuration, fragmentShiftIntensityMax, fragmentShiftScaleMax));
+    }
 
     public void SetBlackAndWhite()
     {
@@ -181,10 +212,21 @@ public class VolumeManager : MonoBehaviour
         colorAdjustments.hueShift.value = colorAdjustments.hueShift.min;
     }
 
+    public void SetMaxLensDistortion()
+    {
+        lensDistortion.intensity.value = maxLensDistrtionValue;
+    }
+
+    public void SetMinLensDistortion()
+    {
+        lensDistortion.intensity.value = minLensDistrtionValue;
+    }
+
     public void ResetEffects()
     {
         colorAdjustments.saturation.value = baseColorAdjustmentSaturation;
         colorAdjustments.hueShift.value = baseColorAdjustmentHue;
+        lensDistortion.intensity.value = baseLensDistortionValue;
     }
 
 }
