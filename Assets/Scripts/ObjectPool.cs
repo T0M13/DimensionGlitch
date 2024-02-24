@@ -31,7 +31,9 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
    }
 
    public abstract T GetObjectFromPool(Vector2 InitialPosition);
-   
+
+#if UNITY_EDITOR
+
    public void ReinitPool()
    {
       ClearPool();
@@ -58,4 +60,5 @@ public abstract class ObjectPool<T> : MonoBehaviour where T : Component
          SpawnedObject.gameObject.SetActive(false);
       }
    }
+#endif
 }

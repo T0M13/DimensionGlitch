@@ -26,6 +26,7 @@ public class SpriteFXPool : ObjectPool<SpriteRenderer>
         GameObject.SetActive(false);
     }
 
+#if UNITY_EDITOR
     protected override void InitPool()
     {
         if(!ObjectPrefab) return;
@@ -39,4 +40,5 @@ public class SpriteFXPool : ObjectPool<SpriteRenderer>
             SpawnedObject.gameObject.SetActive(false);
         }
     }
+#endif
 }
