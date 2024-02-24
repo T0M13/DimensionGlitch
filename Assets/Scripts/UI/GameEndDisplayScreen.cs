@@ -5,15 +5,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverScreen : MonoBehaviour
+public class GameEndDisplayScreen : MonoBehaviour
 {
    [SerializeField] float AnimationTime = 2.0f;
    [SerializeField] float TextBlinkSpeed = 1.5f;
    [SerializeField] float MainAudioFadeTime = 5.0f;
-   [SerializeField] private string GamePlayScene = "GameplayScene";
    [SerializeField] TextMeshProUGUI GameOverText;
    [SerializeField] Image GameOverImage;
    [SerializeField] Button RestartButton;
+   [SerializeField] Button ReturnToMainMenu;
    [SerializeField] OneShotAudioPlayer AudioPlayer;
 
    Color DefaultGameOverTextColor;
@@ -23,10 +23,12 @@ public class GameOverScreen : MonoBehaviour
 
    private void Start()
    {
-      RestartButton.onClick.AddListener(RestartGame);
+      RestartButton.onClick.AddListener(GameManager.Instance.RestartGame);
+      ReturnToMainMenu.onClick.AddListener(GameManager.Instance.ReturnToMainMenu);
+      RestartButton.onClick.AddListener(DeactivateButtons);
    }
 
-   public void GameOver()
+   public void DisplayScreen()
    {
       DefaultGameOverTextColor = GameOverText.color;
       DefaultGameOverImageColor = GameOverImage.color;
@@ -38,11 +40,10 @@ public class GameOverScreen : MonoBehaviour
       AudioPlayer.PlayOneShotAudioClip();
    }
 
-   void RestartGame()
+   void DeactivateButtons()
    {
-      RestartButton.onClick.RemoveListener(RestartGame);
       RestartButton.interactable = false;
-      SceneManager.LoadSceneAsync(GamePlayScene);
+      ReturnToMainMenu.interactable = false;
    }
    IEnumerator Animate()
    {

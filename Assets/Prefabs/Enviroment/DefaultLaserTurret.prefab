@@ -552,9 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7440f0e6b3fb64db1b722d6da56b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinPitchValue: 3
+  MinPitchValue: 1.5
   MaxPitch: 1
-  Volume: 0.5
+  Volume: 0.7
   UseRandomPitch: 1
   ClipToPlay: {fileID: 8300000, guid: 8e01c6c4b7c44634b8533fe14311e187, type: 3}
   SoundGroup: 0
@@ -574,7 +574,7 @@ MonoBehaviour:
   LaserThickness: 0.2
   DirectionsOfLaseres:
     DirectionMask: 255
-  HitSound: {fileID: 0}
+  HitSound: {fileID: 2209395357086597879}
   RectangleBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
