@@ -100,7 +100,7 @@ public class LaserTurret : MonoBehaviour
       LaserLineRenderers[LineRendererIndex].SetPosition(0, StartPosition);
       LaserLineRenderers[LineRendererIndex].SetPosition(1, EndPosition);
    }
-   private void OnDrawGizmosSelected()
+   private void OnDrawGizmos()
    {
       if (!Application.isPlaying)
       {
