@@ -25,6 +25,8 @@ public class FragmentController : MonoBehaviour
     [SerializeField] private float chanceToSelectDimensionWithFragment = 0.5f;
     [SerializeField] private float dynamicChanceToSelectDimensionWithFragment;
     [SerializeField] private int consecutiveSelectionsWithoutFragments = 0;
+    [SerializeField] private bool randDimensionEffect = true;
+    [SerializeField] private List<UnityEvent> onDimensionChangeRandEffect;
 
     [Header("Actions")]
     public UnityEvent onBeforePlayerShifting;
@@ -251,6 +253,8 @@ public class FragmentController : MonoBehaviour
             portal.SetHasBeenTraveledThrough();
         }
 
+ 
+
         //set fragments
         foreach (var fragment in notCollectedFragments)
         {
@@ -264,8 +268,20 @@ public class FragmentController : MonoBehaviour
         onResetDimensionEffects?.Invoke();
 
         //trigger dimension event
-        gridTravelDimension.onDimensionChange?.Invoke();
+        if (randDimensionEffect)
+        {
+            RandDimensionEffect()?.Invoke();
+        }
+        else
+        {
+            gridTravelDimension.onDimensionChange?.Invoke();
+        }
 
+    }
+
+    private UnityEvent RandDimensionEffect()
+    {
+        return onDimensionChangeRandEffect[Random.Range(0, onDimensionChangeRandEffect.Count)];
     }
 
     private DimensionPortal GetRandomPortal(GridDimension gridDimension)
