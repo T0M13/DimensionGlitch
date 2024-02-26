@@ -44,12 +44,16 @@ public class HUDManager : MonoBehaviour
    
    void EnableGameOverScreen()
    {
+      if (WinScreen.IsScreenActive()) return;
+      
       GameOverScreen.gameObject.SetActive(true);
       GameOverScreen.DisplayScreen();
    }
 
    void EnableWinScreen()
    {
+      if(GameOverScreen.IsScreenActive()) return;
+      
       WinScreen.gameObject.SetActive(true);
       WinScreen.DisplayScreen();
    }

@@ -19,8 +19,9 @@ public class GameEndDisplayScreen : MonoBehaviour
    Color DefaultGameOverTextColor;
    Color DefaultGameOverImageColor;
    Color DefaultButtonColor;
-   bool IsInGameOverScreen = true;
+   bool isScreenActive = false;
 
+   public bool IsScreenActive() => isScreenActive;
    private void Start()
    {
       RestartButton.onClick.AddListener(GameManager.Instance.RestartGame);
@@ -30,6 +31,7 @@ public class GameEndDisplayScreen : MonoBehaviour
 
    public void DisplayScreen()
    {
+      isScreenActive = true;
       DefaultGameOverTextColor = GameOverText.color;
       DefaultGameOverImageColor = GameOverImage.color;
       DefaultButtonColor = RestartButton.image.color;
@@ -70,7 +72,7 @@ public class GameEndDisplayScreen : MonoBehaviour
 
    IEnumerator BlinkGameOverText()
    {
-      while (IsInGameOverScreen)
+      while (isScreenActive)
       {
          float Sin = Mathf.Abs(Mathf.Sin(Time.time * TextBlinkSpeed));
          GameOverText.color = Color.Lerp(DefaultGameOverTextColor, Color.clear, Sin);

@@ -18,7 +18,8 @@ public class AudioManager : BaseSingleton<AudioManager>
    float DefaultAudioVolume = 0.0f;
    private void Start()
    {
-      MainAudioMixer.GetFloat("VolumeMaster", out DefaultAudioVolume);
+      MainAudioMixer.GetFloat("VolumeMaster", out float DefaultMainAudio);
+      DefaultAudioVolume = ConvertToScale(DefaultMainAudio);
    }
    
    public void FadeMainAudio(float FadeTime, bool In)
@@ -89,6 +90,11 @@ public class AudioManager : BaseSingleton<AudioManager>
    float ConvertToDecibel(float InValue)
    {
       return Mathf.Lerp(-80, 20, InValue);
+   }
+
+   float ConvertToScale(float InValue)
+   {
+      return Mathf.InverseLerp(-80, 20, InValue);
    }
 
    IEnumerator DespawnAudioSourceAfterTime(AudioSource SourceToDespawn, float ClipLength)
