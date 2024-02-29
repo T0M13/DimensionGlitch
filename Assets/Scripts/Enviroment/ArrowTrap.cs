@@ -9,6 +9,7 @@ public class ArrowTrap : MonoBehaviour
     [SerializeField] ProjectilePool ProjectilePool;
     [SerializeField] SpriteFXPool FXPool;
     [SerializeField] OneShotAudioPlayer ShootSound;
+    [SerializeField] Transform projectileShootPosition;
 
     void Start()
     {
@@ -20,10 +21,9 @@ public class ArrowTrap : MonoBehaviour
     }
     void ShootProjectile()
     {
-        Projectile ProjectileToShoot = ProjectilePool.GetObjectFromPool(transform.position);
-        ProjectileToShoot.InitProjectile( transform.right, EFraction.Player, gameObject);
+        Projectile ProjectileToShoot = ProjectilePool.GetObjectFromPool(projectileShootPosition.position);
+        ProjectileToShoot.InitProjectile(transform.right, EFraction.Player, gameObject);
         ProjectileToShoot.OnProjectileHit += FXPool.SpawnSpriteObjectAtPosition;
-        
         ShootSound.PlayOneShotAudioClip();
         ProjectileToShoot.gameObject.SetActive(true);
     }
@@ -34,5 +34,8 @@ public class ArrowTrap : MonoBehaviour
         {
             Gizmos.DrawLine(transform.position, TrapTrigger.transform.position);
         }
+        Gizmos.color = Color.red;
+        if (projectileShootPosition)
+            Gizmos.DrawWireSphere(projectileShootPosition.position, 0.2f);
     }
 }
