@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class BaseSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
    private static T instance = null;
-   
+   static public bool bIsValid = true;
    public static T Instance
    {
       get
@@ -26,7 +26,12 @@ public abstract class BaseSingleton<T> : MonoBehaviour where T : MonoBehaviour
          return instance;
       }
    }
-   
+
+   protected virtual void OnDisable()
+   {
+      bIsValid = false;
+   }
+
    protected virtual void Awake()
    {
       if (instance && instance != this)

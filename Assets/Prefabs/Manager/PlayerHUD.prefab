@@ -654,9 +654,9 @@ RectTransform:
   - {fileID: 7780980041765151255}
   m_Father: {fileID: 5818916259260863711}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &5393771087440492544
@@ -672,9 +672,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationTime: 1
+  Transform: {fileID: 7667111676621583949}
   HorizontalLayoutGroup: {fileID: 7013181765164939390}
   FragmentDisplayPrefab: {fileID: -8875774347909089775, guid: 48b647d589f9bed48a2c6edbff7bbedc, type: 3}
   OneShotAudioPlayer: {fileID: 1886249021931069342}
+  FromTransform:
+    Position: {x: 960, y: 540}
+    EulerRotation: {x: 0, y: 0, z: 0}
+    Scale: {x: 1, y: 1}
+  TargetTransform:
+    Position: {x: 760, y: 540}
+    EulerRotation: {x: 0, y: 0, z: 0}
+    Scale: {x: 1, y: 1}
 --- !u!114 &1886249021931069342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1778,8 +1787,8 @@ MonoBehaviour:
   MaxIntensityScale: 2.8
   MinIntensityScale: 1.4
   MaxIntensitySpeed: 1.4
-  EmergencyColor: {r: 1, g: 0, b: 0, a: 1}
-  DefaultColor: {r: 1, g: 1, b: 1, a: 1}
+  EmergencyColor: {r: 1, g: 1, b: 1, a: 1}
+  DefaultColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!222 &5698284405423545570
 CanvasRenderer:
   m_ObjectHideFlags: 0

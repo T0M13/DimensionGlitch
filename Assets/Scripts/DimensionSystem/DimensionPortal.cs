@@ -67,7 +67,8 @@ public class DimensionPortal : MonoBehaviour
 
     private void SetRandColor()
     {
-        sprite.color = colors[Random.Range(0, colors.Length)];
+        if(colors.Length == 0) return;
+        sprite.color = colors[Random.Range(0, colors.Length -1)];
     }
 
     private void SetCollider()

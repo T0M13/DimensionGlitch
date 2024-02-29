@@ -8,15 +8,15 @@ using UnityEngine.UI;
 public class FragmentCounter : MonoBehaviour
 {
     [SerializeField] float AnimationTime = 1.0f;
+    [SerializeField] RectTransform Transform;
     [SerializeField] HorizontalLayoutGroup HorizontalLayoutGroup;
     [SerializeField] FragmentDisplay FragmentDisplayPrefab;
     [SerializeField] OneShotAudioPlayer OneShotAudioPlayer;
-
+   
     List<FragmentDisplay> FragmentDisplays = new List<FragmentDisplay>();
 
     int CollectedFragmentsCounter = 0;
-    Vector2 DefaultSize = Vector2.zero;
-
+   
     void Start()
     {
         Init();

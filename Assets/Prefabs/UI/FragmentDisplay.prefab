@@ -202,6 +202,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FragmentFillImage: {fileID: 6597459907774798809}
+  Transform: {fileID: 3473477452784319510}
+  ColorTween:
+    From: {r: 1, g: 1, b: 1, a: 0}
+    To: {r: 1, g: 1, b: 1, a: 1}
+    AnimationTime: 0.5
+    AnimationSpeed: 1
+  TransformTween:
+    From:
+      Position: {x: 0, y: 0}
+      EulerRotation: {x: 0, y: 0, z: 0}
+      Scale: {x: 1, y: 1, z: 1}
+    To:
+      Position: {x: 0, y: 0}
+      EulerRotation: {x: 0, y: 0, z: 0}
+      Scale: {x: 1.5, y: 1.5, z: 1}
+    AnimationTime: 0.25
+    AnimationSpeed: 1
+  RotationTween:
+    From: {x: 0, y: 0, z: 0}
+    To: {x: 0, y: 900, z: 0}
+    AnimationTime: 1
+    AnimationSpeed: 1
 --- !u!222 &1097444856301366952
 CanvasRenderer:
   m_ObjectHideFlags: 0

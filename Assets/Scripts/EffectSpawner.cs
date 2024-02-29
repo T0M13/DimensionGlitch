@@ -22,6 +22,7 @@ public class EffectSpawner : BaseSingleton<EffectSpawner>
 
     public void InstantiateEffects(int amount, GameObject prefab, List<GameObject> list)
     {
+        return;
         for (int i = 0; i < amount; i++)
         {
             GameObject effect = Instantiate(prefab);
@@ -32,6 +33,7 @@ public class EffectSpawner : BaseSingleton<EffectSpawner>
 
     public void SpawnItemPickUpEffect(Transform positionGoal)
     {
+        return;
         List<GameObject> activeEffects = itemPickUpEffectList.Where(effect => !effect.gameObject.activeSelf).ToList();
         var randEffect = activeEffects[Random.Range(0, itemPickUpEffectList.Count)];
         randEffect.transform.position = positionGoal.position;
@@ -40,6 +42,7 @@ public class EffectSpawner : BaseSingleton<EffectSpawner>
 
     public void SpawnFragmentShiftEffect(Transform positionGoal)
     {
+        return;
         List<GameObject> activeEffects = fragmentShiftEffectList.Where(effect => !effect.gameObject.activeSelf).ToList();
         var randEffect = activeEffects[Random.Range(0, fragmentShiftEffectList.Count)];
         randEffect.transform.position = positionGoal.position;
