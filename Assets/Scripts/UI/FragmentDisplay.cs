@@ -35,18 +35,15 @@ public class FragmentDisplay : MonoBehaviour, ITweenable<Color>, ITweenable<Twee
         TweenManager.Instance.StartTweenTransform(TransformTween);
         TweenManager.Instance.StartTweenRotation(RotationTween);
     }
-    
     public void SetTween(Color NewValue)
     {
 
         FragmentFillImage.color = NewValue;
     }
-
     public void SetTween(TweenTransform NewValue)
     {
         Transform.localScale = NewValue.Scale;
     }
-
     public void SetTween(Vector3 NewValue)
     {
         Transform.rotation = Quaternion.Euler(NewValue);
