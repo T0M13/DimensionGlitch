@@ -204,11 +204,59 @@ MonoBehaviour:
   FragmentFillImage: {fileID: 6597459907774798809}
   Transform: {fileID: 3473477452784319510}
   ColorTween:
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     From: {r: 1, g: 1, b: 1, a: 0}
     To: {r: 1, g: 1, b: 1, a: 1}
     AnimationTime: 0.5
     AnimationSpeed: 1
   TransformTween:
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     From:
       Position: {x: 0, y: 0}
       EulerRotation: {x: 0, y: 0, z: 0}
@@ -220,10 +268,43 @@ MonoBehaviour:
     AnimationTime: 0.25
     AnimationSpeed: 1
   RotationTween:
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: 0.013329903
+        outSlope: 0.013329903
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.19738984
+      - serializedVersion: 3
+        time: 0.99835205
+        value: 0.1
+        inSlope: -0.53782916
+        outSlope: -0.53782916
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.16363826
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     From: {x: 0, y: 0, z: 0}
     To: {x: 0, y: 900, z: 0}
     AnimationTime: 1
-    AnimationSpeed: 1
+    AnimationSpeed: 2
 --- !u!222 &1097444856301366952
 CanvasRenderer:
   m_ObjectHideFlags: 0

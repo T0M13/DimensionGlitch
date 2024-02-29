@@ -877,7 +877,7 @@ MonoBehaviour:
   fragmentAmount: 3
   notCollectedFragments: []
   collectedFragments: []
-  fragmentShiftTimerCooldown: 20
+  fragmentShiftTimerCooldown: 7
   fragmentShiftTimer: 0
   chanceToSelectDimensionWithFragment: 0.5
   dynamicChanceToSelectDimensionWithFragment: 0

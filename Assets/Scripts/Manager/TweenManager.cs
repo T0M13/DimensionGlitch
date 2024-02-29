@@ -29,10 +29,14 @@ public struct TweenRequest<T>
         this.To = To;
         this.AnimationTime = AnimationTime;
         this.AnimationSpeed = AnimationSpeed;
+        EaseCurve = new AnimationCurve();
     }
 
     //implement on tween finished
     public Action OnTweenFinished;
+    [SerializeField, Tooltip("The end and start values should always be greater then zero")]
+    public AnimationCurve EaseCurve;
+    
     public ITweenable<T> ToTween;
     public T From;
     public T To;
@@ -64,8 +68,8 @@ public class TweenManager : BaseSingleton<TweenManager>
         
         while ((!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f))
         {
-            CurrentAnimTime += ReverseTween ? -Time.deltaTime : Time.deltaTime;
             float InterpValue = CurrentAnimTime / AnimationDuration;
+            CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
             InterpValue = Mathf.Clamp01(InterpValue);
             
             Color NewColor = Color.Lerp(TweenRequest.From, TweenRequest.To, InterpValue);
@@ -80,12 +84,12 @@ public class TweenManager : BaseSingleton<TweenManager>
     {
         float CurrentAnimTime = ReverseTween ? TweenRequest.AnimationTime : 0.0f;
         float AnimationDuration = TweenRequest.AnimationTime;
-        float AnimationSpeed = TweenRequest.AnimationSpeed;
         
         while ((!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f))
         {
-            CurrentAnimTime += ReverseTween ? -Time.deltaTime * AnimationSpeed : Time.deltaTime * AnimationSpeed;
             float InterpValue = CurrentAnimTime / AnimationDuration;
+            CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
+            Debug.Log(CurrentAnimTime);
             InterpValue = Mathf.Clamp01(InterpValue);
             
             Vector2 NewPosition = Vector2.Lerp(TweenRequest.From.Position, TweenRequest.To.Position, InterpValue);
@@ -105,12 +109,11 @@ public class TweenManager : BaseSingleton<TweenManager>
     {
         float CurrentAnimTime = ReverseTween ? TweenRequest.AnimationTime : 0.0f;
         float AnimationDuration = TweenRequest.AnimationTime;
-        float AnimationSpeed = TweenRequest.AnimationSpeed;
-        
+       
         while ((!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f))
         {
-            CurrentAnimTime += ReverseTween ? -Time.deltaTime * AnimationSpeed : Time.deltaTime * AnimationSpeed;
             float InterpValue = CurrentAnimTime / AnimationDuration;
+            CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
             InterpValue = Mathf.Clamp01(InterpValue);
             
             Vector3 NewRotation = Vector3.Lerp(TweenRequest.From, TweenRequest.To, InterpValue);
@@ -120,6 +123,13 @@ public class TweenManager : BaseSingleton<TweenManager>
         }
         
         TweenRequest.OnTweenFinished?.Invoke();
+    }
+
+    float GetAnimTimeIncrement<T>(TweenRequest<T> TweenRequest, float CurrentInterpValue, bool ReverseTween)
+    {
+        float Increment = ReverseTween ? -Time.deltaTime * TweenRequest.EaseCurve.Evaluate(CurrentInterpValue) * TweenRequest.AnimationSpeed : Time.deltaTime * TweenRequest.EaseCurve.Evaluate(CurrentInterpValue) * TweenRequest.AnimationSpeed;
+        
+        return Increment;
     }
   
 }
