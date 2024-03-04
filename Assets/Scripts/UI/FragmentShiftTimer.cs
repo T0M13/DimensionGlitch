@@ -18,12 +18,9 @@ public class FragmentShiftTimer : MonoBehaviour
    private void Start()
    {
       TimerText.color = DefaultColor;
-      MaxTimerValue = GameManager.Instance.FragmentController.FragmentShiftTimerCooldown;
    }
    void Update()
    {
-      CurrentTimerValue = GameManager.Instance.FragmentController.FragmentShiftTimer;
-
       StringBuilder.Clear();
       StringBuilder.Append(CurrentTimerValue.ToString("F2"));
       TimerText.SetText(StringBuilder.ToString());
@@ -41,6 +38,6 @@ public class FragmentShiftTimer : MonoBehaviour
       Color IntensityColor = Color.Lerp(DefaultColor, EmergencyColor, Sine);
 
       TimerText.color = IntensityColor;
-      TimerText.transform.localScale = new Vector3(ScaleXY, ScaleXY, 1);
+      //TimerText.transform.localScale = new Vector3(ScaleXY, ScaleXY, 1);
    }
 }

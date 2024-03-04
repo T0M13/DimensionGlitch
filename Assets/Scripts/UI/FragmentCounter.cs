@@ -30,12 +30,8 @@ public class FragmentCounter : MonoBehaviour
     void Init()
     {
         Fragment.OnFragmentCollected += UpdateCollectedFragments;
-        for (int i = 0; i < GameManager.Instance.FragmentController.GetAmountOfFragments(); i++)
-        {
-            var Instance = Instantiate(FragmentDisplayPrefab, HorizontalLayoutGroup.transform);
-            FragmentDisplays.Add(Instance);
-        }
     }
+
     void UpdateCollectedFragments()
     {
         FragmentDisplays[CollectedFragmentsCounter].ActivateFragmentFillImage();

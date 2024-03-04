@@ -22,12 +22,11 @@ public class HUDManager : MonoBehaviour
    {
       GameManager GameManager = GameManager.Instance;
       
-      FragmentController = GameManager.FragmentController;
       PlayerController = GameManager.GetPlayerControllerRef;
       PlayerStats = PlayerController.GetPlayerStats();
       
-      FragmentController.onFragmentShifting.AddListener(FragmentShiftPopUp.TriggerAnimation);
-      FragmentController.onGameOverVictory.AddListener(EnableWinScreen);
+      //FragmentController.onFragmentShifting.AddListener(FragmentShiftPopUp.TriggerAnimation);
+      //FragmentController.onGameOverVictory.AddListener(EnableWinScreen);
       PlayerController.OnDash += DashCDBar.StartDashCD;
       PlayerStats.OnDamage += PlayerHealthBar.DeactivateHearts;
       PlayerStats.OnDeath += EnableGameOverScreen;
@@ -73,8 +72,8 @@ public class HUDManager : MonoBehaviour
       PlayerStats.OnDamage -= PlayerHealthBar.DeactivateHearts;
       PlayerStats.OnDeath -= DisablePlayerHud;
       PlayerStats.OnDeath -= EnableGameOverScreen;
-      FragmentController.onFragmentShifting.RemoveListener(FragmentShiftPopUp.TriggerAnimation);
-      FragmentController.onGameOverVictory.RemoveListener(EnableWinScreen);
+      //FragmentController.onFragmentShifting.RemoveListener(FragmentShiftPopUp.TriggerAnimation);
+      //FragmentController.onGameOverVictory.RemoveListener(EnableWinScreen);
    }
    void DisableHUD()
    {

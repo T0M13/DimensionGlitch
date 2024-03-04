@@ -12,7 +12,6 @@ public class GameManager : BaseSingleton<GameManager>
     HUDManager PlayerHud;
     
     [Header("References")]
-    [SerializeField] private FragmentController fragmentController;
     [SerializeField] private VolumeManager volumeManager;
 
     [Header("Game Settings")]
@@ -25,18 +24,15 @@ public class GameManager : BaseSingleton<GameManager>
     public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()
     {
-        GetFragmentController();
         GetVolumeManager();
         SpawnPlayer();
         SpawnHud();
     }
 
-    public FragmentController FragmentController { get => fragmentController; set => fragmentController = value; }
     public VolumeManager VolumeManager { get => volumeManager; set => volumeManager = value; }
 
     private void OnValidate()
     {
-        GetFragmentController();
         GetVolumeManager();
     }
 
@@ -72,12 +68,6 @@ public class GameManager : BaseSingleton<GameManager>
     void OnPlayerDie()
     {
         //Implement respawn logic or deathscreen etc
-    }
-
-    private void GetFragmentController()
-    {
-        if (FragmentController == null)
-            FragmentController = FindAnyObjectByType<FragmentController>();
     }
 
     private void GetVolumeManager()
