@@ -4,17 +4,19 @@ public class AnimationController : MonoBehaviour
 {
     [SerializeField] Animator MyAnimator;
     [SerializeField] private SpriteRenderer SpriteRenderer;
-    [SerializeField] private string IdleState = "IsIdle";
-    [SerializeField] private string WalkingState = "IsWalking";
+    [SerializeField][ShowOnly] private string IdleState = "IsIdle";
+    [SerializeField][ShowOnly] private string WalkingState = "IsWalking";
+    [SerializeField][ShowOnly] private string WalkingXValue = "xWalk";
+    [SerializeField][ShowOnly] private string WalkingYValue = "yWalk";
 
     [Header("AnimationEvents")]
     [SerializeField] AudioSource AudioSource;
-    
+
     int HashedIdleState = 0;
     int HashedWalkingState = 0;
 
-    private PlayerController CachedPlayerController = null;
-    
+    [SerializeField][ShowOnly] private PlayerController CachedPlayerController = null;
+
     void Start()
     {
         HashedIdleState = Animator.StringToHash(IdleState);
@@ -26,58 +28,55 @@ public class AnimationController : MonoBehaviour
     {
         UpdateAnimationState();
     }
-    
+
     void UpdateAnimationState()
     {
         PlayerController PlayerController = GameManager.Instance.GetPlayerControllerRef;
         PackedMovementMode.EMovementModes CurrentMovementMode = PlayerController.GetCurrentMovementMode().MovementState;
-        
+
+        MyAnimator.SetFloat(WalkingXValue, PlayerController.CurrentMove.x);
+        MyAnimator.SetFloat(WalkingYValue, PlayerController.CurrentMove.y);
+
         switch (CurrentMovementMode)
         {
             case PackedMovementMode.EMovementModes.Idle:
-            {
-                SetIdleState();
-                break;
-            }
+                {
+                    SetIdleState(PlayerController.IsIdling);
+                    break;
+                }
             case PackedMovementMode.EMovementModes.Walking:
-            {
-                //SetWalkingState(PlayerController.GetCurrentVelocity());
-                break;
-            }
+                {
+                    SetWalkingState(PlayerController.IsWalking);
+                    break;
+                }
 
         }
     }
 
-    void SetIdleState()
+    void SetIdleState(bool idle)
     {
-        MyAnimator.SetBool(HashedIdleState, true);
-        MyAnimator.SetBool(HashedWalkingState, false);
-        // MyAnimator.SetBool(HashedDashingState, false);
+        MyAnimator.SetBool(HashedIdleState, idle);
+        MyAnimator.SetBool(HashedWalkingState, !idle);
     }
 
-    void SetWalkingState(Vector2 CurrentVelocity)
+    void SetWalkingState(bool walk)
     {
-        MyAnimator.SetBool(HashedIdleState, false);
-        MyAnimator.SetBool(HashedWalkingState, true);
-        // MyAnimator.SetBool(HashedDashingState, false);
-        
-        if (CurrentVelocity.x != 0)
+        MyAnimator.SetBool(HashedIdleState, !walk);
+        MyAnimator.SetBool(HashedWalkingState, walk);
+ 
+    }
+
+
+    #region AnimationEventFunctions
+
+    public void PlaySound(AudioClip ClipToPlay)
+    {
+        if (AudioSource)
         {
-            SpriteRenderer.flipX = CurrentVelocity.x <= 0;
+            AudioSource.PlayOneShot(ClipToPlay, AudioSource.volume);
         }
     }
 
-
-#region AnimationEventFunctions
-
-public void PlaySound(AudioClip ClipToPlay)
-{
-    if (AudioSource)
-    {
-        AudioSource.PlayOneShot(ClipToPlay, AudioSource.volume);
-    }
-}    
-
-#endregion
+    #endregion
 
 }

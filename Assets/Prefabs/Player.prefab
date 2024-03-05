@@ -105,11 +105,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 754652138578632799}
-  moveSpeed: 10
   playerRB: {fileID: 4856677469131246988}
-  Walk: {fileID: -2754104354122851769, guid: b922c5a32ea404c4f924935836990aea, type: 3}
-  currentVelocity: {x: 0, y: 0}
+  moveSpeed: 5
+  isIdling: 0
+  isWalking: 0
   currentInput: {x: 0, y: 0}
+  currentMove: {x: 0, y: 0}
 --- !u!114 &754652138578632799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +145,7 @@ MonoBehaviour:
   IdleState: IsIdle
   WalkingState: IsWalking
   AudioSource: {fileID: 4823713372748356527}
+  CachedPlayerController: {fileID: 0}
 --- !u!95 &6629177911874635645
 Animator:
   serializedVersion: 5
