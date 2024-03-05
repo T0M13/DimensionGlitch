@@ -1,135 +1,73 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Stats))]
 public class PlayerController : MonoBehaviour
 {
+
+    [Header("References")]
     [SerializeField] Stats PlayerStats;
-    
+    [SerializeField] IM_Player inputActions;
+    [SerializeField] Rigidbody2D playerRB = null;
+
     [Header("Walk")]
-    [SerializeField, Min(0)] float Speed = 10;//meters
-    [SerializeField, Min(0)] float TimeToReachMaxSpeed = 1;
-    [SerializeField] Rigidbody2D PlayerRb = null;
+    [SerializeField, Min(0)] float moveSpeed = 5;
 
-    [Header("Dash")] 
-    [SerializeField, Min(0)] float DashDistance = 50;
-    [SerializeField, Min(0)] float DashTime = 10;//meters
-    [SerializeField, Min(0)] float DashCd = 10;//meters
-    
-    [Header("InputActions")] 
-    [SerializeField] InputActionReference Walk;
-    [SerializeField] InputActionReference Dash;
+    [Header("Debug")]
+    [SerializeField][ShowOnly] Vector2 currentInput = Vector2.zero;
+    [SerializeField][ShowOnly] Vector2 currentMove = Vector2.zero;
 
-    [Header("Debug")] 
-    [SerializeField] float MovementTime = 0.0f;
-    [SerializeField] float LastDashTime = 0.0f;
-    [SerializeField] Vector2 CurrentVelocity = Vector2.zero;
-
-    private float TravelledDashDistance = 0.0f;
     PackedMovementMode CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
 
-    public float GetDashProgress() => CurrentMovementMode.MovementState == PackedMovementMode.EMovementModes.Dashing ? TravelledDashDistance / DashDistance : 0;
-    public float GetDashCD() => DashCd;
+    public Vector2 CurrentInput() => currentInput;
     public PackedMovementMode GetCurrentMovementMode() => CurrentMovementMode;
-    public Vector2 GetCurrentVelocity() => CurrentVelocity;
     public Stats GetPlayerStats() => PlayerStats;
-    public event Action OnDash;
-    
-    void Start()
+
+
+    private void OnEnable()
     {
-        Dash.action.performed += DoDash;
-        Walk.action.canceled += ResetMovementState;
-    }
-    void FixedUpdate()
-    {
-        MovePlayer();
+        inputActions.Enable();
+        inputActions.PlayerControlls.Walk.performed += WalkPerformed;
+        inputActions.PlayerControlls.Walk.canceled += WalkCancelled;
     }
 
     private void OnDisable()
     {
-        Dash.action.performed -= DoDash;
-        Walk.action.canceled -= ResetMovementState;
+        inputActions.Disable();
+        inputActions.PlayerControlls.Walk.performed -= WalkPerformed;
+        inputActions.PlayerControlls.Walk.canceled -= WalkCancelled;
     }
-    void ResetMovementState(InputAction.CallbackContext _)
+
+
+    private void OnValidate()
     {
-        CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
-        CurrentVelocity = Vector2.zero;
-        MovementTime = 0.0f;
+        playerRB = GetComponent<Rigidbody2D>();
+        inputActions = new IM_Player();
     }
-    
-#region Walking
 
-    void MovePlayer()
+    private void Awake()
     {
-        //Get current player pos
-        Vector2 CurrentPlayerPosition = PlayerRb.position;
-        Vector2 CurrentPlayerInput = Walk.action.ReadValue<Vector2>();
-
-        //if the player is moving move him if the player cant walk right now dont do anything
-        if(!CurrentMovementMode.bCanWalk) return;
-        if (!CurrentPlayerInput.Equals(Vector2.zero))
-        {
-            MovementTime += Time.deltaTime;
-            //add the movement vector multiplied by the progress of acceleration time
-            float SpeedMultiplier = (Mathf.Clamp01(MovementTime / TimeToReachMaxSpeed));
-            CurrentVelocity = CurrentPlayerInput * (Speed * Time.deltaTime * SpeedMultiplier);
-           
-            PlayerRb.MovePosition(CurrentPlayerPosition + CurrentVelocity);
-            CurrentMovementMode = MovementModeFactory.GetWalkingMovementMode();
-        }
+        playerRB = GetComponent<Rigidbody2D>();
+        inputActions = new IM_Player();
     }
 
-#endregion
-
-#region Dash
-
-    void DoDash(InputAction.CallbackContext CallbackContext)
+    private void Update()
     {
-        if(!IsAllowedToDash()) return;
-        
-        StartCoroutine(DashRoutine());
-        
-        LastDashTime = Time.time;
-        CurrentMovementMode = MovementModeFactory.GetDashMovementMode();
-        
-        OnDash?.Invoke();
+        currentMove = new Vector2(currentInput.x, currentInput.y) * moveSpeed;
     }
 
-    IEnumerator DashRoutine()
+    private void FixedUpdate()
     {
-        //float Travelled Distance maybe we can implement this for a blend tree to set animation frame
-        float DashSpeed = DashDistance / DashTime;
-        float PassedTime = 0.0f;
-        Vector2 DashDirection = CurrentVelocity.normalized;
-        
-        while (PassedTime < DashTime)
-        {
-            PlayerStats.SetInvincibility(true);
-            
-            //Get the dash movement
-            Vector2 DashVector = DashDirection * (DashSpeed * Time.deltaTime);
-            //Get the current player pos
-            Vector2 PreviousPlayerPos = PlayerRb.position;
-            //Get the new pos for the player dash vector added
-            Vector2 NewPlayerPos = PreviousPlayerPos + DashVector;
-
-            TravelledDashDistance += Vector2.Distance(PreviousPlayerPos, NewPlayerPos);
-            //Move the player rb to the new position
-            PlayerRb.MovePosition(NewPlayerPos);
-            PassedTime += Time.deltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-
-        CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
-        PlayerStats.SetInvincibility(false);
-        TravelledDashDistance = 0;
+        playerRB.velocity = currentMove;
     }
-    bool IsAllowedToDash()
+
+    public void WalkPerformed(InputAction.CallbackContext context)
     {
-        return CurrentMovementMode.bCanDash && Time.time - LastDashTime > DashCd;
+        currentInput = context.ReadValue<Vector2>();
     }
 
-#endregion
+    public void WalkCancelled(InputAction.CallbackContext context)
+    {
+        currentInput = Vector2.zero;
+    }
 }

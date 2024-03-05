@@ -12,7 +12,6 @@ public class HUDManager : MonoBehaviour
    [SerializeField] GameEndDisplayScreen GameOverScreen;
    [SerializeField] GameEndDisplayScreen WinScreen;
    [SerializeField] FragmentCounter FragmentCounter;
-   [SerializeField] DashCDBar DashCDBar;
 
    FragmentController FragmentController;
    PlayerController PlayerController;
@@ -27,7 +26,6 @@ public class HUDManager : MonoBehaviour
       
       //FragmentController.onFragmentShifting.AddListener(FragmentShiftPopUp.TriggerAnimation);
       //FragmentController.onGameOverVictory.AddListener(EnableWinScreen);
-      PlayerController.OnDash += DashCDBar.StartDashCD;
       PlayerStats.OnDamage += PlayerHealthBar.DeactivateHearts;
       PlayerStats.OnDeath += EnableGameOverScreen;
       PlayerStats.OnDeath += DisablePlayerHud;
@@ -61,14 +59,12 @@ public class HUDManager : MonoBehaviour
       PlayerHealthBar.gameObject.SetActive(false);
       FragmentShiftTimer.gameObject.SetActive(false);
       FragmentShiftPopUp.gameObject.SetActive(false);
-      DashCDBar.gameObject.SetActive(false);
       FragmentCounter.gameObject.SetActive(false);
       UnbindEvents();
    }
 
    void UnbindEvents()
    {
-      PlayerController.OnDash -= DashCDBar.StartDashCD;
       PlayerStats.OnDamage -= PlayerHealthBar.DeactivateHearts;
       PlayerStats.OnDeath -= DisablePlayerHud;
       PlayerStats.OnDeath -= EnableGameOverScreen;
