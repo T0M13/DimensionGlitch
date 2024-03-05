@@ -109,6 +109,7 @@ MonoBehaviour:
   moveSpeed: 5
   isIdling: 0
   isWalking: 0
+  lastInput: {x: 0, y: -1}
   currentInput: {x: 0, y: 0}
   currentMove: {x: 0, y: 0}
 --- !u!114 &754652138578632799
@@ -144,6 +145,10 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 6946738078845725280}
   IdleState: IsIdle
   WalkingState: IsWalking
+  IdlingXValue: xIdle
+  IdlingYValue: yIdle
+  WalkingXValue: xWalk
+  WalkingYValue: yWalk
   AudioSource: {fileID: 4823713372748356527}
   CachedPlayerController: {fileID: 0}
 --- !u!95 &6629177911874635645
@@ -362,6 +367,6 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: PlayerControlls
+  m_DefaultActionMap: 8b586171-2036-4db1-a00e-89652b6d31a9
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

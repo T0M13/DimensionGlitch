@@ -6,39 +6,76 @@ using UnityEngine.InputSystem;
 
 public class InputManager : BaseSingleton<InputManager>
 {
-    [Header("InputActions")] 
-    [SerializeField] InputActionReference PlayerWalk;
-    [SerializeField] InputActionReference PlayerDash;
-    
-    private void Start()
+    [Header("References")]
+    [SerializeField] IM_Player inputActions;
+    [SerializeField] private Camera mainCamera;
+    [Header("Settings")]
+    [SerializeField] private LayerMask placementLayermask;
+    [Header("Debug")]
+    [SerializeField][Range(0, 1)] private float gizmosRadius = 0.5f;
+    [SerializeField][ShowOnly] private Vector3 lastPosition;
+    [SerializeField][ShowOnly] private Vector3 mousePos;
+    [SerializeField][ShowOnly] private Vector3 mousePosInWorld;
+
+
+    public IM_Player InputActions { get => inputActions; set => inputActions = value; }
+    public Vector3 GetMousePositionInWorld() => mousePosInWorld;
+
+    private void OnEnable()
     {
-        EnableDefaultActions();
+        InputActions.Enable();
+        InputActions.MouseControls.MousePosition.performed += MousePositionPerformed;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        DisableAllActions();
+        base.OnDisable();
+        InputActions.Disable();
+        InputActions.MouseControls.MousePosition.performed -= MousePositionPerformed;
+
     }
 
-    void EnableDefaultActions()
+    private void OnValidate()
     {
-        PlayerWalk.action.Enable();
-        PlayerDash.action.Enable();
+        //inputActions = new IM_Player();
+        mainCamera = Camera.main;
     }
 
-    public void DisableAllActions()
+    protected override void Awake()
     {
-        PlayerWalk.action.Disable();
-        PlayerDash.action.Disable();
-    }
-    
-    public void SeMovementEnabled()
-    {
-        PlayerWalk.action.Enable();
+        base.Awake();
+        inputActions = new IM_Player();
+        mainCamera = Camera.main;
     }
 
-    public void SetMovementDisabled()
+    private void Update()
     {
-        PlayerWalk.action.Disable();
+        mousePosInWorld = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mainCamera.nearClipPlane));
+        mousePosInWorld.z = 0;
+    }
+
+    //public Vector3 GetSelectedMapPosition()
+    //{
+    //    mousePos.z = mainCamera.nearClipPlane;
+    //    Ray ray = mainCamera.ScreenPointToRay(mousePos);
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(ray, out hit, 100, placementLayermask))
+    //    {
+    //        lastPosition = hit.point;
+    //    }
+    //    return lastPosition;
+    //}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(mousePosInWorld, gizmosRadius);
+    }
+
+    private void MousePositionPerformed(InputAction.CallbackContext context)
+    {
+        mousePos = context.ReadValue<Vector2>();
+
+
     }
 }

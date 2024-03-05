@@ -9,18 +9,20 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] GameObject PlayerSpawnPosition;
 
     PlayerController GlobalPlayerControllerRef;
+    InputManager GlobalInputManagerRef;
     HUDManager PlayerHud;
-    
+
     [Header("References")]
     [SerializeField] private VolumeManager volumeManager;
 
     [Header("Game Settings")]
     [SerializeField] private float defaultTimeFlow = 1f;
 
-    [Header("SceneTravelling")] 
+    [Header("SceneTravelling")]
     [SerializeField] string GameplaySceneName = "Game";
     [SerializeField] string MainMenuSceneName = "MainMenu";
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+    public InputManager GetInputManagerRef => GlobalInputManagerRef;
     public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()
     {
@@ -48,18 +50,20 @@ public class GameManager : BaseSingleton<GameManager>
     }
     void SpawnPlayer()
     {
+        GlobalInputManagerRef = InputManager.Instance;
+
         GlobalPlayerControllerRef = Instantiate(PlayerPrefab, PlayerSpawnPosition.transform.position, PlayerPrefab.transform.rotation);
         GlobalPlayerControllerRef.GetComponent<Stats>().OnDeath += OnPlayerDie;
 
         Vector3 PlayerPosition = GlobalPlayerControllerRef.transform.position;
         GlobalPlayerControllerRef.transform.position = new Vector3(PlayerPosition.x, PlayerPosition.y, 0);
     }
-    
+
     void SpawnHud()
     {
         PlayerHud = Instantiate(HudPrefab, Vector2.zero, Quaternion.identity);
-        
-        Canvas Canvas =  PlayerHud.GetComponentInChildren<Canvas>();
+
+        Canvas Canvas = PlayerHud.GetComponentInChildren<Canvas>();
         if (Canvas.renderMode == RenderMode.ScreenSpaceCamera)
         {
             Canvas.worldCamera = Camera.main;

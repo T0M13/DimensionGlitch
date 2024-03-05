@@ -2,7 +2,7 @@
     "name": "IM_Player",
     "maps": [
         {
-            "name": "PlayerControlls",
+            "name": "PlayerControls",
             "id": "8b586171-2036-4db1-a00e-89652b6d31a9",
             "actions": [
                 {
@@ -13,15 +13,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Dash",
-                    "type": "Button",
-                    "id": "6a8516c8-75ed-44c9-a5f5-1ef5e6469d78",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -79,15 +70,32 @@
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
+                }
+            ]
+        },
+        {
+            "name": "MouseControls",
+            "id": "141b56d9-8636-4e0c-ae17-617162c59c18",
+            "actions": [
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "1d69c5be-f859-487a-b9d9-5ce3b242e62d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "96f6937f-9590-45b8-8160-1f939500e48e",
-                    "path": "<Keyboard>/space",
+                    "id": "2ec89d8a-441c-450a-a91e-0a4c19ffd36b",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "MousePosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

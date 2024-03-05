@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] Stats PlayerStats;
-    [SerializeField] IM_Player inputActions;
     [SerializeField] Rigidbody2D playerRB = null;
 
     [Header("Movement")]
@@ -19,6 +18,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField][ShowOnly] Vector2 lastInput = Vector2.down;
     [SerializeField][ShowOnly] Vector2 currentInput = Vector2.zero;
     [SerializeField][ShowOnly] Vector2 currentMove = Vector2.zero;
+
+
+    [SerializeField][ShowOnly] private InputManager CachedInputManager = null;
 
     PackedMovementMode CurrentMovementMode = MovementModeFactory.GetDefaultMovementMode();
 
@@ -34,29 +36,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.Enable();
-        inputActions.PlayerControlls.Walk.performed += WalkPerformed;
-        inputActions.PlayerControlls.Walk.canceled += WalkCancelled;
+        InputManager.Instance.InputActions.PlayerControls.Walk.performed += WalkPerformed;
+        InputManager.Instance.InputActions.PlayerControls.Walk.canceled += WalkCancelled;
     }
 
     private void OnDisable()
     {
-        inputActions.Disable();
-        inputActions.PlayerControlls.Walk.performed -= WalkPerformed;
-        inputActions.PlayerControlls.Walk.canceled -= WalkCancelled;
+        InputManager.Instance.InputActions.PlayerControls.Walk.performed -= WalkPerformed;
+        InputManager.Instance.InputActions.PlayerControls.Walk.canceled -= WalkCancelled;
     }
 
 
     private void OnValidate()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        inputActions = new IM_Player();
     }
-
     private void Awake()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        inputActions = new IM_Player();
+    }
+
+    private void Start()
+    {
 
         IsIdling = true;
     }

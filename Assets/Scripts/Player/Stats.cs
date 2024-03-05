@@ -27,7 +27,6 @@ public class Stats : MonoBehaviour
    }
    void Die()
    {
-      InputManager.Instance.DisableAllActions();
       OnDeath?.Invoke();
    }
 }

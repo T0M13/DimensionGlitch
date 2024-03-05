@@ -24,7 +24,7 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     ""name"": ""IM_Player"",
     ""maps"": [
         {
-            ""name"": ""PlayerControlls"",
+            ""name"": ""PlayerControls"",
             ""id"": ""8b586171-2036-4db1-a00e-89652b6d31a9"",
             ""actions"": [
                 {
@@ -35,15 +35,6 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""6a8516c8-75ed-44c9-a5f5-1ef5e6469d78"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -101,15 +92,32 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""MouseControls"",
+            ""id"": ""141b56d9-8636-4e0c-ae17-617162c59c18"",
+            ""actions"": [
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""1d69c5be-f859-487a-b9d9-5ce3b242e62d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""96f6937f-9590-45b8-8160-1f939500e48e"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""2ec89d8a-441c-450a-a91e-0a4c19ffd36b"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -118,10 +126,12 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // PlayerControlls
-        m_PlayerControlls = asset.FindActionMap("PlayerControlls", throwIfNotFound: true);
-        m_PlayerControlls_Walk = m_PlayerControlls.FindAction("Walk", throwIfNotFound: true);
-        m_PlayerControlls_Dash = m_PlayerControlls.FindAction("Dash", throwIfNotFound: true);
+        // PlayerControls
+        m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
+        m_PlayerControls_Walk = m_PlayerControls.FindAction("Walk", throwIfNotFound: true);
+        // MouseControls
+        m_MouseControls = asset.FindActionMap("MouseControls", throwIfNotFound: true);
+        m_MouseControls_MousePosition = m_MouseControls.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -180,62 +190,103 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerControlls
-    private readonly InputActionMap m_PlayerControlls;
-    private List<IPlayerControllsActions> m_PlayerControllsActionsCallbackInterfaces = new List<IPlayerControllsActions>();
-    private readonly InputAction m_PlayerControlls_Walk;
-    private readonly InputAction m_PlayerControlls_Dash;
-    public struct PlayerControllsActions
+    // PlayerControls
+    private readonly InputActionMap m_PlayerControls;
+    private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
+    private readonly InputAction m_PlayerControls_Walk;
+    public struct PlayerControlsActions
     {
         private @IM_Player m_Wrapper;
-        public PlayerControllsActions(@IM_Player wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Walk => m_Wrapper.m_PlayerControlls_Walk;
-        public InputAction @Dash => m_Wrapper.m_PlayerControlls_Dash;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerControlls; }
+        public PlayerControlsActions(@IM_Player wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Walk => m_Wrapper.m_PlayerControls_Walk;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerControllsActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerControllsActions instance)
+        public static implicit operator InputActionMap(PlayerControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerControlsActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerControllsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerControllsActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Add(instance);
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
         }
 
-        private void UnregisterCallbacks(IPlayerControllsActions instance)
+        private void UnregisterCallbacks(IPlayerControlsActions instance)
         {
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
         }
 
-        public void RemoveCallbacks(IPlayerControllsActions instance)
+        public void RemoveCallbacks(IPlayerControlsActions instance)
         {
-            if (m_Wrapper.m_PlayerControllsActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerControllsActions instance)
+        public void SetCallbacks(IPlayerControlsActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerControllsActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerControlsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerControllsActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerControllsActions @PlayerControlls => new PlayerControllsActions(this);
-    public interface IPlayerControllsActions
+    public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
+
+    // MouseControls
+    private readonly InputActionMap m_MouseControls;
+    private List<IMouseControlsActions> m_MouseControlsActionsCallbackInterfaces = new List<IMouseControlsActions>();
+    private readonly InputAction m_MouseControls_MousePosition;
+    public struct MouseControlsActions
+    {
+        private @IM_Player m_Wrapper;
+        public MouseControlsActions(@IM_Player wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePosition => m_Wrapper.m_MouseControls_MousePosition;
+        public InputActionMap Get() { return m_Wrapper.m_MouseControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MouseControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IMouseControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MouseControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MouseControlsActionsCallbackInterfaces.Add(instance);
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+        }
+
+        private void UnregisterCallbacks(IMouseControlsActions instance)
+        {
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+        }
+
+        public void RemoveCallbacks(IMouseControlsActions instance)
+        {
+            if (m_Wrapper.m_MouseControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMouseControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MouseControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MouseControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MouseControlsActions @MouseControls => new MouseControlsActions(this);
+    public interface IPlayerControlsActions
     {
         void OnWalk(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+    }
+    public interface IMouseControlsActions
+    {
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }
