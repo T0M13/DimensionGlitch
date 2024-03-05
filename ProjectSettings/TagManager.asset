@@ -41,8 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Water
+    uniqueID: 2563375577
+    locked: 0
   - name: Floor
     uniqueID: 1042224551
+    locked: 0
+  - name: FloorDeco
+    uniqueID: 2220056883
     locked: 0
   - name: Items
     uniqueID: 1270261013
@@ -59,14 +65,11 @@ TagManager:
   - name: Portal
     uniqueID: 2402280713
     locked: 0
-  - name: Player
-    uniqueID: 427029401
-    locked: 0
   - name: Walls
     uniqueID: 1638853599
     locked: 0
-  - name: Wall Deco
-    uniqueID: 898890923
+  - name: Player
+    uniqueID: 427029401
     locked: 0
   - name: Visibility
     uniqueID: 1266796857
