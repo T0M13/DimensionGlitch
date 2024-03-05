@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject mouseIndicator;
+    [SerializeField] private GameObject cellIndicator;
+    [SerializeField] private Grid grid;
 
     private void Update()
     {
-        //Vector3 mousePosition = InputManager.Instance.GetSelectedMapPosition();
-        //mouseIndicator.transform.position = mousePosition;
+        Vector3 mousePosition = InputManager.Instance.GetMousePositionInWorld();
+        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+        Vector3 cellCenterPosition = grid.GetCellCenterWorld(gridPosition);
+        cellIndicator.transform.position = cellCenterPosition;
     }
 }
