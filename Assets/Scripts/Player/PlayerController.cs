@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("Debug")]
     [SerializeField][ShowOnly] bool isIdling;
     [SerializeField][ShowOnly] bool isWalking;
+    [SerializeField][ShowOnly] Vector2 lastInput = Vector2.down;
     [SerializeField][ShowOnly] Vector2 currentInput = Vector2.zero;
     [SerializeField][ShowOnly] Vector2 currentMove = Vector2.zero;
 
@@ -23,8 +24,10 @@ public class PlayerController : MonoBehaviour
 
     public bool IsIdling { get => isIdling; set => isIdling = value; }
     public bool IsWalking { get => isWalking; set => isWalking = value; }
+    public Vector2 LastInput => lastInput;
     public Vector2 CurrentInput() => currentInput;
     public Vector2 CurrentMove { get => currentMove; set => currentMove = value; }
+
     public PackedMovementMode GetCurrentMovementMode() => CurrentMovementMode;
     public Stats GetPlayerStats() => PlayerStats;
 
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public void WalkPerformed(InputAction.CallbackContext context)
     {
         currentInput = context.ReadValue<Vector2>();
+        lastInput = currentInput;
 
         IsWalking = true;
         IsIdling = false;

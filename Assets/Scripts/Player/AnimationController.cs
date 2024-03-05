@@ -4,8 +4,11 @@ public class AnimationController : MonoBehaviour
 {
     [SerializeField] Animator MyAnimator;
     [SerializeField] private SpriteRenderer SpriteRenderer;
+    [Header("Animator Parameters")]
     [SerializeField][ShowOnly] private string IdleState = "IsIdle";
     [SerializeField][ShowOnly] private string WalkingState = "IsWalking";
+    [SerializeField][ShowOnly] private string IdlingXValue = "xIdle";
+    [SerializeField][ShowOnly] private string IdlingYValue = "yIdle";
     [SerializeField][ShowOnly] private string WalkingXValue = "xWalk";
     [SerializeField][ShowOnly] private string WalkingYValue = "yWalk";
 
@@ -34,8 +37,12 @@ public class AnimationController : MonoBehaviour
         PlayerController PlayerController = GameManager.Instance.GetPlayerControllerRef;
         PackedMovementMode.EMovementModes CurrentMovementMode = PlayerController.GetCurrentMovementMode().MovementState;
 
-        MyAnimator.SetFloat(WalkingXValue, PlayerController.CurrentMove.x);
-        MyAnimator.SetFloat(WalkingYValue, PlayerController.CurrentMove.y);
+        MyAnimator.SetFloat(IdlingXValue, CachedPlayerController.LastInput.x);
+        MyAnimator.SetFloat(IdlingYValue, CachedPlayerController.LastInput.y);
+
+        MyAnimator.SetFloat(WalkingXValue, CachedPlayerController.CurrentMove.x);
+        MyAnimator.SetFloat(WalkingYValue, CachedPlayerController.CurrentMove.y);
+
 
         switch (CurrentMovementMode)
         {
@@ -63,7 +70,7 @@ public class AnimationController : MonoBehaviour
     {
         MyAnimator.SetBool(HashedIdleState, !walk);
         MyAnimator.SetBool(HashedWalkingState, walk);
- 
+
     }
 
 
