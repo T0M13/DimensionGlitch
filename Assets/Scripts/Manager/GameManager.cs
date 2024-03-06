@@ -8,9 +8,9 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] HUDManager HudPrefab;
     [SerializeField] GameObject PlayerSpawnPosition;
 
-    PlayerController GlobalPlayerControllerRef;
-    InputManager GlobalInputManagerRef;
-    HUDManager PlayerHud;
+    [SerializeField][ShowOnly] PlayerController GlobalPlayerControllerRef;
+    [SerializeField][ShowOnly] InputManager GlobalInputManagerRef;
+    [SerializeField][ShowOnly] HUDManager PlayerHud;
 
     [Header("References")]
     [SerializeField] private VolumeManager volumeManager;

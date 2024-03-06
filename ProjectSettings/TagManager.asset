@@ -16,7 +16,7 @@ TagManager:
   - Volumes
   - Fragment
   - Buildable
-  - 
+  - Crop
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Floor
     uniqueID: 1042224551
+    locked: 0
+  - name: Crops
+    uniqueID: 2882365911
     locked: 0
   - name: Walls
     uniqueID: 1638853599
