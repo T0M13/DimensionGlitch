@@ -15,7 +15,7 @@ TagManager:
   - Enemy
   - Volumes
   - Fragment
-  - 
+  - Buildable
   - 
   - 
   - 
@@ -47,6 +47,9 @@ TagManager:
   - name: Floor
     uniqueID: 1042224551
     locked: 0
+  - name: Walls
+    uniqueID: 1638853599
+    locked: 0
   - name: FloorDeco
     uniqueID: 2220056883
     locked: 0
@@ -56,6 +59,9 @@ TagManager:
   - name: Traps
     uniqueID: 3222018493
     locked: 0
+  - name: Build
+    uniqueID: 3432766469
+    locked: 0
   - name: Effects
     uniqueID: 2580755291
     locked: 0
@@ -64,9 +70,6 @@ TagManager:
     locked: 0
   - name: Portal
     uniqueID: 2402280713
-    locked: 0
-  - name: Walls
-    uniqueID: 1638853599
     locked: 0
   - name: Player
     uniqueID: 427029401

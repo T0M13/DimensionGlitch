@@ -10,14 +10,13 @@ public class InputManager : BaseSingleton<InputManager>
     [SerializeField] IM_Player inputActions;
     [SerializeField] InputActionReference[] SlotbarHotkeys;
     [SerializeField] private Camera mainCamera;
-    [Header("Settings")]
-    [SerializeField] private LayerMask placementLayermask;
     [Header("Debug")]
     [SerializeField][Range(0, 1)] private float gizmosRadius = 0.5f;
+    [SerializeField] private LayerMask buildingLayermask;
     [SerializeField][ShowOnly] private Vector3 lastPosition;
     [SerializeField][ShowOnly] private Vector3 mousePos;
     [SerializeField][ShowOnly] private Vector3 mousePosInWorld;
-
+    public LayerMask BuildingLayermask { get => buildingLayermask; set => buildingLayermask = value; }
 
     public IM_Player InputActions { get => inputActions; set => inputActions = value; }
     public Vector3 GetMousePositionInWorld() => mousePosInWorld;
@@ -75,7 +74,6 @@ public class InputManager : BaseSingleton<InputManager>
     
     private void OnValidate()
     {
-        //inputActions = new IM_Player();
         mainCamera = Camera.main;
     }
 
@@ -92,6 +90,7 @@ public class InputManager : BaseSingleton<InputManager>
         mousePosInWorld.z = 0;
     }
     
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
