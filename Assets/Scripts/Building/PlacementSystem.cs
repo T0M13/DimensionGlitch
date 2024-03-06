@@ -11,6 +11,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] private Tilemap tilemapCrops;
 
     [SerializeField] private GameObject selectedCropPrefab;
+    private HashSet<Vector3Int> occupiedTiles = new HashSet<Vector3Int>();
     [SerializeField][ShowOnly] private PlayerController CachedPlayerController = null;
 
     [Header("Debug")]
@@ -38,9 +39,6 @@ public class PlacementSystem : MonoBehaviour
 
         cellIndicator.transform.position = mouseHoverCellPosition;
 
-        float distanceToMouse = Vector3.Distance(playerPosition, mousePosition);
-        int tileDistance = Mathf.Abs(gridPosition.x - playerGridPosition.x) + Mathf.Abs(gridPosition.y - playerGridPosition.y);
-
         Vector3Int gridPositionDifference = gridPosition - playerGridPosition;
         bool isAdjacentOrDiagonal = Mathf.Abs(gridPositionDifference.x) <= CachedPlayerController.GetPlayerStats().BuildingRadius && Mathf.Abs(gridPositionDifference.y) <= CachedPlayerController.GetPlayerStats().BuildingRadius;
 
@@ -65,22 +63,25 @@ public class PlacementSystem : MonoBehaviour
     {
         StatefulTile tile = tilemapBuildable.GetTile<StatefulTile>(gridPosition);
 
-        if (tile != null)
+        if (tile != null && tile.canBuildOn && !occupiedTiles.Contains(gridPosition))
         {
-            return tile.canBuildOn;
+            return true;
         }
 
         return false;
     }
 
+
     private void PlaceCropAtPosition(Vector3 position)
     {
-        GameObject newCrop = Instantiate(selectedCropPrefab, position, Quaternion.identity);
+        Vector3Int gridPosition = grid.WorldToCell(position);
 
+        GameObject newCrop = Instantiate(selectedCropPrefab, position, Quaternion.identity);
         newCrop.transform.SetParent(tilemapCrops.transform);
 
-        // Here you might also initialize any specific crop data or scripts
+        occupiedTiles.Add(gridPosition);
     }
+
 
     private void OnDrawGizmos()
     {
