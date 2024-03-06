@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4856677469131246988}
   - component: {fileID: 2898256376286033036}
   - component: {fileID: 901631767725473432}
+  - component: {fileID: 1513081718165059143}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -126,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealhtPoints: 3
-  buildingRadius: 1.5
+  buildingRadius: 1
   MyFraction: 0
   InvincibilityTime: 1
   TimesToBlink: 8
@@ -372,3 +373,15 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!210 &1513081718165059143
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893319486378076228}
+  m_Enabled: 1
+  m_SortingLayerID: -1412601385
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

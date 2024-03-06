@@ -44,39 +44,18 @@ TagManager:
   - name: Water
     uniqueID: 2563375577
     locked: 0
+  - name: Walls
+    uniqueID: 1638853599
+    locked: 0
   - name: Floor
     uniqueID: 1042224551
     locked: 0
   - name: Crops
     uniqueID: 2882365911
     locked: 0
-  - name: Walls
-    uniqueID: 1638853599
-    locked: 0
-  - name: FloorDeco
-    uniqueID: 2220056883
-    locked: 0
   - name: Items
     uniqueID: 1270261013
     locked: 0
-  - name: Traps
-    uniqueID: 3222018493
-    locked: 0
-  - name: Build
-    uniqueID: 3432766469
-    locked: 0
-  - name: Effects
-    uniqueID: 2580755291
-    locked: 0
-  - name: Fragments
-    uniqueID: 709489977
-    locked: 0
-  - name: Portal
-    uniqueID: 2402280713
-    locked: 0
   - name: Player
     uniqueID: 427029401
-    locked: 0
-  - name: Visibility
-    uniqueID: 1266796857
     locked: 0

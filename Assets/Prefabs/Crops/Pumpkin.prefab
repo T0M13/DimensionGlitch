@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2389173239092705736}
   - component: {fileID: 4615535135392339382}
   - component: {fileID: 58378335349734433}
+  - component: {fileID: 4961999032119969320}
   m_Layer: 11
   m_Name: Pumpkin
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -1412601385
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -954484688, guid: 19493d3164389314eb65631c66681f8c, type: 3}
+  m_Sprite: {fileID: -1417917033, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,16 +102,64 @@ MonoBehaviour:
   - duration: 10
     growthStage: 0
     sprite: {fileID: -954484688, guid: 19493d3164389314eb65631c66681f8c, type: 3}
+    colliderActive: 0
+    colliderSize: {x: 0.0001, y: 0.0001}
+    colliderOffset: {x: 0, y: 0}
   - duration: 8
     growthStage: 100
     sprite: {fileID: -878915554, guid: 19493d3164389314eb65631c66681f8c, type: 3}
+    colliderActive: 1
+    colliderSize: {x: 0.4028493, y: 0.3257839}
+    colliderOffset: {x: 0.06209938, y: -0.209957}
   - duration: 6
     growthStage: 100
     sprite: {fileID: 588456575, guid: 19493d3164389314eb65631c66681f8c, type: 3}
-  - duration: 0
+    colliderActive: 1
+    colliderSize: {x: 0.6660352, y: 0.3849306}
+    colliderOffset: {x: 0.08132116, y: -0.180386}
+  - duration: 1
     growthStage: 200
     sprite: {fileID: -1417917033, guid: 19493d3164389314eb65631c66681f8c, type: 3}
+    colliderActive: 1
+    colliderSize: {x: 0.923308, y: 0.6185482}
+    colliderOffset: {x: 0.06801462, y: -0.06358086}
   spriteRenderer: {fileID: 4615535135392339382}
   currentState: 0
+  capsuleCollider: {fileID: 4961999032119969320}
   currentStateIndex: 0
   stateTimer: 0
+--- !u!70 &4961999032119969320
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345312663257579663}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.0001, y: 0.0001}
+  m_Direction: 1
