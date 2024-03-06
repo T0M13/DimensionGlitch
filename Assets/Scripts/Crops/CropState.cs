@@ -1,8 +1,6 @@
-using UnityEngine;
-
-[System.Serializable] 
-public struct CropState
+public enum CropState
 {
-    public float duration; 
-    public Sprite sprite;
+    Seed = 0,
+    Growing = 100,
+    Mature = 200,
 }

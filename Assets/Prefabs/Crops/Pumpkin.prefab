@@ -99,13 +99,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   states:
   - duration: 10
+    growthStage: 0
     sprite: {fileID: -954484688, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   - duration: 8
+    growthStage: 100
     sprite: {fileID: -878915554, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   - duration: 6
+    growthStage: 100
     sprite: {fileID: 588456575, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   - duration: 0
+    growthStage: 200
     sprite: {fileID: -1417917033, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   spriteRenderer: {fileID: 4615535135392339382}
+  currentState: 0
   currentStateIndex: 0
   stateTimer: 0

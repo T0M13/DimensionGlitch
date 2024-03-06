@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Crop : MonoBehaviour
 {
-    [SerializeField] private CropState[] states;
+    [SerializeField] private CropGrowthState[] states;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField][ShowOnly] private CropState currentState = CropState.Seed;
 
     [SerializeField][ShowOnly] private int currentStateIndex = 0;
     [SerializeField][ShowOnly] private float stateTimer = 0;
@@ -42,6 +43,7 @@ public class Crop : MonoBehaviour
     private void UpdateSprite()
     {
         SpriteRenderer.sprite = states[currentStateIndex].sprite;
+        currentState = states[currentStateIndex].growthStage;
     }
 
     private IEnumerator UpdateStateCoroutine()
