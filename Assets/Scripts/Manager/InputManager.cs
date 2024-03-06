@@ -8,6 +8,7 @@ public class InputManager : BaseSingleton<InputManager>
 {
     [Header("References")]
     [SerializeField] IM_Player inputActions;
+    [SerializeField] InputActionReference[] SlotbarHotkeys;
     [SerializeField] private Camera mainCamera;
     [Header("Settings")]
     [SerializeField] private LayerMask placementLayermask;
@@ -21,18 +22,42 @@ public class InputManager : BaseSingleton<InputManager>
     public IM_Player InputActions { get => inputActions; set => inputActions = value; }
     public Vector3 GetMousePositionInWorld() => mousePosInWorld;
 
-    private void OnEnable()
+    private void Start()
     {
+        if(!Application.isPlaying) return;
+        
         InputActions.Enable();
+        EnableSlotbarHotkeys();
         InputActions.MouseControls.MousePosition.performed += MousePositionPerformed;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
+        if(!Application.isPlaying) return;
+        
         InputActions.Disable();
+        DisableSlotbarHotkeys();
         InputActions.MouseControls.MousePosition.performed -= MousePositionPerformed;
 
+    }
+
+    //Enzo M
+    void EnableSlotbarHotkeys()
+    {
+        foreach (var SlotbarHotkey in SlotbarHotkeys)
+        {
+            SlotbarHotkey.action.Enable();
+        }
+    }
+
+    //Enzo M
+    void DisableSlotbarHotkeys()
+    {
+        foreach (var SlotbarHotkey in SlotbarHotkeys)
+        {
+            SlotbarHotkey.action.Disable();
+        }
     }
 
     private void OnValidate()
@@ -53,19 +78,7 @@ public class InputManager : BaseSingleton<InputManager>
         mousePosInWorld = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mainCamera.nearClipPlane));
         mousePosInWorld.z = 0;
     }
-
-    //public Vector3 GetSelectedMapPosition()
-    //{
-    //    mousePos.z = mainCamera.nearClipPlane;
-    //    Ray ray = mainCamera.ScreenPointToRay(mousePos);
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(ray, out hit, 100, placementLayermask))
-    //    {
-    //        lastPosition = hit.point;
-    //    }
-    //    return lastPosition;
-    //}
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

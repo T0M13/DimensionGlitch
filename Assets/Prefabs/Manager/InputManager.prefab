@@ -44,5 +44,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e37d40640ca4f4785982fff47e3a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerWalk: {fileID: -2754104354122851769, guid: b922c5a32ea404c4f924935836990aea, type: 3}
-  PlayerDash: {fileID: -7959165094267984536, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  SlotbarHotkeys:
+  - {fileID: -6708305118256221940, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: 5238822805354543993, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: -9218476353514229819, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: -2613635124867327631, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: 2907995806132713485, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: 5007403386453297772, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: -229782707646120817, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: -7855391072122172570, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  - {fileID: -2247611202533711116, guid: b922c5a32ea404c4f924935836990aea, type: 3}
+  mainCamera: {fileID: 0}
+  placementLayermask:
+    serializedVersion: 2
+    m_Bits: 0
+  gizmosRadius: 0.5
+  lastPosition: {x: 0, y: 0, z: 0}
+  mousePos: {x: 0, y: 0, z: 0}
+  mousePosInWorld: {x: 0, y: 0, z: 0}

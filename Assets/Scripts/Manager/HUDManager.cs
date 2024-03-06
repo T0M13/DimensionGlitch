@@ -4,34 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class HUDManager : MonoBehaviour
+public class HUDManager : BaseSingleton<HUDManager>
 {
    [SerializeField] HealthBar PlayerHealthBar;
    [SerializeField] FragmentShiftTimer FragmentShiftTimer;
-   [SerializeField] FragmentShiftPopUp FragmentShiftPopUp;
-   [SerializeField] GameEndDisplayScreen GameOverScreen;
-   [SerializeField] GameEndDisplayScreen WinScreen;
-   [SerializeField] FragmentCounter FragmentCounter;
-
+   [SerializeField] Inventory PlayerInventory;
+   
    FragmentController FragmentController;
    PlayerController PlayerController;
    Stats PlayerStats;
+
+   public ref Inventory GetPlayerInventory() => ref PlayerInventory;
    
    void OnEnable()
    {
       GameManager GameManager = GameManager.Instance;
       
       PlayerController = GameManager.GetPlayerControllerRef;
-      PlayerStats = PlayerController.GetPlayerStats();
-      
+
       //FragmentController.onFragmentShifting.AddListener(FragmentShiftPopUp.TriggerAnimation);
       //FragmentController.onGameOverVictory.AddListener(EnableWinScreen);
-      PlayerStats.OnDamage += PlayerHealthBar.DeactivateHearts;
-      PlayerStats.OnDeath += EnableGameOverScreen;
-      PlayerStats.OnDeath += DisablePlayerHud;
-      
-      GameOverScreen.gameObject.SetActive(false);
-      WinScreen.gameObject.SetActive(false);
    }
 
    private void OnDisable()
@@ -39,37 +31,15 @@ public class HUDManager : MonoBehaviour
       UnbindEvents();
    }
    
-   void EnableGameOverScreen()
-   {
-      if (WinScreen.IsScreenActive()) return;
-      
-      GameOverScreen.gameObject.SetActive(true);
-      GameOverScreen.DisplayScreen();
-   }
-
-   void EnableWinScreen()
-   {
-      if(GameOverScreen.IsScreenActive()) return;
-      
-      WinScreen.gameObject.SetActive(true);
-      WinScreen.DisplayScreen();
-   }
    void DisablePlayerHud()
    {
       PlayerHealthBar.gameObject.SetActive(false);
       FragmentShiftTimer.gameObject.SetActive(false);
-      FragmentShiftPopUp.gameObject.SetActive(false);
-      FragmentCounter.gameObject.SetActive(false);
       UnbindEvents();
    }
 
    void UnbindEvents()
    {
-      PlayerStats.OnDamage -= PlayerHealthBar.DeactivateHearts;
-      PlayerStats.OnDeath -= DisablePlayerHud;
-      PlayerStats.OnDeath -= EnableGameOverScreen;
-      //FragmentController.onFragmentShifting.RemoveListener(FragmentShiftPopUp.TriggerAnimation);
-      //FragmentController.onGameOverVictory.RemoveListener(EnableWinScreen);
    }
    void DisableHUD()
    {

@@ -66,7 +66,7 @@ public class TweenManager : BaseSingleton<TweenManager>
         float CurrentAnimTime = ReverseTween ? TweenRequest.AnimationTime : 0.0f;
         float AnimationDuration = TweenRequest.AnimationTime;
         
-        while ((!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f))
+        while (ContinueAnimation(CurrentAnimTime, AnimationDuration, ReverseTween))
         {
             float InterpValue = CurrentAnimTime / AnimationDuration;
             CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
@@ -85,7 +85,7 @@ public class TweenManager : BaseSingleton<TweenManager>
         float CurrentAnimTime = ReverseTween ? TweenRequest.AnimationTime : 0.0f;
         float AnimationDuration = TweenRequest.AnimationTime;
         
-        while ((!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f))
+        while (ContinueAnimation(CurrentAnimTime, AnimationDuration, ReverseTween))
         {
             float InterpValue = CurrentAnimTime / AnimationDuration;
             CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
@@ -110,7 +110,7 @@ public class TweenManager : BaseSingleton<TweenManager>
         float CurrentAnimTime = ReverseTween ? TweenRequest.AnimationTime : 0.0f;
         float AnimationDuration = TweenRequest.AnimationTime;
        
-        while ((!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f))
+        while (ContinueAnimation(CurrentAnimTime, AnimationDuration, ReverseTween))
         {
             float InterpValue = CurrentAnimTime / AnimationDuration;
             CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
@@ -125,11 +125,19 @@ public class TweenManager : BaseSingleton<TweenManager>
         TweenRequest.OnTweenFinished?.Invoke();
     }
 
+#region Helper
+
+    bool ContinueAnimation(float CurrentAnimTime, float AnimationDuration, bool ReverseTween)
+    {
+        return (!ReverseTween && CurrentAnimTime < AnimationDuration) || (ReverseTween && CurrentAnimTime > 0.0f);
+    }
     float GetAnimTimeIncrement<T>(TweenRequest<T> TweenRequest, float CurrentInterpValue, bool ReverseTween)
     {
         float Increment = ReverseTween ? -Time.deltaTime * TweenRequest.EaseCurve.Evaluate(CurrentInterpValue) * TweenRequest.AnimationSpeed : Time.deltaTime * TweenRequest.EaseCurve.Evaluate(CurrentInterpValue) * TweenRequest.AnimationSpeed;
-        
+            
         return Increment;
     }
-  
+    
+#endregion
+   
 }

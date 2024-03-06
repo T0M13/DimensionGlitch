@@ -35,6 +35,87 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SlotbarHotkey1"",
+                    ""type"": ""Button"",
+                    ""id"": ""c398d692-6329-490d-b094-a7bc2037f061"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey2"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a402bf2-90e4-4743-8760-b51f5e9530f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey3"",
+                    ""type"": ""Button"",
+                    ""id"": ""d989c809-973e-4349-a442-f3100918b708"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey4"",
+                    ""type"": ""Button"",
+                    ""id"": ""65fdf035-9476-4d34-8f37-2411640e3de0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey5"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c70f2c6-b176-472d-abed-439d852d77b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey6"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ad24174-34d2-47b0-be95-28ef60fe9fd1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey7"",
+                    ""type"": ""Button"",
+                    ""id"": ""fc53ed2d-59be-4895-8a84-69a0c8e3b0c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey8"",
+                    ""type"": ""Button"",
+                    ""id"": ""8152b8d9-01d2-412f-a12a-3db56987f47a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlotbarHotkey9"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae843314-824c-40a2-a9f4-09a8cb5835f0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +173,105 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80a56404-6c5a-4a30-a38a-a3e41e642726"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30d70372-addb-4a3d-a84b-48ee280e554e"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e913470-51eb-4e0d-8122-0b3535ecab46"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40b37906-a465-49d0-ab2d-bb8551d0847e"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""812c1b9f-26dc-4297-91ae-07a4691a0fb5"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4f22ba0-3b78-4d90-9342-f205e37d3baa"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65e5a64a-df42-4e85-b1fe-8e2db56db45b"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a66a64d1-c653-44a8-b665-65b613fdb801"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52601f6b-aad6-47a2-811f-d3d9feddbfae"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotbarHotkey9"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -129,6 +309,15 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         // PlayerControls
         m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
         m_PlayerControls_Walk = m_PlayerControls.FindAction("Walk", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey1 = m_PlayerControls.FindAction("SlotbarHotkey1", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey2 = m_PlayerControls.FindAction("SlotbarHotkey2", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey3 = m_PlayerControls.FindAction("SlotbarHotkey3", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey4 = m_PlayerControls.FindAction("SlotbarHotkey4", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey5 = m_PlayerControls.FindAction("SlotbarHotkey5", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey6 = m_PlayerControls.FindAction("SlotbarHotkey6", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey7 = m_PlayerControls.FindAction("SlotbarHotkey7", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey8 = m_PlayerControls.FindAction("SlotbarHotkey8", throwIfNotFound: true);
+        m_PlayerControls_SlotbarHotkey9 = m_PlayerControls.FindAction("SlotbarHotkey9", throwIfNotFound: true);
         // MouseControls
         m_MouseControls = asset.FindActionMap("MouseControls", throwIfNotFound: true);
         m_MouseControls_MousePosition = m_MouseControls.FindAction("MousePosition", throwIfNotFound: true);
@@ -194,11 +383,29 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerControls;
     private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
     private readonly InputAction m_PlayerControls_Walk;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey1;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey2;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey3;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey4;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey5;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey6;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey7;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey8;
+    private readonly InputAction m_PlayerControls_SlotbarHotkey9;
     public struct PlayerControlsActions
     {
         private @IM_Player m_Wrapper;
         public PlayerControlsActions(@IM_Player wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_PlayerControls_Walk;
+        public InputAction @SlotbarHotkey1 => m_Wrapper.m_PlayerControls_SlotbarHotkey1;
+        public InputAction @SlotbarHotkey2 => m_Wrapper.m_PlayerControls_SlotbarHotkey2;
+        public InputAction @SlotbarHotkey3 => m_Wrapper.m_PlayerControls_SlotbarHotkey3;
+        public InputAction @SlotbarHotkey4 => m_Wrapper.m_PlayerControls_SlotbarHotkey4;
+        public InputAction @SlotbarHotkey5 => m_Wrapper.m_PlayerControls_SlotbarHotkey5;
+        public InputAction @SlotbarHotkey6 => m_Wrapper.m_PlayerControls_SlotbarHotkey6;
+        public InputAction @SlotbarHotkey7 => m_Wrapper.m_PlayerControls_SlotbarHotkey7;
+        public InputAction @SlotbarHotkey8 => m_Wrapper.m_PlayerControls_SlotbarHotkey8;
+        public InputAction @SlotbarHotkey9 => m_Wrapper.m_PlayerControls_SlotbarHotkey9;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -211,6 +418,33 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
+            @SlotbarHotkey1.started += instance.OnSlotbarHotkey1;
+            @SlotbarHotkey1.performed += instance.OnSlotbarHotkey1;
+            @SlotbarHotkey1.canceled += instance.OnSlotbarHotkey1;
+            @SlotbarHotkey2.started += instance.OnSlotbarHotkey2;
+            @SlotbarHotkey2.performed += instance.OnSlotbarHotkey2;
+            @SlotbarHotkey2.canceled += instance.OnSlotbarHotkey2;
+            @SlotbarHotkey3.started += instance.OnSlotbarHotkey3;
+            @SlotbarHotkey3.performed += instance.OnSlotbarHotkey3;
+            @SlotbarHotkey3.canceled += instance.OnSlotbarHotkey3;
+            @SlotbarHotkey4.started += instance.OnSlotbarHotkey4;
+            @SlotbarHotkey4.performed += instance.OnSlotbarHotkey4;
+            @SlotbarHotkey4.canceled += instance.OnSlotbarHotkey4;
+            @SlotbarHotkey5.started += instance.OnSlotbarHotkey5;
+            @SlotbarHotkey5.performed += instance.OnSlotbarHotkey5;
+            @SlotbarHotkey5.canceled += instance.OnSlotbarHotkey5;
+            @SlotbarHotkey6.started += instance.OnSlotbarHotkey6;
+            @SlotbarHotkey6.performed += instance.OnSlotbarHotkey6;
+            @SlotbarHotkey6.canceled += instance.OnSlotbarHotkey6;
+            @SlotbarHotkey7.started += instance.OnSlotbarHotkey7;
+            @SlotbarHotkey7.performed += instance.OnSlotbarHotkey7;
+            @SlotbarHotkey7.canceled += instance.OnSlotbarHotkey7;
+            @SlotbarHotkey8.started += instance.OnSlotbarHotkey8;
+            @SlotbarHotkey8.performed += instance.OnSlotbarHotkey8;
+            @SlotbarHotkey8.canceled += instance.OnSlotbarHotkey8;
+            @SlotbarHotkey9.started += instance.OnSlotbarHotkey9;
+            @SlotbarHotkey9.performed += instance.OnSlotbarHotkey9;
+            @SlotbarHotkey9.canceled += instance.OnSlotbarHotkey9;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -218,6 +452,33 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
+            @SlotbarHotkey1.started -= instance.OnSlotbarHotkey1;
+            @SlotbarHotkey1.performed -= instance.OnSlotbarHotkey1;
+            @SlotbarHotkey1.canceled -= instance.OnSlotbarHotkey1;
+            @SlotbarHotkey2.started -= instance.OnSlotbarHotkey2;
+            @SlotbarHotkey2.performed -= instance.OnSlotbarHotkey2;
+            @SlotbarHotkey2.canceled -= instance.OnSlotbarHotkey2;
+            @SlotbarHotkey3.started -= instance.OnSlotbarHotkey3;
+            @SlotbarHotkey3.performed -= instance.OnSlotbarHotkey3;
+            @SlotbarHotkey3.canceled -= instance.OnSlotbarHotkey3;
+            @SlotbarHotkey4.started -= instance.OnSlotbarHotkey4;
+            @SlotbarHotkey4.performed -= instance.OnSlotbarHotkey4;
+            @SlotbarHotkey4.canceled -= instance.OnSlotbarHotkey4;
+            @SlotbarHotkey5.started -= instance.OnSlotbarHotkey5;
+            @SlotbarHotkey5.performed -= instance.OnSlotbarHotkey5;
+            @SlotbarHotkey5.canceled -= instance.OnSlotbarHotkey5;
+            @SlotbarHotkey6.started -= instance.OnSlotbarHotkey6;
+            @SlotbarHotkey6.performed -= instance.OnSlotbarHotkey6;
+            @SlotbarHotkey6.canceled -= instance.OnSlotbarHotkey6;
+            @SlotbarHotkey7.started -= instance.OnSlotbarHotkey7;
+            @SlotbarHotkey7.performed -= instance.OnSlotbarHotkey7;
+            @SlotbarHotkey7.canceled -= instance.OnSlotbarHotkey7;
+            @SlotbarHotkey8.started -= instance.OnSlotbarHotkey8;
+            @SlotbarHotkey8.performed -= instance.OnSlotbarHotkey8;
+            @SlotbarHotkey8.canceled -= instance.OnSlotbarHotkey8;
+            @SlotbarHotkey9.started -= instance.OnSlotbarHotkey9;
+            @SlotbarHotkey9.performed -= instance.OnSlotbarHotkey9;
+            @SlotbarHotkey9.canceled -= instance.OnSlotbarHotkey9;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -284,6 +545,15 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     public interface IPlayerControlsActions
     {
         void OnWalk(InputAction.CallbackContext context);
+        void OnSlotbarHotkey1(InputAction.CallbackContext context);
+        void OnSlotbarHotkey2(InputAction.CallbackContext context);
+        void OnSlotbarHotkey3(InputAction.CallbackContext context);
+        void OnSlotbarHotkey4(InputAction.CallbackContext context);
+        void OnSlotbarHotkey5(InputAction.CallbackContext context);
+        void OnSlotbarHotkey6(InputAction.CallbackContext context);
+        void OnSlotbarHotkey7(InputAction.CallbackContext context);
+        void OnSlotbarHotkey8(InputAction.CallbackContext context);
+        void OnSlotbarHotkey9(InputAction.CallbackContext context);
     }
     public interface IMouseControlsActions
     {

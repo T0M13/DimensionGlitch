@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 901631767725473432}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,6 +112,7 @@ MonoBehaviour:
   lastInput: {x: 0, y: -1}
   currentInput: {x: 0, y: 0}
   currentMove: {x: 0, y: 0}
+  CachedInputManager: {fileID: 0}
 --- !u!114 &754652138578632799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +368,6 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 8b586171-2036-4db1-a00e-89652b6d31a9
+  m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
