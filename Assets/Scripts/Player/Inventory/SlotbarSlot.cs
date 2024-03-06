@@ -24,11 +24,15 @@ public class SlotbarSlot : InventorySlot
     {
         UseableItem UseableItem = ItemDataBaseManager.Instance.GetItemFromDataBase(CurrentItem.ItemID) as UseableItem;
         
-        if (UseableItem)
+        if (UseableItem && UseableItem.ShouldRemoveOnInitialUse())
         {
             UseableItem.OnUseItem(GameManager.Instance.GetPlayerControllerRef.gameObject);
 
             RemoveCurrentItem(1);
+        }
+        else if (UseableItem)
+        {
+            UseableItem.OnUseItem(GameManager.Instance.GetPlayerControllerRef.gameObject);
         }
     }
 }

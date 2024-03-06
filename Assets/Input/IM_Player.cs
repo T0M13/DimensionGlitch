@@ -302,6 +302,65 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ComboKeys"",
+            ""id"": ""47d55bd4-6309-4313-b53a-429640d42628"",
+            ""actions"": [
+                {
+                    ""name"": ""ShiftComboKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""89b9bd74-182f-4d29-82c5-d5d5892e793d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AltComboKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""43d9a471-5027-4f1f-b53e-b827347ef827"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""91785a04-0da5-44d3-aed9-fae2071c5c7a"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftComboKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f41ad70-f097-406b-9bef-bc4d035c5304"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftComboKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""971f0c79-4c86-4421-b0e0-1cd123f34390"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AltComboKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -321,6 +380,10 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         // MouseControls
         m_MouseControls = asset.FindActionMap("MouseControls", throwIfNotFound: true);
         m_MouseControls_MousePosition = m_MouseControls.FindAction("MousePosition", throwIfNotFound: true);
+        // ComboKeys
+        m_ComboKeys = asset.FindActionMap("ComboKeys", throwIfNotFound: true);
+        m_ComboKeys_ShiftComboKey = m_ComboKeys.FindAction("ShiftComboKey", throwIfNotFound: true);
+        m_ComboKeys_AltComboKey = m_ComboKeys.FindAction("AltComboKey", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -542,6 +605,60 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         }
     }
     public MouseControlsActions @MouseControls => new MouseControlsActions(this);
+
+    // ComboKeys
+    private readonly InputActionMap m_ComboKeys;
+    private List<IComboKeysActions> m_ComboKeysActionsCallbackInterfaces = new List<IComboKeysActions>();
+    private readonly InputAction m_ComboKeys_ShiftComboKey;
+    private readonly InputAction m_ComboKeys_AltComboKey;
+    public struct ComboKeysActions
+    {
+        private @IM_Player m_Wrapper;
+        public ComboKeysActions(@IM_Player wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ShiftComboKey => m_Wrapper.m_ComboKeys_ShiftComboKey;
+        public InputAction @AltComboKey => m_Wrapper.m_ComboKeys_AltComboKey;
+        public InputActionMap Get() { return m_Wrapper.m_ComboKeys; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ComboKeysActions set) { return set.Get(); }
+        public void AddCallbacks(IComboKeysActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ComboKeysActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ComboKeysActionsCallbackInterfaces.Add(instance);
+            @ShiftComboKey.started += instance.OnShiftComboKey;
+            @ShiftComboKey.performed += instance.OnShiftComboKey;
+            @ShiftComboKey.canceled += instance.OnShiftComboKey;
+            @AltComboKey.started += instance.OnAltComboKey;
+            @AltComboKey.performed += instance.OnAltComboKey;
+            @AltComboKey.canceled += instance.OnAltComboKey;
+        }
+
+        private void UnregisterCallbacks(IComboKeysActions instance)
+        {
+            @ShiftComboKey.started -= instance.OnShiftComboKey;
+            @ShiftComboKey.performed -= instance.OnShiftComboKey;
+            @ShiftComboKey.canceled -= instance.OnShiftComboKey;
+            @AltComboKey.started -= instance.OnAltComboKey;
+            @AltComboKey.performed -= instance.OnAltComboKey;
+            @AltComboKey.canceled -= instance.OnAltComboKey;
+        }
+
+        public void RemoveCallbacks(IComboKeysActions instance)
+        {
+            if (m_Wrapper.m_ComboKeysActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IComboKeysActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ComboKeysActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ComboKeysActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ComboKeysActions @ComboKeys => new ComboKeysActions(this);
     public interface IPlayerControlsActions
     {
         void OnWalk(InputAction.CallbackContext context);
@@ -558,5 +675,10 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     public interface IMouseControlsActions
     {
         void OnMousePosition(InputAction.CallbackContext context);
+    }
+    public interface IComboKeysActions
+    {
+        void OnShiftComboKey(InputAction.CallbackContext context);
+        void OnAltComboKey(InputAction.CallbackContext context);
     }
 }

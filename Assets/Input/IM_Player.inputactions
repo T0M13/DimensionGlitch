@@ -280,6 +280,65 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ComboKeys",
+            "id": "47d55bd4-6309-4313-b53a-429640d42628",
+            "actions": [
+                {
+                    "name": "ShiftComboKey",
+                    "type": "Button",
+                    "id": "89b9bd74-182f-4d29-82c5-d5d5892e793d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AltComboKey",
+                    "type": "Button",
+                    "id": "43d9a471-5027-4f1f-b53e-b827347ef827",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "91785a04-0da5-44d3-aed9-fae2071c5c7a",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftComboKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1f41ad70-f097-406b-9bef-bc4d035c5304",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftComboKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "971f0c79-4c86-4421-b0e0-1cd123f34390",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltComboKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

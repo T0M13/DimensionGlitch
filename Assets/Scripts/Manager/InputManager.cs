@@ -61,6 +61,18 @@ public class InputManager : BaseSingleton<InputManager>
         }
     }
 
+    //Enzo M
+    public bool IsShiftPressed()
+    {
+        return inputActions.ComboKeys.ShiftComboKey.IsPressed();
+    }
+    
+    //Enzo M
+    public bool IsAltPressed()
+    {
+        return InputActions.ComboKeys.AltComboKey.IsPressed();
+    }
+    
     private void OnValidate()
     {
         //inputActions = new IM_Player();
@@ -89,7 +101,5 @@ public class InputManager : BaseSingleton<InputManager>
     private void MousePositionPerformed(InputAction.CallbackContext context)
     {
         mousePos = context.ReadValue<Vector2>();
-
-
     }
 }

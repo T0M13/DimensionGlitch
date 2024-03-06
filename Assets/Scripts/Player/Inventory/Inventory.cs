@@ -54,17 +54,19 @@ public class Inventory : MonoBehaviour
     public bool TryFindSlotsWithItem(int ItemId, out List<InventorySlot> OutInventorySlots)
     {
         OutInventorySlots = new List<InventorySlot>();
+        bool FoundSlotWithSameItem = false;
         
         foreach (var InventorySlot in InventorySlots)
         {
             if (InventorySlot.HasSameItem(ItemId))
             {
-               OutInventorySlots.Add(InventorySlot);
-                return true;
+                OutInventorySlots.Add(InventorySlot);
+                FoundSlotWithSameItem = true;
+                Debug.Log("Slot with same item added");
             }
         }
 
-        return false;
+        return FoundSlotWithSameItem;
     }
     
 #region InventoryIntitialization

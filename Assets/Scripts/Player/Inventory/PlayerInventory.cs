@@ -16,29 +16,43 @@ public class PlayerInventory : Inventory
             if (InventorySlot is SlotbarSlot)
             {
                 //Bind to on double click to move the item from the slotbar slot to the 
-                InventorySlot.OnDoubleClickSlot += OnDoubleClickSlotbarSlot;
+                InventorySlot.OnDoubleClickSlot += QuickAssignToInventory;
+                InventorySlot.OnMouseShiftClickSlot += QuickAssignToInventory;
+                InventorySlot.OnMouseAltClickSlot += SplitStack;
             }
             else if (InventorySlot is InventorySlot)
             {
-                InventorySlot.OnDoubleClickSlot += OnDoubleClickInventorySlot;
+                InventorySlot.OnDoubleClickSlot += QuickAssignToSlotbar;
+                InventorySlot.OnMouseShiftClickSlot += QuickAssignToSlotbar;
+                InventorySlot.OnMouseAltClickSlot += SplitStack;
                 Debug.Log("Inventory Slots");
             }
         }
     }
 
-    void OnDoubleClickSlotbarSlot(InventorySlot InventorySlot)
+    void SplitStack(InventorySlot InventorySlot)
+    {
+        if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
+        if(InventorySlot.GetCurrentItemAmount() <= 1) return;
+
+        Item ClickedSlotItem = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
+        int SplitStackAmount = Mathf.RoundToInt(Mathf.Floor(InventorySlot.GetCurrentItemAmount() * 0.5f));
+
+        if (TryFindFreeSlot(out InventorySlot FreeSlotForStack))
+        {
+            FreeSlotForStack.SetItem(ClickedSlotItem, SplitStackAmount);
+            InventorySlot.RemoveCurrentItem(SplitStackAmount);
+        }
+    }
+    void QuickAssignToInventory(InventorySlot InventorySlot)
     {
         if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
         
         Debug.Log("Double clicked slotbar slot");
         Item ItemToAdd = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
 
-        if (TryFindFreeSlot(out InventorySlot FreeSlot))
-        {
-            FreeSlot.SetItem(ItemToAdd, InventorySlot.GetCurrentItemAmount());
-            InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
-        }
-        else if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> SlotsWithSameItem))
+        //If the count is bigger then one of the found slots it means that we have found a slot except ourselve that contains the item
+        if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> SlotsWithSameItem) && SlotsWithSameItem.Count > 1)
         {
             foreach (var SlotWithSameItem in SlotsWithSameItem)
             {
@@ -50,9 +64,14 @@ public class PlayerInventory : Inventory
                 }
             }
         }
+        else if (TryFindFreeSlot(out InventorySlot FreeSlot))
+        {
+            FreeSlot.SetItem(ItemToAdd, InventorySlot.GetCurrentItemAmount());
+            InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
+        }
     }
 
-    void OnDoubleClickInventorySlot(InventorySlot InventorySlot)
+    void QuickAssignToSlotbar(InventorySlot InventorySlot)
     {
         if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
         

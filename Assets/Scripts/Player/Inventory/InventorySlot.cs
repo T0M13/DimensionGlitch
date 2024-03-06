@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
@@ -10,11 +12,15 @@ public class InventorySlot : MonoBehaviour
    [SerializeField] protected int AmountOfItems = 0;
    [SerializeField] protected ItemData CurrentItem;
    [SerializeField] Image InventorySlotDisplay;
+   [FormerlySerializedAs("AmountText")] [SerializeField] TextMeshProUGUI AmountOfItemsDisplay;
    [SerializeField] EventTrigger EventTrigger;
 
    float LastTimeClicked = 0.0f;
    Sprite DefaultSprite = null;
    public event Action<InventorySlot> OnDoubleClickSlot;
+   public event Action<InventorySlot> OnMouseShiftClickSlot;
+   public event Action<InventorySlot> OnMouseAltClickSlot;
+   
    Coroutine DoubleClickRoutine = null;
    
    public ItemData GetCurrentItem() => CurrentItem;
@@ -45,6 +51,7 @@ public class InventorySlot : MonoBehaviour
       if (NewItemData.ItemID == CurrentItem.ItemID)
       {
          AmountOfItems += Amount;
+         AmountOfItemsDisplay.SetText(AmountOfItems.ToString());
          
          if (MouseData.CurrentDrag.IsValid())
          {
@@ -65,6 +72,7 @@ public class InventorySlot : MonoBehaviour
    public void AddToCurrentItem(int Amount)
    {
       AmountOfItems += Amount;
+      AmountOfItemsDisplay.SetText(AmountOfItems.ToString());
    }
 
    /// <summary>
@@ -74,7 +82,8 @@ public class InventorySlot : MonoBehaviour
    public void RemoveCurrentItem(int Amount)
    {
       AmountOfItems -= Amount;
-      Debug.Log("Removed item");
+      AmountOfItemsDisplay.SetText(AmountOfItems.ToString());
+      
       if (AmountOfItems < 0)
       {
          Debug.Log("hey we removed more items then there are available");
@@ -90,7 +99,7 @@ public class InventorySlot : MonoBehaviour
       CurrentItem = NewItem.GetItemData();
       AmountOfItems = NewAmount;
       InventorySlotDisplay.sprite = NewItem.GetItemData().ItemSprite ? NewItem.GetItemData().ItemSprite : DefaultSprite;
-      Debug.Log("Current item is" + CurrentItem.ItemName + "with an amount of " + AmountOfItems);
+      AmountOfItemsDisplay.SetText(NewAmount.ToString());
    }
    void SwapItemsWithDraggedSlot()
    {
@@ -148,17 +157,28 @@ public class InventorySlot : MonoBehaviour
 
    void OnMouseClickSlot(BaseEventData pointerEventData)
    {
+      if (InputManager.Instance.IsShiftPressed())
+      {
+         Debug.Log("Shift clicked a slot");
+         OnMouseShiftClickSlot?.Invoke(this);
+         return;
+      }
+      if (InputManager.Instance.IsAltPressed())
+      {
+         Debug.Log("Alt Clicked slot");
+         OnMouseAltClickSlot?.Invoke(this);
+         return;
+      }
       if (DoubleClickRoutine == null)
       {
          DoubleClickRoutine = StartCoroutine(CheckForDoubleClick());
+         return;
       }
-      else
-      {
-         StopCoroutine(DoubleClickRoutine);
-         DoubleClickRoutine = null;
+      
+      StopCoroutine(DoubleClickRoutine);
+      DoubleClickRoutine = null;
          
-         OnDoubleClickSlot?.Invoke(this);
-      }
+      OnDoubleClickSlot?.Invoke(this);
    }
 
    void OnMouseExitSlot(BaseEventData pointerEventData)
@@ -172,9 +192,9 @@ public class InventorySlot : MonoBehaviour
       {
          DraggedItemDisplay.SetDisplayActive(true);
          DraggedItemDisplay.SetDisplay(CurrentItem.ItemSprite);
-      
-         MouseData.CurrentDrag = new DragData(this);
       }
+      
+      MouseData.CurrentDrag = new DragData(this);
    }
 
    void OnMouseEndDragSlot(BaseEventData pointerEventData)

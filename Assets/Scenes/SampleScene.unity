@@ -371,6 +371,10 @@ PrefabInstance:
       propertyPath: ItemToAdd
       value: 
       objectReference: {fileID: 11400000, guid: 63b54faa7f231ef4b85bfb35393031fb, type: 2}
+    - target: {fileID: 3161748536440353069, guid: 651f154ac75b7cf46b68c93279e52945, type: 3}
+      propertyPath: AmountToAdd
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6995494168319067383, guid: 651f154ac75b7cf46b68c93279e52945, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.507397
@@ -906,11 +910,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4100460064233699796, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4100460064233699796, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
-      value: 0.69803923
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
