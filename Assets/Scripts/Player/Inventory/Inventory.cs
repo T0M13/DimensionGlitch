@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -8,35 +9,39 @@ public class Inventory : MonoBehaviour
     [SerializeField, Min(1)] int AmountOfSlotsPerColumn;
     [SerializeField] float SpacingBetweenSlots;
     [SerializeField] InventorySlot InventorySlotTemplate;
-    
+   
     [Header("Debug")]
     [SerializeField] protected List<InventorySlot> InventorySlots;
-
-    public List<InventorySlot> GetInventorySlots() => InventorySlots;
     
+    public List<InventorySlot> GetInventorySlots() => InventorySlots;
+
     public bool TryAddItem(Item ItemToAdd, int Amount)
     {
-        if (TryFindSlotWithItem(ItemToAdd.GetItemData().ItemID, out InventorySlot OutSlot))
+        if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> OutSlots))
         {
-            OutSlot.AddToCurrentItem(Amount);
+            Debug.Log("Added to current item");
+            //Always add to the first found slot that is a valid slot
+            OutSlots[0].AddToCurrentItem(Amount);
             return true;
         }
         if (TryFindFreeSlot(out InventorySlot FreeSlot))
         {
+            Debug.Log("Set current item");
             FreeSlot.SetItem(ItemToAdd, Amount);
             return true;
         }
 
+        Debug.Log("Found no slot");
         return false;
     }
 
-    bool TryFindFreeSlot(out  InventorySlot OutInventorySlot)
+    protected bool TryFindFreeSlot(out  InventorySlot OutInventorySlot)
     {
         OutInventorySlot = null;
         
         foreach (var InventorySlot in InventorySlots)
         {
-            if (InventorySlot.GetCurrentItemAmount() == 0)
+            if (ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID))
             {
                 OutInventorySlot = InventorySlot;
                 return true;
@@ -46,15 +51,15 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    bool TryFindSlotWithItem(int ItemId, out InventorySlot OutInventorySlot)
+    public bool TryFindSlotsWithItem(int ItemId, out List<InventorySlot> OutInventorySlots)
     {
-        OutInventorySlot = null;
+        OutInventorySlots = new List<InventorySlot>();
         
         foreach (var InventorySlot in InventorySlots)
         {
             if (InventorySlot.HasSameItem(ItemId))
             {
-               OutInventorySlot = InventorySlot;
+               OutInventorySlots.Add(InventorySlot);
                 return true;
             }
         }

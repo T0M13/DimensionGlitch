@@ -21,6 +21,7 @@ public class InputManager : BaseSingleton<InputManager>
 
     public IM_Player InputActions { get => inputActions; set => inputActions = value; }
     public Vector3 GetMousePositionInWorld() => mousePosInWorld;
+    public Vector3 GetMousePositionScreen() => mousePos;
 
     private void Start()
     {

@@ -8,22 +8,19 @@ public class HUDManager : BaseSingleton<HUDManager>
 {
    [SerializeField] HealthBar PlayerHealthBar;
    [SerializeField] FragmentShiftTimer FragmentShiftTimer;
-   [SerializeField] Inventory PlayerInventory;
+   [SerializeField] PlayerInventory PlayerInventory;
    
    FragmentController FragmentController;
    PlayerController PlayerController;
    Stats PlayerStats;
 
-   public ref Inventory GetPlayerInventory() => ref PlayerInventory;
+   public ref PlayerInventory GetPlayerInventory() => ref PlayerInventory;
    
    void OnEnable()
    {
       GameManager GameManager = GameManager.Instance;
       
       PlayerController = GameManager.GetPlayerControllerRef;
-
-      //FragmentController.onFragmentShifting.AddListener(FragmentShiftPopUp.TriggerAnimation);
-      //FragmentController.onGameOverVictory.AddListener(EnableWinScreen);
    }
 
    private void OnDisable()

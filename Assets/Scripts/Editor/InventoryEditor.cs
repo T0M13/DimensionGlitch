@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Inventory))]
+[CustomEditor(typeof(Inventory), true)]
 public class InventoryEditor : Editor
 {
    public override void OnInspectorGUI()
@@ -13,6 +13,7 @@ public class InventoryEditor : Editor
       if (GUILayout.Button("InitInventory"))
       {
          Inventory.ReinitializeInventory();
+         EditorUtility.SetDirty(Inventory);
       }
 
       if (GUILayout.Button("AddItemToInventory"))

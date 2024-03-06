@@ -18,4 +18,14 @@ public class ItemDataBaseManager : BaseSingleton<ItemDataBaseManager>
    {
       return NullItem;
    }
+
+   /// <summary>
+   /// check if something contains a null item, meaning the slot is empty or in general inaccesible
+   /// </summary>
+   /// <param name="ItemId"></param>
+   /// <returns></returns>
+   public bool IsNullItemOrInvalid(int ItemId)
+   {
+      return ItemId == NullItem.GetItemData().ItemID || ItemId < 0;
+   }
 }

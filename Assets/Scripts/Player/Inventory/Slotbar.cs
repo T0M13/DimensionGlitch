@@ -15,7 +15,7 @@ public class Slotbar : MonoBehaviour
     [SerializeField, ShowOnly] List<SlotbarSlot> SlotBarSlots;
     [SerializeField] InputActionReference[] Hotkeys;
     
-    void Start()
+    void OnEnable()
     {
         MergeSlotbarSlotsWithInventorySlots();
     }
@@ -25,6 +25,31 @@ public class Slotbar : MonoBehaviour
         PlayerInventory.GetInventorySlots().AddRange(SlotBarSlots);
     }
 
+    public bool TryAddItemToSlotbarSlot(Item ItemToAdd, int Amount )
+    {
+        //first search for a slot containing the item
+        foreach (var SlotbarSlot in SlotBarSlots)
+        {
+            if (SlotbarSlot.HasSameItem(ItemToAdd.GetItemData().ItemID))
+            {
+                SlotbarSlot.AddToCurrentItem(Amount);
+                return true;
+            }
+        }
+        
+        //If we dont find a slot that already holds the item try o find an empty slot
+        foreach (var SlotbarSlot in SlotBarSlots)
+        {
+            if (SlotbarSlot.IsEmpty())
+            {
+                SlotbarSlot.SetItem(ItemToAdd, Amount);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
 #region Initialization
 #if UNITY_EDITOR
 

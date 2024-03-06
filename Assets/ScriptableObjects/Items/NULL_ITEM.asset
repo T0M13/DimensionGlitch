@@ -16,4 +16,4 @@ MonoBehaviour:
     ItemName: NULL_ITEM
     ItemValue: -100000000
     ItemID: -9999999
-    ItemSprite: {fileID: 0}
+    ItemSprite: {fileID: 21300000, guid: f905632d4c4dce34fb91644349e64486, type: 3}

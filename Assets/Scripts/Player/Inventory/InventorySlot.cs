@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,7 +12,11 @@ public class InventorySlot : MonoBehaviour
    [SerializeField] Image InventorySlotDisplay;
    [SerializeField] EventTrigger EventTrigger;
 
+   float LastTimeClicked = 0.0f;
    Sprite DefaultSprite = null;
+   public event Action<InventorySlot> OnDoubleClickSlot;
+   Coroutine DoubleClickRoutine = null;
+   
    public ItemData GetCurrentItem() => CurrentItem;
    public int GetCurrentItemAmount() => AmountOfItems;
    
@@ -25,6 +30,11 @@ public class InventorySlot : MonoBehaviour
    public bool HasSameItem(int ItemID)
    {
       return CurrentItem.ItemID == ItemID;
+   }
+
+   public bool IsEmpty()
+   {
+      return AmountOfItems <= 0;
    }
    public void PlaceItem(Item NewItem, int Amount)
    {
@@ -69,7 +79,7 @@ public class InventorySlot : MonoBehaviour
       {
          Debug.Log("hey we removed more items then there are available");
       }
-      if (AmountOfItems <= 0)
+      if (IsEmpty())
       {
          SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
       }
@@ -138,31 +148,58 @@ public class InventorySlot : MonoBehaviour
 
    void OnMouseClickSlot(BaseEventData pointerEventData)
    {
-     
+      if (DoubleClickRoutine == null)
+      {
+         DoubleClickRoutine = StartCoroutine(CheckForDoubleClick());
+      }
+      else
+      {
+         StopCoroutine(DoubleClickRoutine);
+         DoubleClickRoutine = null;
+         
+         OnDoubleClickSlot?.Invoke(this);
+      }
    }
 
    void OnMouseExitSlot(BaseEventData pointerEventData)
    {
-      
       MouseData.CurrentlyHoveredSlot = null;
    }
 
    void OnMouseBeginDragSlot(BaseEventData pointerEventData)
    {
-     
-      MouseData.CurrentDrag = new DragData(this);
+      if (!ItemDataBaseManager.Instance.IsNullItemOrInvalid(CurrentItem.ItemID))
+      {
+         DraggedItemDisplay.SetDisplayActive(true);
+         DraggedItemDisplay.SetDisplay(CurrentItem.ItemSprite);
+      
+         MouseData.CurrentDrag = new DragData(this);
+      }
    }
 
    void OnMouseEndDragSlot(BaseEventData pointerEventData)
    {
       //Destroy the dragged visual in here
+      DraggedItemDisplay.SetDisplayActive(false);
+      DraggedItemDisplay.SetDisplay(null);
+      
+      //Only swap items if we are over another slot
       if(!MouseData.CurrentlyHoveredSlot) return;
       
       Item DraggedItem = ItemDataBaseManager.Instance.GetItemFromDataBase(CurrentItem.ItemID);
       MouseData.CurrentlyHoveredSlot.PlaceItem(DraggedItem, AmountOfItems);
    }
-   
 
+   IEnumerator CheckForDoubleClick()
+   {
+      float PassedTime = 0.0f;
+      while (PassedTime < 1.0f)
+      {
+         PassedTime += Time.deltaTime;
+         yield return null;
+      }
+
+      DoubleClickRoutine = null;
+   }
 #endregion
-   
 }
