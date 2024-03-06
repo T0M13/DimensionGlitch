@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class HUDManager : BaseSingleton<HUDManager>
@@ -9,6 +10,9 @@ public class HUDManager : BaseSingleton<HUDManager>
    [SerializeField] HealthBar PlayerHealthBar;
    [SerializeField] FragmentShiftTimer FragmentShiftTimer;
    [SerializeField] PlayerInventory PlayerInventory;
+
+   [Header("HotKeys")] 
+   [SerializeField] InputActionReference OpenInventoryAction;
    
    FragmentController FragmentController;
    PlayerController PlayerController;
@@ -21,11 +25,17 @@ public class HUDManager : BaseSingleton<HUDManager>
       GameManager GameManager = GameManager.Instance;
       
       PlayerController = GameManager.GetPlayerControllerRef;
+      OpenInventoryAction.action.performed += OpenInventory;
    }
-
+   
    private void OnDisable()
    { 
       UnbindEvents();
+   }
+
+   void OpenInventory(InputAction.CallbackContext _)
+   {
+      PlayerInventory.gameObject.SetActive(!PlayerInventory.gameObject.activeSelf);
    }
    
    void DisablePlayerHud()
@@ -37,6 +47,7 @@ public class HUDManager : BaseSingleton<HUDManager>
 
    void UnbindEvents()
    {
+      OpenInventoryAction.action.performed -= OpenInventory;
    }
    void DisableHUD()
    {
