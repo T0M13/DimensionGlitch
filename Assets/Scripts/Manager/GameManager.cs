@@ -7,8 +7,10 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] PlayerController PlayerPrefab;
     [SerializeField] HUDManager HudPrefab;
     [SerializeField] GameObject PlayerSpawnPosition;
+    [SerializeField] PlacementSystem PlacementSystem;
 
     [SerializeField][ShowOnly] PlayerController GlobalPlayerControllerRef;
+    [SerializeField][ShowOnly] PlacementSystem GlobalPlacementSystemRef;
     [SerializeField][ShowOnly] InputManager GlobalInputManagerRef;
     [SerializeField][ShowOnly] HUDManager PlayerHud;
 
@@ -22,6 +24,7 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] string GameplaySceneName = "Game";
     [SerializeField] string MainMenuSceneName = "MainMenu";
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
+    public PlacementSystem GetPlacementSystemRef => GlobalPlacementSystemRef;
     public InputManager GetInputManagerRef => GlobalInputManagerRef;
     public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()

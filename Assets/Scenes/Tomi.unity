@@ -123,6 +123,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &40934285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+  m_Name: Bloom(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  skipIterations:
+    m_OverrideState: 0
+    m_Value: 1
+  threshold:
+    m_OverrideState: 0
+    m_Value: 0.9
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  scatter:
+    m_OverrideState: 0
+    m_Value: 0.7
+  clamp:
+    m_OverrideState: 0
+    m_Value: 65472
+  tint:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  highQualityFiltering:
+    m_OverrideState: 0
+    m_Value: 0
+  downscale:
+    m_OverrideState: 0
+    m_Value: 0
+  maxIterations:
+    m_OverrideState: 0
+    m_Value: 6
+  dirtTexture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+    dimension: 1
+  dirtIntensity:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!1 &218666981
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,10 +234,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1994303958}
   volume: {fileID: 218666983}
-  bloom: {fileID: 1316201328}
-  chromaticAberration: {fileID: 1656785167}
-  lensDistortion: {fileID: 1795436767}
-  colorAdjustments: {fileID: 946955099}
+  bloom: {fileID: 40934285}
+  chromaticAberration: {fileID: 319850765}
+  lensDistortion: {fileID: 1643002425}
+  colorAdjustments: {fileID: 1261039113}
   doBloom: 1
   baseBloomIntensity: 1
   maxBloomIntensity: 3
@@ -215,6 +262,22 @@ MonoBehaviour:
   transitionWaitBackDuration: 1
   fragmentShiftDuration: 0.2
   fragmentShiftIntensityBase: 0
+--- !u!114 &319850765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
+  m_Name: ChromaticAberration(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.2
 --- !u!1 &363746311
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,13 +327,16 @@ MonoBehaviour:
   grid: {fileID: 834463405701275107}
   tilemapBuildable: {fileID: 546380121}
   tilemapCrops: {fileID: 1468681160}
-  selectedCropPrefab: {fileID: 1345312663257579663, guid: ac28fb9afcbbc174680684f7b88fad61, type: 3}
   CachedPlayerController: {fileID: 0}
+  selectedSeed: {fileID: 0}
+  currentPlacementMode: 0
   mouseHoverCellPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0, z: 0}
   playerPostionSphere: 0.2
   playerPosition: {x: 0, y: 0, z: 0}
   playerPositionOffset: {x: 0, y: -0.33, z: 0}
   playerCellPosition: {x: 0, y: 0, z: 0}
+  isAdjacentOrDiagonal: 0
 --- !u!1 &494198749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1795,34 +1861,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8e43df80f9c394ab51784451cac316, type: 3}
---- !u!114 &946955099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
-  m_Name: ColorAdjustments(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  postExposure:
-    m_OverrideState: 0
-    m_Value: 1.7
-  contrast:
-    m_OverrideState: 0
-    m_Value: 100
-  colorFilter:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-  hueShift:
-    m_OverrideState: 1
-    m_Value: 0.2
-  saturation:
-    m_OverrideState: 1
-    m_Value: 0.2
 --- !u!1001 &947817555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1880,7 +1918,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 955fbe99d604fd846b2b26675c6f1b4d, type: 3}
---- !u!114 &1316201328
+--- !u!114 &1261039113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1889,44 +1927,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
-  m_Name: Bloom(Clone)(Clone)(Clone)(Clone)
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments(Clone)
   m_EditorClassIdentifier: 
   active: 1
-  skipIterations:
+  postExposure:
     m_OverrideState: 0
-    m_Value: 1
-  threshold:
+    m_Value: 1.7
+  contrast:
     m_OverrideState: 0
-    m_Value: 0.9
-  intensity:
-    m_OverrideState: 1
-    m_Value: 1
-  scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
-  clamp:
-    m_OverrideState: 0
-    m_Value: 65472
-  tint:
+    m_Value: 100
+  colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
-  highQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 0
-  downscale:
-    m_OverrideState: 0
-    m_Value: 0
-  maxIterations:
-    m_OverrideState: 0
-    m_Value: 6
-  dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
-    dimension: 1
-  dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+  hueShift:
+    m_OverrideState: 1
+    m_Value: 0.2
+  saturation:
+    m_OverrideState: 1
+    m_Value: 0.2
 --- !u!1 &1323625034
 GameObject:
   m_ObjectHideFlags: 0
@@ -64767,7 +64786,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a93d03166bb84a449441cbe11d074eb, type: 3}
---- !u!114 &1656785167
+--- !u!114 &1643002425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64776,13 +64795,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
-  m_Name: ChromaticAberration(Clone)(Clone)(Clone)(Clone)
+  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
+  m_Name: LensDistortion(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0
+  xMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!1 &1786287707
 GameObject:
   m_ObjectHideFlags: 0
@@ -64832,34 +64863,6 @@ MonoBehaviour:
   fragmentShiftEffect: {fileID: 4488245157979819321, guid: 2352d737db3715e4f85fdaa5c2aa3de5, type: 3}
   itemPickUpEffectList: []
   fragmentShiftEffectList: []
---- !u!114 &1795436767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
-  m_Name: LensDistortion(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0
-  xMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
-  yMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
-  center:
-    m_OverrideState: 0
-    m_Value: {x: 0.5, y: 0.5}
-  scale:
-    m_OverrideState: 1
-    m_Value: 1
 --- !u!1 &1839097096
 GameObject:
   m_ObjectHideFlags: 0
@@ -67894,6 +67897,10 @@ PrefabInstance:
       propertyPath: HudPrefab
       value: 
       objectReference: {fileID: 5278588403054499502, guid: 5b401711c6815a741ab82207664684f3, type: 3}
+    - target: {fileID: 31229246520801372, guid: 07ba35bd9e4627c4491b01514e35a9e6, type: 3}
+      propertyPath: PlacementSystem
+      value: 
+      objectReference: {fileID: 363746313}
     - target: {fileID: 31229246520801372, guid: 07ba35bd9e4627c4491b01514e35a9e6, type: 3}
       propertyPath: PlayerSpawnPosition
       value: 

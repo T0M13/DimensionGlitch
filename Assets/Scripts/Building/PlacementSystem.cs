@@ -62,9 +62,20 @@ public class PlacementSystem : MonoBehaviour
 
     }
 
-    public void EnterBuildMode(PlacementMode newMode)
+    public void ChangePlacementMode(PlacementMode newMode)
     {
         currentPlacementMode = newMode;
+    }
+
+    public void EnterPlantingMode(PlaceableSeed seed)
+    {
+        ChangePlacementMode(PlacementMode.Planting);
+        selectedSeed = seed;
+    }
+
+    public void ExitCurrentPlacementMode()
+    {
+        ChangePlacementMode(PlacementMode.None);
     }
 
     public void PlaceSeed()
