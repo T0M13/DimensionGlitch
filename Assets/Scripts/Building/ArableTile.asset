@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d8cfb31fc0a36045a2c6725aa57ed49, type: 3}
-  m_Name: NormalOnBuildable
+  m_Name: ArableTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -404318449, guid: e9017f54a63ca0440b2e145cdbb64455, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -34,4 +34,5 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  canBuildOn: 1
+  canBuildOn: 0
+  IsArable: 1
