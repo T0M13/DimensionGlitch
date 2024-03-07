@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -62,11 +63,74 @@ public class Inventory : MonoBehaviour
             {
                 OutInventorySlots.Add(InventorySlot);
                 FoundSlotWithSameItem = true;
-                Debug.Log("Slot with same item added");
             }
         }
 
         return FoundSlotWithSameItem;
+    }
+
+    public void RemoveAmountOfItems(int ItemID, int AmountToRemove)
+    {
+        if (TryFindSlotsWithItem(ItemID, out List<InventorySlot> SlotsWithItem))
+        {
+            foreach (var InventorySlot in SlotsWithItem)
+            {
+                AmountToRemove -= InventorySlot.GetCurrentItemAmount();
+
+                if (AmountToRemove >= 0)
+                {
+                    InventorySlot.RemoveCurrentItem(InventorySlot.GetCurrentItemAmount());
+                }
+                else
+                {
+                    int Overshoot = Mathf.Abs(AmountToRemove);
+                    InventorySlot.RemoveCurrentItem(InventorySlot.GetCurrentItemAmount() - Overshoot);
+                    break;
+                }
+            }
+        }
+    }
+    //get the amount of a specific item inside of the inventory
+    public int GetAmountOfItemInInventory(int ItemID)
+    {
+        int AmountOfItem = 0;
+     
+        foreach (var InventorySlot in InventorySlots)
+        {
+            if (InventorySlot.HasSameItem(ItemID))
+            {
+                AmountOfItem += InventorySlot.GetCurrentItemAmount();
+            }
+        }
+
+        return AmountOfItem;
+    }
+    public bool ContainsItem(int ItemID)
+    {
+        foreach (var InventorySlot in InventorySlots)
+        {
+            if (InventorySlot.GetCurrentItem().ItemID == ItemID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<InventorySlot> GetSlotsWithItem(int ItemID)
+    {
+        List<InventorySlot> InventorySlotsContainingItem = new List<InventorySlot>();
+        
+        foreach (var InventorySlot in InventorySlots)
+        {
+            if (InventorySlot.HasSameItem(ItemID))
+            {
+                InventorySlotsContainingItem.Add(InventorySlot);
+            }
+        }
+
+        return InventorySlotsContainingItem;
     }
     
 #region InventoryIntitialization

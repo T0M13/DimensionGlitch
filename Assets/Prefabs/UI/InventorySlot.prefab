@@ -194,10 +194,11 @@ MonoBehaviour:
     ItemName: NONE
     ItemValue: 0
     ItemID: -1
-    ItemSprite: {fileID: 0}
+    ItemSprite: {fileID: 21300000, guid: b62730195d627984e84a26c44df5c0ef, type: 3}
   InventorySlotDisplay: {fileID: 1303797976257612835}
   AmountOfItemsDisplay: {fileID: 2063243159384855924}
   EventTrigger: {fileID: 8700441614482034647}
+  DefaultSprite: {fileID: 21300000, guid: b62730195d627984e84a26c44df5c0ef, type: 3}
 --- !u!222 &2717329584044661933
 CanvasRenderer:
   m_ObjectHideFlags: 0

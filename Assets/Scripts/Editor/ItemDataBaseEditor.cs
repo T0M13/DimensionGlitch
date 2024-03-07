@@ -18,6 +18,7 @@ public class ItemDataBaseEditor : Editor
          for (int i = 0; i < ItemDataBase.GetAllItems().Count; i++)
          {
             ItemDataBase.GetAllItems()[i].SetItemID(i);
+            ItemDataBase.GetAllItems()[i].GenerateHashCode();
             EditorUtility.SetDirty(ItemDataBase.GetAllItems()[i]);
          }
       }

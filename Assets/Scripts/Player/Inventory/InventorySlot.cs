@@ -12,14 +12,17 @@ public class InventorySlot : MonoBehaviour
    [SerializeField] protected int AmountOfItems = 0;
    [SerializeField] protected ItemData CurrentItem;
    [SerializeField] Image InventorySlotDisplay;
-   [FormerlySerializedAs("AmountText")] [SerializeField] TextMeshProUGUI AmountOfItemsDisplay;
+   [SerializeField] TextMeshProUGUI AmountOfItemsDisplay;
    [SerializeField] EventTrigger EventTrigger;
+   [SerializeField] Sprite DefaultSprite;
 
    float LastTimeClicked = 0.0f;
-   Sprite DefaultSprite = null;
+
    public event Action<InventorySlot> OnDoubleClickSlot;
    public event Action<InventorySlot> OnMouseShiftClickSlot;
    public event Action<InventorySlot> OnMouseAltClickSlot;
+   public event Action<InventorySlot> OnEndDragWithoutValidSlot;
+   public event Action<InventorySlot> OnItemDroppedIntoSlot;
    
    Coroutine DoubleClickRoutine = null;
    
@@ -30,7 +33,10 @@ public class InventorySlot : MonoBehaviour
    {
       CreateMouseEvents();
 
-      DefaultSprite = InventorySlotDisplay.sprite;
+      if (ItemDataBaseManager.Instance.IsNullItemOrInvalid(CurrentItem.ItemID))
+      {
+         InventorySlotDisplay.sprite = DefaultSprite;
+      }
    }
 
    public bool HasSameItem(int ItemID)
@@ -45,7 +51,6 @@ public class InventorySlot : MonoBehaviour
    public void PlaceItem(Item NewItem, int Amount)
    {
       ItemData NewItemData = NewItem.GetItemData();
-    
       
       //Check if its the same item if so then add if not then swap 
       if (NewItemData.ItemID == CurrentItem.ItemID)
@@ -100,6 +105,8 @@ public class InventorySlot : MonoBehaviour
       AmountOfItems = NewAmount;
       InventorySlotDisplay.sprite = NewItem.GetItemData().ItemSprite ? NewItem.GetItemData().ItemSprite : DefaultSprite;
       AmountOfItemsDisplay.SetText(NewAmount.ToString());
+      
+      OnItemDroppedIntoSlot?.Invoke(this);
    }
    void SwapItemsWithDraggedSlot()
    {
@@ -204,7 +211,11 @@ public class InventorySlot : MonoBehaviour
       DraggedItemDisplay.SetDisplay(null);
       
       //Only swap items if we are over another slot
-      if(!MouseData.CurrentlyHoveredSlot) return;
+      if (!MouseData.CurrentlyHoveredSlot)
+      {
+         OnEndDragWithoutValidSlot?.Invoke(this);
+         return;
+      }
       
       Item DraggedItem = ItemDataBaseManager.Instance.GetItemFromDataBase(CurrentItem.ItemID);
       MouseData.CurrentlyHoveredSlot.PlaceItem(DraggedItem, AmountOfItems);

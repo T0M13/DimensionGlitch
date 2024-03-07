@@ -6,6 +6,7 @@ public class ItemDataBaseManager : BaseSingleton<ItemDataBaseManager>
 {
    //Consider putting this into groups and assigning items groups for faster search and possibly easy unlockable items
    [SerializeField] List<ItemDataBase> ItemDataBases;
+   [SerializeField] PickupItem PickupItemTemplate;
    [SerializeField] Item NullItem;
    
    public Item GetItemFromDataBase(int ItemId)
@@ -27,5 +28,11 @@ public class ItemDataBaseManager : BaseSingleton<ItemDataBaseManager>
    public bool IsNullItemOrInvalid(int ItemId)
    {
       return ItemId == NullItem.GetItemData().ItemID || ItemId < 0;
+   }
+
+   public void CreateItemDrop(int ItemID, int AmountToDrop, Vector3 Position)
+   {
+      PickupItem DroppedItem = Instantiate(PickupItemTemplate, Position, Quaternion.identity);
+      DroppedItem.InitializeItemPickup(GetItemFromDataBase(ItemID), AmountToDrop);
    }
 }

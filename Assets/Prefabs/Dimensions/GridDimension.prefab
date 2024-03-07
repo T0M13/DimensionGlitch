@@ -1694,7 +1694,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1042224551
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -2465,7 +2465,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1638853599
-  m_SortingLayer: 9
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3087,15 +3087,15 @@ PrefabInstance:
       objectReference: {fileID: 7479606303198010650}
     - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.b
-      value: 0.7490196
-      objectReference: {fileID: 0}
-    - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
-      propertyPath: m_Color.g
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
-      propertyPath: m_Color.r
+      propertyPath: m_Color.g
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3254902
       objectReference: {fileID: 0}
     - target: {fileID: 7306997715570445732, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Name
@@ -3212,11 +3212,11 @@ PrefabInstance:
       objectReference: {fileID: 7479606303198010650}
     - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.b
-      value: 0.24313726
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7054298629548870425, guid: 39fec7291fa0109488459cdef8324895, type: 3}
       propertyPath: m_Color.r

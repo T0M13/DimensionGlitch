@@ -6,10 +6,10 @@ public class PlayerInventory : Inventory
     [SerializeField] Slotbar Slotbar;
     private void Start()
     {
-        BindToDoubleClick();
+        BindToSlotEvents();
     }
 
-    void BindToDoubleClick()
+    void BindToSlotEvents()
     {
         foreach (var InventorySlot in InventorySlots)
         {
@@ -19,13 +19,14 @@ public class PlayerInventory : Inventory
                 InventorySlot.OnDoubleClickSlot += QuickAssignToInventory;
                 InventorySlot.OnMouseShiftClickSlot += QuickAssignToInventory;
                 InventorySlot.OnMouseAltClickSlot += SplitStack;
+                InventorySlot.OnEndDragWithoutValidSlot += DropItem;
             }
             else if (InventorySlot is InventorySlot)
             {
                 InventorySlot.OnDoubleClickSlot += QuickAssignToSlotbar;
                 InventorySlot.OnMouseShiftClickSlot += QuickAssignToSlotbar;
                 InventorySlot.OnMouseAltClickSlot += SplitStack;
-                Debug.Log("Inventory Slots");
+                InventorySlot.OnEndDragWithoutValidSlot += DropItem;
             }
         }
     }
@@ -82,5 +83,11 @@ public class PlayerInventory : Inventory
             InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
             Debug.Log("Double clicked inventory slot");
         }
+    }
+
+    void DropItem(InventorySlot SlotToDropItemFrom)
+    {
+        ItemDataBaseManager.Instance.CreateItemDrop(SlotToDropItemFrom.GetCurrentItem().ItemID, SlotToDropItemFrom.GetCurrentItemAmount(), InputManager.Instance.GetMousePositionInWorld());
+        SlotToDropItemFrom.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+// ReSharper disable All
 
 [Serializable]
 public struct TweenTransform
@@ -32,7 +33,9 @@ public struct TweenRequest<T>
         EaseCurve = new AnimationCurve();
     }
 
-    //implement on tween finished
+    /// <summary>
+    /// If you want to call something when the tween finished assign this in the start method
+    /// </summary>
     public Action OnTweenFinished;
     [SerializeField, Tooltip("The end and start values should always be greater then zero")]
     public AnimationCurve EaseCurve;
@@ -85,7 +88,7 @@ public class TweenManager : BaseSingleton<TweenManager>
         float CurrentAnimTime = ReverseTween ? TweenRequest.AnimationTime : 0.0f;
         float AnimationDuration = TweenRequest.AnimationTime;
         
-        while (ContinueAnimation(CurrentAnimTime, AnimationDuration, ReverseTween))
+        while (ContinueAnimation(CurrentAnimTime, AnimationDuration, ReverseTween) && TweenRequest.ToTween != null)
         {
             float InterpValue = CurrentAnimTime / AnimationDuration;
             CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);

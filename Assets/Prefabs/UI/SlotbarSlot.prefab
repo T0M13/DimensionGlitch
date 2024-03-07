@@ -192,10 +192,11 @@ MonoBehaviour:
     ItemName: NONE
     ItemValue: 0
     ItemID: -1
-    ItemSprite: {fileID: 0}
+    ItemSprite: {fileID: 21300000, guid: b62730195d627984e84a26c44df5c0ef, type: 3}
   InventorySlotDisplay: {fileID: 4992564930764365792}
   AmountOfItemsDisplay: {fileID: 8167742335791918502}
   EventTrigger: {fileID: -2587259384964364809}
+  DefaultSprite: {fileID: 21300000, guid: b62730195d627984e84a26c44df5c0ef, type: 3}
   Hotkey: {fileID: -6708305118256221940, guid: b922c5a32ea404c4f924935836990aea, type: 3}
 --- !u!114 &-2587259384964364809
 MonoBehaviour:
