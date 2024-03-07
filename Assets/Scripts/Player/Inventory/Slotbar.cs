@@ -18,8 +18,8 @@ public class Slotbar : MonoBehaviour
     void OnEnable()
     {
         MergeSlotbarSlotsWithInventorySlots();
+        
     }
-
     void MergeSlotbarSlotsWithInventorySlots()
     {
         PlayerInventory.GetInventorySlots().AddRange(SlotBarSlots);

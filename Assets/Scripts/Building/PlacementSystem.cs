@@ -76,6 +76,7 @@ public class PlacementSystem : MonoBehaviour
     public void ExitCurrentPlacementMode()
     {
         ChangePlacementMode(PlacementMode.None);
+        selectedSeed = null;
     }
 
     public void PlaceSeed()
@@ -125,7 +126,6 @@ public class PlacementSystem : MonoBehaviour
         GameObject newCrop = Instantiate(selectedSeed.CropPrefab(), position, Quaternion.identity);
         newCrop.transform.SetParent(tilemapCrops.transform);
         HUDManager.Instance.GetPlayerInventory().RemoveAmountOfItems(selectedSeed.GetItemData().ItemID, 1);
-        selectedSeed = null;
         occupiedTiles.Add(gridPosition);
     }
 

@@ -9,5 +9,7 @@ public class PlaceableSeed : UseableItem
     public override void OnUseItem(GameObject User)
     {
         //enter the farming mode
+        GameManager.Instance.GetPlacementSystemRef.EnterPlantingMode(this);
+        Debug.Log("Entered the mode");
     }
 }

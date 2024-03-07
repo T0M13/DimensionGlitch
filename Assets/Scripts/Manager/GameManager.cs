@@ -10,7 +10,6 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] PlacementSystem PlacementSystem;
 
     [SerializeField][ShowOnly] PlayerController GlobalPlayerControllerRef;
-    [SerializeField][ShowOnly] PlacementSystem GlobalPlacementSystemRef;
     [SerializeField][ShowOnly] InputManager GlobalInputManagerRef;
     [SerializeField][ShowOnly] HUDManager PlayerHud;
 
@@ -24,7 +23,7 @@ public class GameManager : BaseSingleton<GameManager>
     [SerializeField] string GameplaySceneName = "Game";
     [SerializeField] string MainMenuSceneName = "MainMenu";
     public PlayerController GetPlayerControllerRef => GlobalPlayerControllerRef;
-    public PlacementSystem GetPlacementSystemRef => GlobalPlacementSystemRef;
+    public PlacementSystem GetPlacementSystemRef => PlacementSystem;
     public InputManager GetInputManagerRef => GlobalInputManagerRef;
     public HUDManager GetPlayerHud => PlayerHud;
     protected override void Awake()
@@ -76,7 +75,7 @@ public class GameManager : BaseSingleton<GameManager>
     {
         //Implement respawn logic or deathscreen etc
     }
-
+    
     private void GetVolumeManager()
     {
         if (VolumeManager == null)

@@ -23,6 +23,7 @@ public class InventorySlot : MonoBehaviour
    public event Action<InventorySlot> OnMouseAltClickSlot;
    public event Action<InventorySlot> OnEndDragWithoutValidSlot;
    public event Action<InventorySlot> OnItemDroppedIntoSlot;
+   public event Action<InventorySlot> OnEmptySlot;
    
    Coroutine DoubleClickRoutine = null;
    
@@ -39,6 +40,10 @@ public class InventorySlot : MonoBehaviour
       }
    }
 
+   public void CallOnEmptySlot()
+   {
+      OnEmptySlot?.Invoke(this);
+   }
    public bool HasSameItem(int ItemID)
    {
       return CurrentItem.ItemID == ItemID;
@@ -81,7 +86,7 @@ public class InventorySlot : MonoBehaviour
    }
 
    /// <summary>
-   /// Removes x amount from the currently hold item
+   /// Removes x amount from the currently hold item, also returns true if it was the last item being removed
    /// </summary>
    /// <param name="Amount"></param>
    public void RemoveCurrentItem(int Amount)

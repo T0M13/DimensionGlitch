@@ -80,6 +80,7 @@ public class Inventory : MonoBehaviour
                 if (AmountToRemove >= 0)
                 {
                     InventorySlot.RemoveCurrentItem(InventorySlot.GetCurrentItemAmount());
+                    InventorySlot.CallOnEmptySlot();
                 }
                 else
                 {
