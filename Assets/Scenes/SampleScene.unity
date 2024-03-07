@@ -632,11 +632,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1449475244658341381, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.24313726
       objectReference: {fileID: 0}
     - target: {fileID: 1449475244658341381, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.g
-      value: 0.8260877
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1449475244658341381, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
@@ -644,15 +644,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4100460064233699796, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4100460064233699796, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
-      propertyPath: m_Color.g
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4100460064233699796, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4100460064233699796, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.r
-      value: 0.69803923
+      value: 0.3254902
       objectReference: {fileID: 0}
     - target: {fileID: 4789779828658557937, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
       propertyPath: m_Color.b
@@ -1246,17 +1246,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 651f154ac75b7cf46b68c93279e52945, type: 3}
---- !u!114 &1968321681 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3863184957851458832, guid: 577311725dc0f324ea77343b665c4d07, type: 3}
-  m_PrefabInstance: {fileID: 5059586838083622077}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7dc10ce23234b49881d632aa07353e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2131193771 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7479606303198010650, guid: 948e2b4a597611d45a0cce026e83acda, type: 3}
@@ -1417,18 +1406,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6197161535007086699, guid: 577311725dc0f324ea77343b665c4d07, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 55
-      objectReference: {fileID: 0}
     - target: {fileID: 6683083367715194295, guid: 577311725dc0f324ea77343b665c4d07, type: 3}
       propertyPath: m_Name
       value: CraftingMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 6748888638154130582, guid: 577311725dc0f324ea77343b665c4d07, type: 3}
-      propertyPath: CraftingInventory
-      value: 
-      objectReference: {fileID: 1968321681}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
