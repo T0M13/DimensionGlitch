@@ -15,7 +15,7 @@ MonoBehaviour:
   ItemData:
     ItemName: 
     ItemValue: 0
-    ItemID: 0
+    ItemID: 4
     ItemSprite: {fileID: 0}
   HashCode: 0
   RemoveOnIntialUse: 0
