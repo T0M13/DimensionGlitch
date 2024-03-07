@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlaceableSeed : UseableItem
 {
     [SerializeField] GameObject CropPrefabToPlace;
+
+    public GameObject CropPrefab() => CropPrefabToPlace;
     public override void OnUseItem(GameObject User)
     {
         //enter the farming mode
