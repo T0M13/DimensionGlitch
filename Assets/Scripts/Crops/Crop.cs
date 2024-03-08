@@ -6,7 +6,7 @@ public class Crop : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField][ShowOnly] private CapsuleCollider2D capsuleCollider;
+    [SerializeField][ShowOnly] private BoxCollider2D cropCollider;
     [Header("Crop Settings")]
     [SerializeField] private int dropAmount;
     [SerializeField] private Item dropItem;
@@ -26,17 +26,19 @@ public class Crop : MonoBehaviour
     private void OnValidate()
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        cropCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Awake()
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        cropCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
+        cropCollider.enabled = false;
+
         if (states.Length == 0)
         {
             Debug.LogError("No states defined for the crop.");
@@ -60,9 +62,7 @@ public class Crop : MonoBehaviour
         SpriteRenderer.sprite = states[currentStateIndex].sprite;
         CurrentState = states[currentStateIndex].growthStage;
 
-        capsuleCollider.enabled = states[currentStateIndex].colliderActive;
-        capsuleCollider.size = states[currentStateIndex].colliderSize;
-        capsuleCollider.offset = states[currentStateIndex].colliderOffset;
+        cropCollider.enabled = true;
     }
 
     private IEnumerator UpdateStateCoroutine()

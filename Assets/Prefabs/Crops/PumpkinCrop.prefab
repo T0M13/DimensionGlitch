@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2389173239092705736}
   - component: {fileID: 4615535135392339382}
   - component: {fileID: 58378335349734433}
-  - component: {fileID: 4961999032119969320}
   - component: {fileID: 743014166520217805}
+  - component: {fileID: -8036602800647955765}
   m_Layer: 11
   m_Name: PumpkinCrop
   m_TagString: Untagged
@@ -100,43 +100,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 4615535135392339382}
-  capsuleCollider: {fileID: 4961999032119969320}
+  cropCollider: {fileID: -8036602800647955765}
   dropAmount: 1
   dropItem: {fileID: 11400000, guid: 198d5a6d4344b0e4996663ed7da93810, type: 2}
   initializeItem: {fileID: 3161748536440353069, guid: 651f154ac75b7cf46b68c93279e52945, type: 3}
   cropStats: {fileID: 743014166520217805}
-  healhtPoints: 3
   resourceType: 100
   currentState: 0
   states:
   - duration: 10
     growthStage: 0
     sprite: {fileID: -954484688, guid: 19493d3164389314eb65631c66681f8c, type: 3}
-    colliderActive: 0
-    colliderSize: {x: 0.0001, y: 0.0001}
-    colliderOffset: {x: 0, y: 0}
   - duration: 8
     growthStage: 100
     sprite: {fileID: -878915554, guid: 19493d3164389314eb65631c66681f8c, type: 3}
-    colliderActive: 1
-    colliderSize: {x: 0.4028493, y: 0.3257839}
-    colliderOffset: {x: 0.06209938, y: -0.209957}
   - duration: 6
     growthStage: 100
     sprite: {fileID: 588456575, guid: 19493d3164389314eb65631c66681f8c, type: 3}
-    colliderActive: 1
-    colliderSize: {x: 0.6660352, y: 0.3849306}
-    colliderOffset: {x: 0.08132116, y: -0.180386}
-  - duration: 1
+  - duration: 0
     growthStage: 200
     sprite: {fileID: -1417917033, guid: 19493d3164389314eb65631c66681f8c, type: 3}
-    colliderActive: 1
-    colliderSize: {x: 0.923308, y: 0.6185482}
-    colliderOffset: {x: 0.06801462, y: -0.06358086}
   currentStateIndex: 0
   stateTimer: 0
---- !u!70 &4961999032119969320
-CapsuleCollider2D:
+--- !u!114 &743014166520217805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345312663257579663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealhtPoints: 2
+  MyFraction: 2
+--- !u!61 &-8036602800647955765
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -167,20 +168,16 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.0001, y: 0.0001}
-  m_Direction: 1
---- !u!114 &743014166520217805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345312663257579663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealhtPoints: 2
-  MyFraction: 2
+  m_Offset: {x: 0.06, y: -0.3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 0.1}
+  m_EdgeRadius: 0
