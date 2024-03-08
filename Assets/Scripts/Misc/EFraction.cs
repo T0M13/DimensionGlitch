@@ -5,5 +5,6 @@ using UnityEngine;
 public enum EFraction
 {
     Player,
-    Enemy
+    Enemy,
+    Neutral
 }

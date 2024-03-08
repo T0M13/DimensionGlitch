@@ -5,5 +5,5 @@ using UnityEngine.Tilemaps;
 public class StatefulTile : Tile
 {
     public bool canBuildOn;
-    public bool IsArable;
+    public bool isArable;
 }
