@@ -92,7 +92,6 @@ public class TweenManager : BaseSingleton<TweenManager>
         {
             float InterpValue = CurrentAnimTime / AnimationDuration;
             CurrentAnimTime += GetAnimTimeIncrement(TweenRequest, InterpValue, ReverseTween);
-            Debug.Log(CurrentAnimTime);
             InterpValue = Mathf.Clamp01(InterpValue);
             
             Vector2 NewPosition = Vector2.Lerp(TweenRequest.From.Position, TweenRequest.To.Position, InterpValue);

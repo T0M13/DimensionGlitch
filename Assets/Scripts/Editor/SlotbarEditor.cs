@@ -12,7 +12,9 @@ public class SlotbarEditor : Editor
         {
             Slotbar Slotbar = (Slotbar)serializedObject.targetObject;
             
-            Slotbar.ReinitializeSlotbar();
+            Slotbar.ReinitializeInventory();
+            EditorUtility.SetDirty(Slotbar);
+            EditorUtility.SetDirty(Slotbar.gameObject);
         }
     }
 }

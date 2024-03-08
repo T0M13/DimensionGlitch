@@ -8,34 +8,124 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField, Min(1)] int AmountOfSlotsPerRow;
     [SerializeField, Min(1)] int AmountOfSlotsPerColumn;
+    [SerializeField, Min(10)] int MaxAmountOfItemsPerSlot = 10;
     [SerializeField] float SpacingBetweenSlots;
-    [SerializeField] InventorySlot InventorySlotTemplate;
+    [SerializeField] protected InventorySlot InventorySlotTemplate;
    
     [Header("Debug")]
     [SerializeField] protected List<InventorySlot> InventorySlots;
-    
+
+    public int GetMaxAmountOfItemsPerSlot() => MaxAmountOfItemsPerSlot;
     public List<InventorySlot> GetInventorySlots() => InventorySlots;
 
-    public bool TryAddItem(Item ItemToAdd, int Amount)
+    public bool TryAddItem(Item ItemToAdd, int Amount, InventorySlot SlotToIgnore = null)
     {
-        if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> OutSlots))
+        if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> OutSlots, SlotToIgnore))
         {
-            Debug.Log("Added to current item");
-            //Always add to the first found slot that is a valid slot
-            OutSlots[0].AddToCurrentItem(Amount);
-            return true;
+            //First look if any of the found slots can fit the item amount we want to add
+            foreach (var InventorySlot in OutSlots)
+            {
+                if (InventorySlot.CanFitItem(Amount))
+                {
+                    InventorySlot.AddToCurrentItem(Amount);
+                    return true;
+                }
+            }
+            
+            OutSlots.AddRange(GetAllFreeSlots());
+            //first find out if all free slots can fit the amount that we want to add
+            int FreeSpace = 0;
+            foreach (var SlotWithFreeSpace in OutSlots)
+            {
+                FreeSpace += SlotWithFreeSpace.GetFreeSlotSpace();
+            }
+
+            //Means that we can fit the item into this slot
+            if (FreeSpace >= Amount)
+            {
+                foreach (var SlotWithFreeSpace in OutSlots)
+                {
+                    int DiffToAdd = Amount - SlotWithFreeSpace.GetFreeSlotSpace();
+                    Amount -= SlotWithFreeSpace.GetFreeSlotSpace();
+
+                    if (DiffToAdd >= 0)
+                    {
+                        SlotWithFreeSpace.SetItem(ItemToAdd,SlotWithFreeSpace.GetMaxAmountOfItems());
+                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
+                    }
+                    else
+                    {
+                        SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() + Amount);
+                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
+                        break;
+                    }
+                }
+                
+                return true;
+            }
+
+            return false;
         }
         if (TryFindFreeSlot(out InventorySlot FreeSlot))
         {
-            Debug.Log("Set current item");
-            FreeSlot.SetItem(ItemToAdd, Amount);
-            return true;
-        }
+            //If we can fit all items in the first free slot just return true
+            if (FreeSlot.CanFitItem(Amount))
+            {
+                FreeSlot.SetItem(ItemToAdd, Amount);
+                return true;
+            }
+          
+            List<InventorySlot> AllFreeSlots = GetAllFreeSlots();
 
-        Debug.Log("Found no slot");
+            int FreeSlotSpace = 0;
+            foreach (var FreeInventorySlot in AllFreeSlots)
+            {
+                FreeSlotSpace += FreeInventorySlot.GetFreeSlotSpace();
+            }
+
+            if (FreeSlotSpace >= Amount)
+            {
+                foreach (var SlotWithFreeSpace in AllFreeSlots)
+                {
+                    int DiffToAdd = Amount - SlotWithFreeSpace.GetFreeSlotSpace();
+                    Amount -= SlotWithFreeSpace.GetFreeSlotSpace();
+
+                    if (DiffToAdd >= 0)
+                    {
+                        SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetMaxAmountOfItems());
+                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
+                    }
+                    else
+                    {
+                        SlotWithFreeSpace.SetItem(ItemToAdd,
+                            SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() +
+                            Amount);
+                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
+                        break;
+                    }
+                }
+
+                return true;
+            }
+        }
+        
         return false;
     }
+    
+    protected List<InventorySlot> GetAllFreeSlots()
+    {
+        List<InventorySlot> FreeSlots = new();
 
+        foreach (var InventorySlot in InventorySlots)
+        {
+            if (InventorySlot.IsEmpty())
+            {
+                FreeSlots.Add(InventorySlot);
+            }
+        }
+
+        return FreeSlots;
+    }
     protected bool TryFindFreeSlot(out  InventorySlot OutInventorySlot)
     {
         OutInventorySlot = null;
@@ -52,7 +142,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool TryFindSlotsWithItem(int ItemId, out List<InventorySlot> OutInventorySlots)
+    public bool TryFindSlotsWithItem(int ItemId, out List<InventorySlot> OutInventorySlots, InventorySlot SlotToIgnore = null)
     {
         OutInventorySlots = new List<InventorySlot>();
         bool FoundSlotWithSameItem = false;
@@ -61,8 +151,11 @@ public class Inventory : MonoBehaviour
         {
             if (InventorySlot.HasSameItem(ItemId))
             {
-                OutInventorySlots.Add(InventorySlot);
-                FoundSlotWithSameItem = true;
+                if (SlotToIgnore != InventorySlot)
+                {
+                    OutInventorySlots.Add(InventorySlot);
+                    FoundSlotWithSameItem = true;
+                }
             }
         }
 
@@ -136,7 +229,7 @@ public class Inventory : MonoBehaviour
     
 #region InventoryIntitialization
 #if UNITY_EDITOR
-  public void ReinitializeInventory()
+  public virtual void ReinitializeInventory()
     {
         foreach (var InventorySlot in InventorySlots)
         {
@@ -161,6 +254,7 @@ public class Inventory : MonoBehaviour
             {
                 InventorySlot NewSlot = (InventorySlot)PrefabUtility.InstantiatePrefab(InventorySlotTemplate, transform);
                 NewSlot.transform.position = InitialPos;
+                NewSlot.SetMaxAmountOfItems(MaxAmountOfItemsPerSlot);
                 InitialPos += IncrementY;
                 
                 InventorySlots.Add(NewSlot);
