@@ -5,7 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class PlacementSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject cellIndicator;
+    [SerializeField] private GameObject normalCellIndicator;
+    [SerializeField] private GameObject redCellIndicator;
     [SerializeField] private Grid grid;
     [SerializeField] private Tilemap tilemapBuildable;
     [SerializeField] private Tilemap tilemapCrops;
@@ -16,7 +17,7 @@ public class PlacementSystem : MonoBehaviour
     [Header("Crops")]
     [SerializeField] private PlaceableSeed selectedSeed;
     [Header("Debug")]
-    [SerializeField][ShowOnly] private PlacementMode currentPlacementMode = PlacementMode.None;
+    [SerializeField] private PlacementMode currentPlacementMode = PlacementMode.None;
     [SerializeField][ShowOnly] private Vector3 mouseHoverCellPosition;
     [SerializeField][ShowOnly] private Vector3Int gridPosition;
     [SerializeField] private float playerPostionSphere = 0.2f;
@@ -41,7 +42,8 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int playerGridPosition = grid.WorldToCell(playerPosition + playerPositionOffset);
         playerCellPosition = grid.GetCellCenterWorld(playerGridPosition);
 
-        cellIndicator.transform.position = mouseHoverCellPosition;
+        normalCellIndicator.transform.position = mouseHoverCellPosition;
+        redCellIndicator.transform.position = mouseHoverCellPosition;
 
         Vector3Int gridPositionDifference = gridPosition - playerGridPosition;
         isAdjacentOrDiagonal = Mathf.Abs(gridPositionDifference.x) <= CachedPlayerController.GetPlayerStats().BuildingRadius && Mathf.Abs(gridPositionDifference.y) <= CachedPlayerController.GetPlayerStats().BuildingRadius;
@@ -77,22 +79,34 @@ public class PlacementSystem : MonoBehaviour
     {
         ChangePlacementMode(PlacementMode.None);
         selectedSeed = null;
+        normalCellIndicator.SetActive(false);
     }
 
     public void PlaceSeed()
     {
-        if (CanPlantCropsAtPosition(gridPosition) && isAdjacentOrDiagonal)
+        if (isAdjacentOrDiagonal)
         {
-            cellIndicator.SetActive(true);
-            if (Input.GetMouseButtonDown(0) && selectedSeed != null)
+            if (CanPlantCropsAtPosition(gridPosition))
             {
-                PlaceCropAtPosition(mouseHoverCellPosition);
+                normalCellIndicator.SetActive(true);
+                redCellIndicator.SetActive(false);
+                if (Input.GetMouseButtonDown(0) && selectedSeed != null)
+                {
+                    PlaceCropAtPosition(mouseHoverCellPosition);
+                }
+            }
+            else
+            {
+                normalCellIndicator.SetActive(false);
+                redCellIndicator.SetActive(true);
             }
         }
         else
         {
-            cellIndicator.SetActive(false);
+            normalCellIndicator.SetActive(false);
+            redCellIndicator.SetActive(false);
         }
+
     }
 
     public bool CanBuildAtPosition(Vector3Int gridPosition)
