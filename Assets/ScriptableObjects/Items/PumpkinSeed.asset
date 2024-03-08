@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: PumpkinSeed
   m_EditorClassIdentifier: 
   ItemData:
-    ItemName: 
+    ItemName: Pumpkin Seeds
+    ItemDescription: A seed used to plant pumpkins
     ItemValue: 0
     ItemID: 4
-    ItemSprite: {fileID: 0}
-  HashCode: 0
+    ItemSprite: {fileID: -451566786, guid: 7ef7397b229e0d6468db380149ff3a7f, type: 3}
+  HashCode: -988481497
   RemoveOnIntialUse: 0
   CropPrefabToPlace: {fileID: 1345312663257579663, guid: ac28fb9afcbbc174680684f7b88fad61, type: 3}

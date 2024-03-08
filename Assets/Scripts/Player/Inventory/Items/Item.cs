@@ -21,11 +21,14 @@ public class Item : ScriptableObject
             hash = hash * 23 + ItemData.ItemName.GetHashCode();
             hash = hash * 23 + ItemData.ItemValue.GetHashCode();
             hash = hash * 23 + ItemData.ItemID.GetHashCode();
+            hash = hash * 23 + ItemData.ItemDescription.GetHashCode();
             if (ItemData.ItemSprite)
             {
                 hash = hash * 23 + ItemData.ItemSprite.GetHashCode();
-                HashCode = hash;
+               
             }
+            
+            HashCode = hash;
         }
         
     }
@@ -39,6 +42,7 @@ public class Item : ScriptableObject
 public struct ItemData
 {
     [SerializeField] public string ItemName;
+    [SerializeField, TextArea(0,10)] public string ItemDescription;
     [SerializeField] public int ItemValue;
     [SerializeField] public int ItemID;
     [SerializeField] public Sprite ItemSprite;

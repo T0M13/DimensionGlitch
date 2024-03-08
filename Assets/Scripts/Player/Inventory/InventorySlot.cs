@@ -23,6 +23,8 @@ public class InventorySlot : MonoBehaviour
    public event Action<InventorySlot> OnMouseAltClickSlot;
    public event Action<InventorySlot> OnEndDragWithoutValidSlot;
    public event Action<InventorySlot> OnItemDroppedIntoSlot;
+   public event Action<InventorySlot> OnEnteredSlot;
+   public event Action<InventorySlot> OnExitSlot;
    public event Action<InventorySlot> OnEmptySlot;
    
    Coroutine DoubleClickRoutine = null;
@@ -163,8 +165,8 @@ public class InventorySlot : MonoBehaviour
    }
    void OnMouseEnterSlot(BaseEventData pointerEventData)
    {
-      Debug.Log("Entered a slot with item " + CurrentItem.ItemName + "and amount of " + AmountOfItems);
       MouseData.CurrentlyHoveredSlot = this;
+      OnEnteredSlot?.Invoke(this);
    }
 
    void OnMouseClickSlot(BaseEventData pointerEventData)
@@ -196,6 +198,7 @@ public class InventorySlot : MonoBehaviour
    void OnMouseExitSlot(BaseEventData pointerEventData)
    {
       MouseData.CurrentlyHoveredSlot = null;
+      OnExitSlot?.Invoke(this);
    }
 
    void OnMouseBeginDragSlot(BaseEventData pointerEventData)
@@ -224,6 +227,7 @@ public class InventorySlot : MonoBehaviour
       
       Item DraggedItem = ItemDataBaseManager.Instance.GetItemFromDataBase(CurrentItem.ItemID);
       MouseData.CurrentlyHoveredSlot.PlaceItem(DraggedItem, AmountOfItems);
+      MouseData.CurrentDrag.Invalidate();
    }
 
    IEnumerator CheckForDoubleClick()

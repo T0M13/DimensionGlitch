@@ -1,13 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Player.Inventory;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 public class PickupItem : MonoBehaviour, ITweenable<TweenTransform>, ITweenable<Color>
 {
     [SerializeField] Item ItemToAdd;
     [SerializeField] SpriteRenderer ItemWorldDisplay;
+    [SerializeField] ItemDescription ItemDescription;
     [SerializeField] int AmountToAdd;
 
     [FormerlySerializedAs("TransformRequest")]
@@ -22,6 +23,8 @@ public class PickupItem : MonoBehaviour, ITweenable<TweenTransform>, ITweenable<
         TransformTween.OnTweenFinished = OnPickUpAnimationFinished;
         TransformTween.From.Position = transform.position;
         TransformTween.To.Position += TransformTween.From.Position;
+        //Initialize the item description
+        ItemDescription.SetItemDescription(ItemToAdd.GetItemData(), AmountToAdd);
     }
 
     public void InitializeItemPickup(Item Item, int Amount)
@@ -71,4 +74,15 @@ public class PickupItem : MonoBehaviour, ITweenable<TweenTransform>, ITweenable<
 
 #endregion
 
+    private void OnMouseEnter()
+    {
+        Debug.Log("Hovered over the item");
+        ItemDescription.SetDescriptionActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        Debug.Log("Exited the item");
+        ItemDescription.SetDescriptionActive(false);
+    }
 }

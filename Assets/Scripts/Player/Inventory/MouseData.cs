@@ -16,6 +16,11 @@ public struct DragData
         return FromSlot != null;
     }
 
+    public void Invalidate()
+    {
+        FromSlot = null;
+    }
+
     public ItemData GetCurrentlyDraggedItem()
     {
         return FromSlot.GetCurrentItem();
