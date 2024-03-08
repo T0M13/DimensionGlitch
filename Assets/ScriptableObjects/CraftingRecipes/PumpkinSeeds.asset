@@ -16,5 +16,5 @@ MonoBehaviour:
   - AmountOfItem: 1
     NeededItem: {fileID: 11400000, guid: 198d5a6d4344b0e4996663ed7da93810, type: 2}
   Output: {fileID: 11400000, guid: e5ed8fff3ee63604bafc0e292e510027, type: 2}
-  AmountOfOutputItems: 5
-  RecipeHash: 0
+  AmountOfOutputItems: 2
+  RecipeHash: -1368447118

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2389173239092705736}
   - component: {fileID: 4615535135392339382}
-  - component: {fileID: 58378335349734433}
   - component: {fileID: 743014166520217805}
+  - component: {fileID: 58378335349734433}
   - component: {fileID: -8036602800647955765}
   m_Layer: 11
   m_Name: PumpkinCrop
@@ -87,6 +87,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &743014166520217805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345312663257579663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealhtPoints: 1
+  MyFraction: 2
 --- !u!114 &58378335349734433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,20 +136,6 @@ MonoBehaviour:
     sprite: {fileID: -1417917033, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   currentStateIndex: 0
   stateTimer: 0
---- !u!114 &743014166520217805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345312663257579663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealhtPoints: 2
-  MyFraction: 2
 --- !u!61 &-8036602800647955765
 BoxCollider2D:
   m_ObjectHideFlags: 0

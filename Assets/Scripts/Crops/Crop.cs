@@ -52,7 +52,7 @@ public class Crop : MonoBehaviour
         }
 
         cropStats.OnDeath += Harvest;
-
+        PlacementSystem.Instance.AddFarmableTile(transform.position, this.gameObject);
         UpdateSprite();
         StartCoroutine(UpdateStateCoroutine());
     }
@@ -109,7 +109,6 @@ public class Crop : MonoBehaviour
     private void OnFullyGrown()
     {
         UpdateSprite();
-        PlacementSystem.Instance.AddFarmableTile(transform.position, this.gameObject);
         Debug.Log("Crop is fully grown.");
     }
 }
