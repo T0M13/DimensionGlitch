@@ -18,6 +18,39 @@ public class Inventory : MonoBehaviour
     public int GetMaxAmountOfItemsPerSlot() => MaxAmountOfItemsPerSlot;
     public List<InventorySlot> GetInventorySlots() => InventorySlots;
 
+    public bool TrySplitItemAmongstSlots(List<InventorySlot> AvailableSlotsForSplitting, Item ItemToAdd, int Amount)
+    {
+        //first find out if all free slots can fit the amount that we want to add
+        int FreeSpace = 0;
+        foreach (var SlotWithFreeSpace in AvailableSlotsForSplitting)
+        {
+            FreeSpace += SlotWithFreeSpace.GetFreeSlotSpace();
+        }
+        //Means that we can fit the item into this slot
+        if (FreeSpace >= Amount)
+        {
+            foreach (var SlotWithFreeSpace in AvailableSlotsForSplitting)
+            {
+                int DiffToAdd = Amount - SlotWithFreeSpace.GetFreeSlotSpace();
+                Amount -= SlotWithFreeSpace.GetFreeSlotSpace();
+
+                if (DiffToAdd >= 0)
+                {
+                    SlotWithFreeSpace.SetItem(ItemToAdd,SlotWithFreeSpace.GetMaxAmountOfItems());
+                    Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
+                }
+                else
+                {
+                    SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() + Amount);
+                    break;
+                }
+            }
+                
+            return true;
+        }
+        
+        return false;
+    }
     public bool TryAddItem(Item ItemToAdd, int Amount, InventorySlot SlotToIgnore = null)
     {
         if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> OutSlots, SlotToIgnore))
@@ -33,38 +66,8 @@ public class Inventory : MonoBehaviour
             }
             
             OutSlots.AddRange(GetAllFreeSlots());
-            //first find out if all free slots can fit the amount that we want to add
-            int FreeSpace = 0;
-            foreach (var SlotWithFreeSpace in OutSlots)
-            {
-                FreeSpace += SlotWithFreeSpace.GetFreeSlotSpace();
-            }
-
-            //Means that we can fit the item into this slot
-            if (FreeSpace >= Amount)
-            {
-                foreach (var SlotWithFreeSpace in OutSlots)
-                {
-                    int DiffToAdd = Amount - SlotWithFreeSpace.GetFreeSlotSpace();
-                    Amount -= SlotWithFreeSpace.GetFreeSlotSpace();
-
-                    if (DiffToAdd >= 0)
-                    {
-                        SlotWithFreeSpace.SetItem(ItemToAdd,SlotWithFreeSpace.GetMaxAmountOfItems());
-                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
-                    }
-                    else
-                    {
-                        SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() + Amount);
-                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
-                        break;
-                    }
-                }
-                
-                return true;
-            }
-
-            return false;
+            
+            return TrySplitItemAmongstSlots(OutSlots, ItemToAdd, Amount);
         }
         if (TryFindFreeSlot(out InventorySlot FreeSlot))
         {
@@ -77,36 +80,7 @@ public class Inventory : MonoBehaviour
           
             List<InventorySlot> AllFreeSlots = GetAllFreeSlots();
 
-            int FreeSlotSpace = 0;
-            foreach (var FreeInventorySlot in AllFreeSlots)
-            {
-                FreeSlotSpace += FreeInventorySlot.GetFreeSlotSpace();
-            }
-
-            if (FreeSlotSpace >= Amount)
-            {
-                foreach (var SlotWithFreeSpace in AllFreeSlots)
-                {
-                    int DiffToAdd = Amount - SlotWithFreeSpace.GetFreeSlotSpace();
-                    Amount -= SlotWithFreeSpace.GetFreeSlotSpace();
-
-                    if (DiffToAdd >= 0)
-                    {
-                        SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetMaxAmountOfItems());
-                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
-                    }
-                    else
-                    {
-                        SlotWithFreeSpace.SetItem(ItemToAdd,
-                            SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() +
-                            Amount);
-                        Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
-                        break;
-                    }
-                }
-
-                return true;
-            }
+            return TrySplitItemAmongstSlots(AllFreeSlots, ItemToAdd, Amount);
         }
         
         return false;
