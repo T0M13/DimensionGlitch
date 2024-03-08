@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Player.Inventory;
 using UnityEngine;
@@ -9,6 +10,11 @@ public class PlayerInventory : Inventory
     private void Start()
     {
         BindToSlotEvents();
+    }
+
+    private void OnDisable()
+    {
+        ItemDescription.SetDescriptionActive(false);
     }
 
     void BindToSlotEvents()
@@ -56,27 +62,12 @@ public class PlayerInventory : Inventory
     {
         if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
         
-        Debug.Log("Double clicked slotbar slot");
         Item ItemToAdd = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
 
-        //If the count is bigger then one of the found slots it means that we have found a slot except ourselve that contains the item
-        if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> SlotsWithSameItem) && SlotsWithSameItem.Count > 1)
+        if (TryAddItem(ItemToAdd, InventorySlot.GetCurrentItemAmount(), InventorySlot))
         {
-            foreach (var SlotWithSameItem in SlotsWithSameItem)
-            {
-                if (!SlotWithSameItem.Equals(InventorySlot))
-                {
-                    SlotWithSameItem.AddToCurrentItem(InventorySlot.GetCurrentItemAmount());
-                    InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
-                    return;
-                }
-            }
-        }
-        else if (TryFindFreeSlot(out InventorySlot FreeSlot))
-        {
-            FreeSlot.SetItem(ItemToAdd, InventorySlot.GetCurrentItemAmount());
             InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
-        }
+        };
     }
 
     void QuickAssignToSlotbar(InventorySlot InventorySlot)
@@ -85,10 +76,9 @@ public class PlayerInventory : Inventory
         
         Item ItemToAdd = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
         
-        if(Slotbar.TryAddItemToSlotbarSlot(ItemToAdd, InventorySlot.GetCurrentItemAmount()))
+        if(Slotbar.TryAddItem(ItemToAdd, InventorySlot.GetCurrentItemAmount()))
         {
             InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
-            Debug.Log("Double clicked inventory slot");
         }
     }
 

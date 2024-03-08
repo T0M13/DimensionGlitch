@@ -18,6 +18,8 @@ public class InventorySlot : MonoBehaviour
 
    float LastTimeClicked = 0.0f;
 
+   public int GetMaxAmountOfItems() => MaxAmountOfItems;
+   public void SetMaxAmountOfItems(int NewAmountOfItems) => MaxAmountOfItems = NewAmountOfItems;
    public event Action<InventorySlot> OnDoubleClickSlot;
    public event Action<InventorySlot> OnMouseShiftClickSlot;
    public event Action<InventorySlot> OnMouseAltClickSlot;
@@ -51,6 +53,15 @@ public class InventorySlot : MonoBehaviour
       return CurrentItem.ItemID == ItemID;
    }
 
+   public bool CanFitItem(int AmountToAdd)
+   {
+      return AmountOfItems + AmountToAdd <= MaxAmountOfItems;
+   }
+
+   public int GetFreeSlotSpace()
+   {
+      return MaxAmountOfItems - AmountOfItems;
+   }
    public bool IsEmpty()
    {
       return AmountOfItems <= 0;
@@ -60,7 +71,7 @@ public class InventorySlot : MonoBehaviour
       ItemData NewItemData = NewItem.GetItemData();
       
       //Check if its the same item if so then add if not then swap 
-      if (NewItemData.ItemID == CurrentItem.ItemID)
+      if (NewItemData.ItemID == CurrentItem.ItemID && CanFitItem(Amount))
       {
          AmountOfItems += Amount;
          AmountOfItemsDisplay.SetText(AmountOfItems.ToString());
@@ -222,6 +233,10 @@ public class InventorySlot : MonoBehaviour
       if (!MouseData.CurrentlyHoveredSlot)
       {
          OnEndDragWithoutValidSlot?.Invoke(this);
+         return;
+      }
+      if (MouseData.CurrentlyHoveredSlot == this)
+      {
          return;
       }
       

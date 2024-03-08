@@ -1,13 +1,15 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Manager;
+using Player.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CraftingMenu : MonoBehaviour
 {
    [SerializeField] Inventory CraftingInventory;
+   [SerializeField] ItemDescription OutPutItemDescription;
+   [SerializeField] Image OutputCraftingImage;
+   [SerializeField] Sprite NoValidItemSprite;
    [SerializeField] List<CraftingRecipe> CraftingRecipes;
 
    Dictionary<int, CraftingRecipe> IngredientsMappedToRecipes = new();
@@ -24,8 +26,33 @@ public class CraftingMenu : MonoBehaviour
    private void Start()
    {
       InventoryContextManager.Instance.CreateContext(HUDManager.Instance.GetPlayerInventory(), CraftingInventory);
+      OutputCraftingImage.sprite = NoValidItemSprite;
+      BindToSlotEvents();
    }
 
+   void BindToSlotEvents()
+   {
+      foreach (var InventorySlot in CraftingInventory.GetInventorySlots())
+      {
+         InventorySlot.OnItemDroppedIntoSlot += ShowOutputItem;
+         InventorySlot.OnEmptySlot += ShowOutputItem;
+      }
+   }
+
+   void ShowOutputItem(InventorySlot _)
+   {
+      if (TryGetMatchingRecipe(out CraftingRecipe FoundCraftingRecipe))
+      {
+         OutputCraftingImage.sprite = FoundCraftingRecipe.GetOutputItem().GetItemData().ItemSprite;
+         OutPutItemDescription.SetItemDescription(FoundCraftingRecipe.GetOutputItem().GetItemData(), FoundCraftingRecipe.GetAmountOfOutputItems());
+         OutPutItemDescription.SetDescriptionActive(true);
+      }
+      else
+      {
+         OutPutItemDescription.SetDescriptionActive(false);
+         OutputCraftingImage.sprite = NoValidItemSprite;
+      }
+   }
    void CreateCraftingRecipeHashes()
    {
       foreach (var CraftingRecipe in CraftingRecipes)
@@ -80,10 +107,9 @@ public class CraftingMenu : MonoBehaviour
       }
 
       //If we find a recipe that has a matching hashcode return this recipe
-      if (IngredientsMappedToRecipes.ContainsKey(CombinedItemHash))
+      if (IngredientsMappedToRecipes.TryGetValue(CombinedItemHash, out var Recipe))
       {
-         Debug.Log("Has matching recipe");
-         MatchingRecipe = IngredientsMappedToRecipes[CombinedItemHash];
+         MatchingRecipe = Recipe;
          return true;
       }
 
