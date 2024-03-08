@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4615535135392339382}
   - component: {fileID: 58378335349734433}
   - component: {fileID: 4961999032119969320}
+  - component: {fileID: 743014166520217805}
   m_Layer: 11
   m_Name: PumpkinCrop
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1412601385
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -1417917033, guid: 19493d3164389314eb65631c66681f8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -98,6 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d4fc46e3b959140aacd00902539239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 4615535135392339382}
+  capsuleCollider: {fileID: 4961999032119969320}
+  dropAmount: 1
+  dropItem: {fileID: 11400000, guid: 198d5a6d4344b0e4996663ed7da93810, type: 2}
+  initializeItem: {fileID: 3161748536440353069, guid: 651f154ac75b7cf46b68c93279e52945, type: 3}
+  cropStats: {fileID: 743014166520217805}
+  healhtPoints: 3
+  resourceType: 100
+  currentState: 0
   states:
   - duration: 10
     growthStage: 0
@@ -123,9 +133,6 @@ MonoBehaviour:
     colliderActive: 1
     colliderSize: {x: 0.923308, y: 0.6185482}
     colliderOffset: {x: 0.06801462, y: -0.06358086}
-  spriteRenderer: {fileID: 4615535135392339382}
-  currentState: 0
-  capsuleCollider: {fileID: 4961999032119969320}
   currentStateIndex: 0
   stateTimer: 0
 --- !u!70 &4961999032119969320
@@ -163,3 +170,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.0001, y: 0.0001}
   m_Direction: 1
+--- !u!114 &743014166520217805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345312663257579663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474c52f92729ffd438004825353fbfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealhtPoints: 2
+  MyFraction: 2

@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerStats : Stats
 {
     [SerializeField, Min(0.1f)] float InvincibilityTime = 0.2f;
+    [SerializeField, Min(0)] int buildingRadius = 1;
     [SerializeField, Min(0), Tooltip("Needs to be a multiple of two")] private int TimesToBlink = 4;
     [SerializeField] SpriteRenderer SpriteRenderer;
+    public int BuildingRadius => buildingRadius;
 
     Color DefaultColor;
     private void OnValidate()
@@ -22,11 +24,11 @@ public class PlayerStats : Stats
         DefaultColor = SpriteRenderer.color;
     }
 
-    public override void RecieveDmg()
+    public override bool RecieveDmg()
     {
-        base.RecieveDmg();
-
         StartCoroutine(Invincibility());
+
+        return base.RecieveDmg();
     }
 
     IEnumerator Invincibility()
@@ -37,7 +39,7 @@ public class PlayerStats : Stats
         float BlinkStep = InvincibilityTime / TimesToBlink;
 
         bool ZeroAlpha = true;
-       
+
         while (PassedTime <= InvincibilityTime)
         {
             float DeltaTime = Time.deltaTime;
@@ -50,10 +52,10 @@ public class PlayerStats : Stats
                 BlinkTimer -= BlinkStep;
                 ZeroAlpha = !ZeroAlpha;
             }
-            
+
             yield return null;
         }
-        
+
         SetInvincibility(false);
     }
 }

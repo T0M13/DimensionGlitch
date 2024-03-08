@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     [Header("References")]
-    [SerializeField] Stats PlayerStats;
+    [SerializeField] PlayerStats PlayerStats;
     [SerializeField] Rigidbody2D playerRB = null;
 
     [Header("Movement")]
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 CurrentMove { get => currentMove; set => currentMove = value; }
 
     public PackedMovementMode GetCurrentMovementMode() => CurrentMovementMode;
-    public Stats GetPlayerStats() => PlayerStats;
+    public PlayerStats GetPlayerStats() => PlayerStats;
 
 
     private void OnEnable()

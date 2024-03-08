@@ -31,6 +31,7 @@ public class GameManager : BaseSingleton<GameManager>
         GetVolumeManager();
         SpawnPlayer();
         SpawnHud();
+        PlacementSystem = PlacementSystem.Instance;
     }
 
     public VolumeManager VolumeManager { get => volumeManager; set => volumeManager = value; }
