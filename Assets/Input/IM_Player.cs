@@ -125,6 +125,15 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e4e535c-6474-4c13-9f45-ab01c82d77e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -303,6 +312,17 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""action"": ""OpenInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d52dbca-5d82-4bda-95e7-2eb17051e31d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -409,6 +429,7 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         m_PlayerControls_SlotbarHotkey8 = m_PlayerControls.FindAction("SlotbarHotkey8", throwIfNotFound: true);
         m_PlayerControls_SlotbarHotkey9 = m_PlayerControls.FindAction("SlotbarHotkey9", throwIfNotFound: true);
         m_PlayerControls_OpenInventory = m_PlayerControls.FindAction("OpenInventory", throwIfNotFound: true);
+        m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         // MouseControls
         m_MouseControls = asset.FindActionMap("MouseControls", throwIfNotFound: true);
         m_MouseControls_MousePosition = m_MouseControls.FindAction("MousePosition", throwIfNotFound: true);
@@ -488,6 +509,7 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_SlotbarHotkey8;
     private readonly InputAction m_PlayerControls_SlotbarHotkey9;
     private readonly InputAction m_PlayerControls_OpenInventory;
+    private readonly InputAction m_PlayerControls_Interact;
     public struct PlayerControlsActions
     {
         private @IM_Player m_Wrapper;
@@ -503,6 +525,7 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         public InputAction @SlotbarHotkey8 => m_Wrapper.m_PlayerControls_SlotbarHotkey8;
         public InputAction @SlotbarHotkey9 => m_Wrapper.m_PlayerControls_SlotbarHotkey9;
         public InputAction @OpenInventory => m_Wrapper.m_PlayerControls_OpenInventory;
+        public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -545,6 +568,9 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
             @OpenInventory.started += instance.OnOpenInventory;
             @OpenInventory.performed += instance.OnOpenInventory;
             @OpenInventory.canceled += instance.OnOpenInventory;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -582,6 +608,9 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
             @OpenInventory.started -= instance.OnOpenInventory;
             @OpenInventory.performed -= instance.OnOpenInventory;
             @OpenInventory.canceled -= instance.OnOpenInventory;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -712,6 +741,7 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         void OnSlotbarHotkey8(InputAction.CallbackContext context);
         void OnSlotbarHotkey9(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IMouseControlsActions
     {

@@ -30,6 +30,10 @@ public class CraftingMenu : MonoBehaviour
       BindToSlotEvents();
    }
 
+   public void SetMenuActive(bool Active)
+   {
+      gameObject.SetActive(Active);
+   }
    void BindToSlotEvents()
    {
       foreach (var InventorySlot in CraftingInventory.GetInventorySlots())

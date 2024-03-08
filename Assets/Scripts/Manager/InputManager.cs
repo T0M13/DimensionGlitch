@@ -30,6 +30,7 @@ public class InputManager : BaseSingleton<InputManager>
         InputActions.Enable();
         EnableSlotbarHotkeys();
         InputActions.MouseControls.MousePosition.performed += MousePositionPerformed;
+        InputActions.PlayerControls.OpenInventory.Enable();
     }
 
     protected override void OnDisable()
