@@ -16,7 +16,7 @@ public class PlacementSystem : MonoBehaviour
     [Header("Crops")]
     [SerializeField] private PlaceableSeed selectedSeed;
     [Header("Debug")]
-    [SerializeField][ShowOnly] private PlacementMode currentPlacementMode = PlacementMode.None;
+    [SerializeField] private PlacementMode currentPlacementMode = PlacementMode.None;
     [SerializeField][ShowOnly] private Vector3 mouseHoverCellPosition;
     [SerializeField][ShowOnly] private Vector3Int gridPosition;
     [SerializeField] private float playerPostionSphere = 0.2f;
@@ -77,6 +77,7 @@ public class PlacementSystem : MonoBehaviour
     {
         ChangePlacementMode(PlacementMode.None);
         selectedSeed = null;
+        cellIndicator.SetActive(false);
     }
 
     public void PlaceSeed()
