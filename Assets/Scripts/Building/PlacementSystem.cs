@@ -9,7 +9,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
 
     [Header("Grid")]
     [SerializeField] private Grid grid;
-    [SerializeField][ShowOnly] private HashSet<Vector3Int> occupiedTiles = new HashSet<Vector3Int>();
+    private Dictionary<Vector3Int, GameObject> buildableGameObjectsAtPositions = new Dictionary<Vector3Int, GameObject>();
     private Dictionary<Vector3Int, GameObject> farmableGameObjectsAtPositions = new Dictionary<Vector3Int, GameObject>();
 
     [Header("Cells")]
@@ -18,7 +18,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
 
     [Header("Builds")]
     [SerializeField] private Tilemap tilemapBuildable;
-    //[SerializeField] private BUILD? selectedBuild;
+    [SerializeField] private GameObject selectedBuild;
 
     [Header("Farming")]
     [SerializeField] private Tool selectedTool;
@@ -76,6 +76,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
                 Farm();
                 break;
             case PlacementMode.Building:
+                //PlaceBuild();
                 break;
             default:
                 break;
@@ -94,6 +95,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         ChangePlacementMode(PlacementMode.None);
         selectedSeed = null;
         selectedTool = null;
+        selectedBuild = null;
         normalCellIndicator.SetActive(false);
         redCellIndicator.SetActive(false);
     }
@@ -105,7 +107,6 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         ChangePlacementMode(PlacementMode.Planting);
         selectedSeed = seed;
     }
-
 
     public void PlaceSeed()
     {
@@ -138,7 +139,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     {
         StatefulTile tile = tilemapBuildable.GetTile<StatefulTile>(gridPosition);
 
-        if (tile != null && tile.isArable && !occupiedTiles.Contains(gridPosition))
+        if (tile != null && tile.isArable && !farmableGameObjectsAtPositions.ContainsKey(gridPosition))
         {
             return true;
         }
@@ -152,7 +153,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         GameObject newCrop = Instantiate(selectedSeed.CropPrefab(), position, Quaternion.identity);
         newCrop.transform.SetParent(tilemapCrops.transform);
         HUDManager.Instance.GetPlayerInventory().RemoveAmountOfItems(selectedSeed.GetItemData().ItemID, 1);
-        occupiedTiles.Add(gridPosition);
+        farmableGameObjectsAtPositions.Add(gridPosition, newCrop);
     }
     #endregion
 
@@ -240,25 +241,69 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         {
             if (!cropTemp.TryHarvesting()) return;
             farmableGameObjectsAtPositions.Remove(gridPosition);
-            if (occupiedTiles.Contains(gridPosition))
-                occupiedTiles.Remove(gridPosition);
         }
     }
     #endregion
 
 
-    public bool CanBuildAtPosition(Vector3Int gridPosition)
-    {
-        StatefulTile tile = tilemapBuildable.GetTile<StatefulTile>(gridPosition);
+    #region Building Mode
 
-        if (tile != null && tile.canBuildOn && !occupiedTiles.Contains(gridPosition))
-        {
-            return true;
-        }
 
-        return false;
-    }
+    //public void EnterBuildingMode(GameObject buildingToBuild)
+    //{
+    //    ChangePlacementMode(PlacementMode.Building);
+    //    selectedBuild = buildingToBuild;
+    //}
 
+
+    //public void PlaceBuild()
+    //{
+    //    if (isAdjacentOrDiagonal)
+    //    {
+    //        if (CanBuildAtPosition(gridPosition))
+    //        {
+    //            normalCellIndicator.SetActive(true);
+    //            redCellIndicator.SetActive(false);
+    //            if (Input.GetMouseButtonDown(0) && selectedSeed != null)
+    //            {
+    //                PlaceBuildAtPosition(mouseHoverCellPosition);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            normalCellIndicator.SetActive(false);
+    //            redCellIndicator.SetActive(true);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        normalCellIndicator.SetActive(false);
+    //        redCellIndicator.SetActive(false);
+    //    }
+
+    //}
+
+    //public bool CanBuildAtPosition(Vector3Int gridPosition)
+    //{
+    //    StatefulTile tile = tilemapBuildable.GetTile<StatefulTile>(gridPosition);
+
+    //    if (tile != null && tile.canBuildOn && !buildableGameObjectsAtPositions.ContainsKey(gridPosition))
+    //    {
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
+
+    //private void PlaceBuildAtPosition(Vector3 position)
+    //{
+    //    Vector3Int gridPosition = grid.WorldToCell(position);
+    //    GameObject newBuild = Instantiate(selectedBuild, position, Quaternion.identity);
+    //    newBuild.transform.SetParent(tilemapCrops.transform);
+    //    HUDManager.Instance.GetPlayerInventory().RemoveAmountOfItems(selectedSeed.GetItemData().ItemID, 1);
+    //    buildableGameObjectsAtPositions.Add(gridPosition, newBuild);
+    //}
+    #endregion
 
     public string GetTileInfo(Vector3Int gridPosition)
     {
