@@ -76,9 +76,6 @@ public class PlayerInventory : Inventory
 
     void DropItem(InventorySlot SlotToDropItemFrom)
     {
-        //If we dragged an empty slot do nothing
-        if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(SlotToDropItemFrom.GetCurrentItem().ItemID)) return;
-        
         ItemDataBaseManager.Instance.CreateItemDrop(SlotToDropItemFrom.GetCurrentItem().ItemID, SlotToDropItemFrom.GetCurrentItemAmount(), InputManager.Instance.GetMousePositionInWorld());
         SlotToDropItemFrom.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
     }

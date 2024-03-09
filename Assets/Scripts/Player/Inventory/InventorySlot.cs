@@ -222,9 +222,8 @@ public class InventorySlot : MonoBehaviour
       {
          DraggedItemDisplay.SetDisplayActive(true);
          DraggedItemDisplay.SetDisplay(CurrentItem.ItemSprite);
+         MouseData.CurrentDrag = new DragData(this);
       }
-      
-      MouseData.CurrentDrag = new DragData(this);
    }
 
    void OnMouseEndDragSlot(BaseEventData pointerEventData)
@@ -232,7 +231,8 @@ public class InventorySlot : MonoBehaviour
       //Destroy the dragged visual in here
       DraggedItemDisplay.SetDisplayActive(false);
       DraggedItemDisplay.SetDisplay(null);
-      
+
+      if (!MouseData.CurrentDrag.IsValid()) return;
       //Only swap items if we are over another slot
       if (!MouseData.CurrentlyHoveredSlot)
       {
