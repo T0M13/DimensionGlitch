@@ -41,7 +41,7 @@ public class InteractionHandler : MonoBehaviour
          }
       }
       
-      NearestInteractable.OnInteract(gameObject);
+      NearestInteractable?.OnInteract(gameObject);
    }
 
    private void OnDrawGizmos()

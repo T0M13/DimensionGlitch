@@ -37,18 +37,14 @@ public class Inventory : MonoBehaviour
                 if (DiffToAdd >= 0)
                 {
                     SlotWithFreeSpace.SetItem(ItemToAdd,SlotWithFreeSpace.GetMaxAmountOfItems());
-                    Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
-                    Debug.Log("The left amount is " + Amount);
                     if (Amount == 0)
                     {
-                        Debug.Log("Exactly added the amount");
                         break;
                     }
                 }
                 else
                 {
                     SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() + Amount);
-                    Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
                     break;
                 }
             }
@@ -80,7 +76,6 @@ public class Inventory : MonoBehaviour
             if (FreeSlot.CanFitItem(Amount))
             {
                 FreeSlot.SetItem(ItemToAdd, Amount);
-                Debug.Log("Added the item to a free slot");
                 return true;
             }
           
@@ -131,7 +126,6 @@ public class Inventory : MonoBehaviour
             if (FreeSlot.CanFitItem(Amount))
             {
                 FreeSlot.SetItem(ItemToAdd, Amount);
-                Debug.Log("Added the item to a free slot");
                 return true;
             }
           
