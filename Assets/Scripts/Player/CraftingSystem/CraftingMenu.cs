@@ -20,14 +20,20 @@ public class CraftingMenu : MonoBehaviour
    void OnEnable()
    {
       CraftButton.onClick.AddListener(CraftItem);
-      CreateCraftingRecipeHashes();
+      BindToSlotEvents();
+      InventoryContextManager.Instance.CreateContext(HUDManager.Instance.GetPlayerInventory(), CraftingInventory);
+   }
+   void OnDisable()
+   {
+      CraftButton.onClick.RemoveListener(CraftItem);
+      InventoryContextManager.Instance.CloseContext();
+      UnBindFromSlotEvents();
    }
 
    private void Start()
    {
-      InventoryContextManager.Instance.CreateContext(HUDManager.Instance.GetPlayerInventory(), CraftingInventory);
       OutputCraftingImage.sprite = NoValidItemSprite;
-      BindToSlotEvents();
+      CreateCraftingRecipeHashes();
    }
 
    public void SetMenuActive(bool Active)
@@ -40,9 +46,37 @@ public class CraftingMenu : MonoBehaviour
       {
          InventorySlot.OnItemDroppedIntoSlot += ShowOutputItem;
          InventorySlot.OnEmptySlot += ShowOutputItem;
+         InventorySlot.OnMouseAltClickSlot += CraftingInventory.SplitStack;
+         InventorySlot.OnMouseShiftClickSlot += MoveItemToContextInventory;
       }
    }
 
+   void UnBindFromSlotEvents()
+   {
+      foreach (var InventorySlot in CraftingInventory.GetInventorySlots())
+      {
+         InventorySlot.OnItemDroppedIntoSlot -= ShowOutputItem;
+         InventorySlot.OnEmptySlot -= ShowOutputItem;
+         InventorySlot.OnMouseAltClickSlot -= MoveItemToContextInventory;
+      }
+   }
+
+   void MoveItemToContextInventory(InventorySlot InventorySlot)
+   {
+      if (InventoryContextManager.Instance.HasValidContext())
+      {
+         //If its an empty slot do nothing
+         if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
+         
+         Item ItemToMoveToInventory = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
+         Inventory CommunicatingInventory =  InventoryContextManager.Instance.GetCommunicatingInventory();
+         
+         if(CommunicatingInventory.TryAddItemFavorMatchingSlots(ItemToMoveToInventory, InventorySlot.GetCurrentItemAmount()))
+         {
+            InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
+         }
+      }
+   }
    void ShowOutputItem(InventorySlot _)
    {
       if (TryGetMatchingRecipe(out CraftingRecipe FoundCraftingRecipe))
@@ -65,12 +99,6 @@ public class CraftingMenu : MonoBehaviour
          IngredientsMappedToRecipes.Add(RecipeHash, CraftingRecipe);
       }
    }
-   void OnDisable()
-   {
-      CraftButton.onClick.RemoveListener(CraftItem);
-      InventoryContextManager.Instance.CloseContext();
-   }
-
    void CraftItem()
    {
       if(!InventoryContextManager.Instance.HasValidContext()) return;
@@ -84,7 +112,7 @@ public class CraftingMenu : MonoBehaviour
                CraftingInventory.RemoveAmountOfItems(Ingredient.NeededItem.GetItemData().ItemID, Ingredient.AmountOfItem);
             }
             
-            InventoryContextManager.Instance.GetCommunicatingInventory().TryAddItem(FoundRecipe.GetOutputItem(), FoundRecipe.GetAmountOfOutputItems());
+            InventoryContextManager.Instance.GetCommunicatingInventory().TryAddItemFavorMatchingSlots(FoundRecipe.GetOutputItem(), FoundRecipe.GetAmountOfOutputItems());
          }
          else
          {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Manager;
 using Player.Inventory;
 using UnityEngine;
 
@@ -43,28 +44,17 @@ public class PlayerInventory : Inventory
             InventorySlot.OnExitSlot += DeactivateItemDescription;
         }
     }
-
-    void SplitStack(InventorySlot InventorySlot)
-    {
-        if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
-        if(InventorySlot.GetCurrentItemAmount() <= 1) return;
-
-        Item ClickedSlotItem = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
-        int SplitStackAmount = Mathf.RoundToInt(Mathf.Floor(InventorySlot.GetCurrentItemAmount() * 0.5f));
-
-        if (TryFindFreeSlot(out InventorySlot FreeSlotForStack))
-        {
-            FreeSlotForStack.SetItem(ClickedSlotItem, SplitStackAmount);
-            InventorySlot.RemoveCurrentItem(SplitStackAmount);
-        }
-    }
+    
     void QuickAssignToInventory(InventorySlot InventorySlot)
     {
         if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
-        
-        Item ItemToAdd = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
 
-        if (TryAddItem(ItemToAdd, InventorySlot.GetCurrentItemAmount(), InventorySlot))
+        Item ItemToAdd = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
+        
+        //If we have a valid context inventory add the item to this inventory
+        if(TryMoveItemToContextInventory(ItemToAdd, InventorySlot)) return;
+        
+        if (TryAddItemFavorFreeSlots(ItemToAdd, InventorySlot.GetCurrentItemAmount(), InventorySlot))
         {
             InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
         };
@@ -76,7 +66,9 @@ public class PlayerInventory : Inventory
         
         Item ItemToAdd = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
         
-        if(Slotbar.TryAddItem(ItemToAdd, InventorySlot.GetCurrentItemAmount()))
+        if(TryMoveItemToContextInventory(ItemToAdd, InventorySlot)) return;
+        
+        if(Slotbar.TryAddItemFavorMatchingSlots(ItemToAdd, InventorySlot.GetCurrentItemAmount()))
         {
             InventorySlot.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
         }
@@ -88,6 +80,20 @@ public class PlayerInventory : Inventory
         SlotToDropItemFrom.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
     }
 
+    bool TryMoveItemToContextInventory(Item ItemToAdd, InventorySlot SlotToMoveItemFrom)
+    {
+        if (InventoryContextManager.Instance.HasValidContext())
+        {
+            if (InventoryContextManager.Instance.GetContextInventory()
+                .TryAddItemFavorFreeSlots(ItemToAdd, SlotToMoveItemFrom.GetCurrentItemAmount()))
+            {
+                SlotToMoveItemFrom.SetItem(ItemDataBaseManager.Instance.GetNullItem(), 0);
+                return true;
+            }
+        }
+
+        return false;
+    }
     void ActivateItemDescription(InventorySlot EnteredSlot)
     {
         if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(EnteredSlot.GetCurrentItem().ItemID)) return;

@@ -50,7 +50,7 @@ public class PickupItem : MonoBehaviour, ITweenable<TweenTransform>, ITweenable<
         
         TweenManager.Instance.StartTweenColor(ColorTween);
         TweenManager.Instance.StartTweenTransform(TransformTween);
-        HUDManager.Instance.GetPlayerInventory().TryAddItem(ItemToAdd, AmountToAdd);
+        HUDManager.Instance.GetPlayerInventory().TryAddItemFavorMatchingSlots(ItemToAdd, AmountToAdd);
     }
 
     void OnPickUpAnimationFinished()

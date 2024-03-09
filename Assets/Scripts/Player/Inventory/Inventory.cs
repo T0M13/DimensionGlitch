@@ -38,10 +38,17 @@ public class Inventory : MonoBehaviour
                 {
                     SlotWithFreeSpace.SetItem(ItemToAdd,SlotWithFreeSpace.GetMaxAmountOfItems());
                     Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
+                    Debug.Log("The left amount is " + Amount);
+                    if (Amount == 0)
+                    {
+                        Debug.Log("Exactly added the amount");
+                        break;
+                    }
                 }
                 else
                 {
                     SlotWithFreeSpace.SetItem(ItemToAdd, SlotWithFreeSpace.GetCurrentItemAmount() + SlotWithFreeSpace.GetFreeSlotSpace() + Amount);
+                    Debug.Log(SlotWithFreeSpace.GetCurrentItemAmount());
                     break;
                 }
             }
@@ -51,7 +58,56 @@ public class Inventory : MonoBehaviour
         
         return false;
     }
-    public bool TryAddItem(Item ItemToAdd, int Amount, InventorySlot SlotToIgnore = null)
+    public void SplitStack(InventorySlot InventorySlot)
+    {
+        if(ItemDataBaseManager.Instance.IsNullItemOrInvalid(InventorySlot.GetCurrentItem().ItemID)) return;
+        if(InventorySlot.GetCurrentItemAmount() <= 1) return;
+
+        Item ClickedSlotItem = ItemDataBaseManager.Instance.GetItemFromDataBase(InventorySlot.GetCurrentItem().ItemID);
+        int SplitStackAmount = Mathf.RoundToInt(Mathf.Floor(InventorySlot.GetCurrentItemAmount() * 0.5f));
+
+        if (TryFindFreeSlot(out InventorySlot FreeSlotForStack))
+        {
+            FreeSlotForStack.SetItem(ClickedSlotItem, SplitStackAmount);
+            InventorySlot.RemoveCurrentItem(SplitStackAmount);
+        }
+    }
+    public bool TryAddItemFavorFreeSlots(Item ItemToAdd, int Amount, InventorySlot SlotToIgnore = null)
+    {
+        if (TryFindFreeSlot(out InventorySlot FreeSlot))
+        {
+            //If we can fit all items in the first free slot just return true
+            if (FreeSlot.CanFitItem(Amount))
+            {
+                FreeSlot.SetItem(ItemToAdd, Amount);
+                Debug.Log("Added the item to a free slot");
+                return true;
+            }
+          
+            List<InventorySlot> AllFreeSlots = GetAllFreeSlots();
+
+            return TrySplitItemAmongstSlots(AllFreeSlots, ItemToAdd, Amount);
+        }
+        if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> OutSlots, SlotToIgnore))
+        {
+            //First look if any of the found slots can fit the item amount we want to add
+            foreach (var InventorySlot in OutSlots)
+            {
+                if (InventorySlot.CanFitItem(Amount))
+                {
+                    InventorySlot.AddToCurrentItem(Amount);
+                    return true;
+                }
+            }
+            
+            OutSlots.AddRange(GetAllFreeSlots());
+            
+            return TrySplitItemAmongstSlots(OutSlots, ItemToAdd, Amount);
+        }
+        
+        return false;
+    }
+    public bool TryAddItemFavorMatchingSlots(Item ItemToAdd, int Amount, InventorySlot SlotToIgnore = null)
     {
         if (TryFindSlotsWithItem(ItemToAdd.GetItemData().ItemID, out List<InventorySlot> OutSlots, SlotToIgnore))
         {
@@ -75,6 +131,7 @@ public class Inventory : MonoBehaviour
             if (FreeSlot.CanFitItem(Amount))
             {
                 FreeSlot.SetItem(ItemToAdd, Amount);
+                Debug.Log("Added the item to a free slot");
                 return true;
             }
           
@@ -116,7 +173,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool TryFindSlotsWithItem(int ItemId, out List<InventorySlot> OutInventorySlots, InventorySlot SlotToIgnore = null)
+    public bool TryFindSlotsWithItem(int ItemId,  out List<InventorySlot> OutInventorySlots, InventorySlot SlotToIgnore = null)
     {
         OutInventorySlots = new List<InventorySlot>();
         bool FoundSlotWithSameItem = false;

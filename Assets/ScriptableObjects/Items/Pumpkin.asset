@@ -18,5 +18,5 @@ MonoBehaviour:
     ItemValue: 0
     ItemID: 3
     ItemSprite: {fileID: -451566786, guid: 7ef7397b229e0d6468db380149ff3a7f, type: 3}
-  HashCode: -1368447118
+  HashCode: -1368447004
   RemoveOnIntialUse: 0

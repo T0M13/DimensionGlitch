@@ -53,6 +53,10 @@ public class InventorySlot : MonoBehaviour
       return CurrentItem.ItemID == ItemID;
    }
 
+   public bool IsFull()
+   {
+      return AmountOfItems == MaxAmountOfItems;
+   }
    public bool CanFitItem(int AmountToAdd)
    {
       return AmountOfItems + AmountToAdd <= MaxAmountOfItems;

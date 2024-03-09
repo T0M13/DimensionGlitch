@@ -18,7 +18,7 @@ public class InventoryEditor : Editor
 
       if (GUILayout.Button("AddItemToInventory"))
       {
-         bool SuccesfullAdd = Inventory.TryAddItem(ItemDataBaseManager.Instance.GetItemFromDataBase(0), 10);
+         bool SuccesfullAdd = Inventory.TryAddItemFavorFreeSlots(ItemDataBaseManager.Instance.GetItemFromDataBase(0), 10);
          
          Debug.Log(SuccesfullAdd);
       }
