@@ -60,7 +60,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         redCellIndicator.transform.position = mouseHoverCellPosition;
 
         Vector3Int gridPositionDifference = gridPosition - playerGridPosition;
-        isAdjacentOrDiagonal = Mathf.Abs(gridPositionDifference.x) <= CachedPlayerController.GetPlayerStats().BuildingRadius && Mathf.Abs(gridPositionDifference.y) <= CachedPlayerController.GetPlayerStats().BuildingRadius;
+        isAdjacentOrDiagonal = Mathf.Abs(gridPositionDifference.x) <= CachedPlayerController.GetPlayerStats().PlacementRadius && Mathf.Abs(gridPositionDifference.y) <= CachedPlayerController.GetPlayerStats().PlacementRadius;
 
         //gridInfo = GetTileInfo(gridPosition);
 
@@ -281,7 +281,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         Gizmos.DrawWireSphere(playerPosition + playerPositionOffset, playerPostionSphere);
         Gizmos.color = Color.cyan;
         if (CachedPlayerController != null)
-            Gizmos.DrawWireCube(playerCellPosition, new Vector3(3, 3, 3) * CachedPlayerController.GetPlayerStats().BuildingRadius);
+            Gizmos.DrawWireCube(playerCellPosition, new Vector3(3, 3, 3) * CachedPlayerController.GetPlayerStats().PlacementRadius);
     }
 
 
