@@ -48,7 +48,6 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
 
     private void Update()
     {
-        return;
         Vector3 mousePosition = InputManager.Instance.GetMousePositionInWorld();
         gridPosition = grid.WorldToCell(mousePosition);
         mouseHoverCellPosition = grid.GetCellCenterWorld(gridPosition);
