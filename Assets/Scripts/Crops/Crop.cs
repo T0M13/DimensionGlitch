@@ -52,7 +52,6 @@ public class Crop : MonoBehaviour
         }
 
         cropStats.OnDeath += Harvest;
-        PlacementSystem.Instance.AddFarmableTile(transform.position, this.gameObject);
         UpdateSprite();
         StartCoroutine(UpdateStateCoroutine());
     }
@@ -60,9 +59,13 @@ public class Crop : MonoBehaviour
     private void UpdateSprite()
     {
         SpriteRenderer.sprite = states[currentStateIndex].sprite;
+
         CurrentState = states[currentStateIndex].growthStage;
 
-        cropCollider.enabled = true;
+        if (!cropCollider.enabled && (states[currentStateIndex].growthStage == CropState.Growing || states[currentStateIndex].growthStage == CropState.Mature))
+        {
+            cropCollider.enabled = true;
+        }
     }
 
     private IEnumerator UpdateStateCoroutine()
