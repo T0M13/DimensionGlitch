@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player.Inventory
 {
@@ -9,7 +10,7 @@ namespace Player.Inventory
         [SerializeField] TextMeshProUGUI ItemName;
         [SerializeField] TextMeshProUGUI ItemAmount;
         [SerializeField] Canvas Canvas;
-
+        
         private void OnEnable()
         {
             Canvas.worldCamera = Camera.main;

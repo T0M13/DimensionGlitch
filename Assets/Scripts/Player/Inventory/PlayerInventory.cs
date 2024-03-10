@@ -100,11 +100,7 @@ public class PlayerInventory : Inventory
         if(MouseData.CurrentDrag.IsValid()) return;
         
         //Cast to rect transform to offset by half the width and half the heigth
-        RectTransform RectTransform = (RectTransform)ItemDescription.transform;
-        Rect Rect = RectTransform.rect;
-        Vector3 Offset = new Vector2(Rect.width * 0.5f, Rect.height * 0.5f);
-        
-        ItemDescription.transform.position = InputManager.Instance.GetMousePositionScreen() + Offset;
+        ItemDescription.transform.position = EnteredSlot.transform.position;
         ItemDescription.SetItemDescription(EnteredSlot.GetCurrentItem(), EnteredSlot.GetCurrentItemAmount());
         ItemDescription.SetDescriptionActive(true);
     }

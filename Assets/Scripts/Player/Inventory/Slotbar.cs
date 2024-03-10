@@ -10,16 +10,47 @@ public class Slotbar : Inventory
     [Header("Slotbar")] 
     [SerializeField] Inventory PlayerInventory;
     [SerializeField] InputActionReference[] Hotkeys;
+    [SerializeField] GameObject SlotbarSelectionFrame;
     
     void OnEnable()
     {
         MergeSlotbarSlotsWithInventorySlots();
-        
+        BindToOnItemSelected();
     }
     void MergeSlotbarSlotsWithInventorySlots()
     {
         PlayerInventory.GetInventorySlots().AddRange(InventorySlots);
     }
+
+    void BindToOnItemSelected()
+    {
+        foreach (InventorySlot InventorySlot in InventorySlots)
+        {
+            SlotbarSlot SlotbarSlot = InventorySlot as SlotbarSlot;
+
+            if (SlotbarSlot)
+            {
+                SlotbarSlot.OnItemSelected += SetSelectionFramPosition;
+                SlotbarSlot.OnEmptySlot += SetSelectionFrameInactive;
+            }
+        }
+    }
+
+    void SetSelectionFrameInactive(InventorySlot _)
+    {
+        SlotbarSelectionFrame.gameObject.SetActive(false);
+    }
+    void SetSelectionFramPosition(SlotbarSlot SlotbarSlot)
+    {
+        if (ItemDataBaseManager.Instance.IsNullItemOrInvalid(SlotbarSlot.GetCurrentItem().ItemID))
+        {
+            SetSelectionFrameInactive(SlotbarSlot);
+            return;
+        }
+        SlotbarSelectionFrame.gameObject.SetActive(true);
+        SlotbarSelectionFrame.transform.position = SlotbarSlot.transform.position;
+    }
+    
 #region Initialization
 #if UNITY_EDITOR
     

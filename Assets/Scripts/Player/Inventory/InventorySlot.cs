@@ -237,6 +237,7 @@ public class InventorySlot : MonoBehaviour
       if (!MouseData.CurrentlyHoveredSlot)
       {
          OnEndDragWithoutValidSlot?.Invoke(this);
+         MouseData.CurrentDrag.Invalidate();
          return;
       }
       if (MouseData.CurrentlyHoveredSlot == this)

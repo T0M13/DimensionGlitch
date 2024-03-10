@@ -190,13 +190,14 @@ MonoBehaviour:
   AmountOfItems: 0
   CurrentItem:
     ItemName: NONE
+    ItemDescription: 
     ItemValue: 0
     ItemID: -1
     ItemSprite: {fileID: 21300000, guid: b62730195d627984e84a26c44df5c0ef, type: 3}
   InventorySlotDisplay: {fileID: 4992564930764365792}
   AmountOfItemsDisplay: {fileID: 8167742335791918502}
   EventTrigger: {fileID: -2587259384964364809}
-  DefaultSprite: {fileID: 21300000, guid: b62730195d627984e84a26c44df5c0ef, type: 3}
+  DefaultSprite: {fileID: 2078765297, guid: 901cd72982c294d4baf3536384e9cf2e, type: 3}
   Hotkey: {fileID: -6708305118256221940, guid: b922c5a32ea404c4f924935836990aea, type: 3}
 --- !u!114 &-2587259384964364809
 MonoBehaviour:
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2036535949, guid: b962b0c47e355f046aec9b61385dace6, type: 3}
+  m_Sprite: {fileID: 2078765297, guid: 901cd72982c294d4baf3536384e9cf2e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
