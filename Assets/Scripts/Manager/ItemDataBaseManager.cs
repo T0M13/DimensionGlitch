@@ -27,7 +27,7 @@ public class ItemDataBaseManager : BaseSingleton<ItemDataBaseManager>
    /// <returns></returns>
    public bool IsNullItemOrInvalid(int ItemId)
    {
-      return ItemId == NullItem.GetItemData().ItemID || ItemId < 0;
+      return ItemId < 0;
    }
 
    public void CreateItemDrop(int ItemID, int AmountToDrop, Vector3 Position)

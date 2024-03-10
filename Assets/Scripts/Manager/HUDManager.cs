@@ -15,7 +15,6 @@ public class HUDManager : BaseSingleton<HUDManager>
    [SerializeField] InputActionReference OpenInventoryAction;
    
    FragmentController FragmentController;
-   PlayerController PlayerController;
    Stats PlayerStats;
 
    public ref PlayerInventory GetPlayerInventory() => ref PlayerInventory;
@@ -23,8 +22,6 @@ public class HUDManager : BaseSingleton<HUDManager>
    void OnEnable()
    {
       GameManager GameManager = GameManager.Instance;
-      
-      PlayerController = GameManager.GetPlayerControllerRef;
       OpenInventoryAction.action.performed += OpenInventory;
    }
    

@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class SlotbarSlot : InventorySlot
 {
     [Header("SlotbarSlot")]
     [SerializeField] InputActionReference Hotkey;
-
+    public event Action<SlotbarSlot> OnItemSelected;
+    
     public void SetHotkey(InputActionReference NewHotkey) => Hotkey = NewHotkey;
     private void OnEnable()
     {
@@ -29,6 +32,8 @@ public class SlotbarSlot : InventorySlot
         
         //always reset the current placement mode to default if we should enter a dfiferent mode it will be handled by the item
         GameManager.Instance.GetPlacementSystemRef.ExitCurrentPlacementMode();
+        
+        OnItemSelected?.Invoke(this);
         
         if (UseableItem && UseableItem.ShouldRemoveOnInitialUse())
         {
