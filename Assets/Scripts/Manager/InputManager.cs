@@ -12,11 +12,9 @@ public class InputManager : BaseSingleton<InputManager>
     [SerializeField] private Camera mainCamera;
     [Header("Debug")]
     [SerializeField][Range(0, 1)] private float gizmosRadius = 0.5f;
-    [SerializeField] private LayerMask buildingLayermask;
     [SerializeField][ShowOnly] private Vector3 lastPosition;
     [SerializeField][ShowOnly] private Vector3 mousePos;
     [SerializeField][ShowOnly] private Vector3 mousePosInWorld;
-    public LayerMask BuildingLayermask { get => buildingLayermask; set => buildingLayermask = value; }
 
     public IM_Player InputActions { get => inputActions; set => inputActions = value; }
     public Vector3 GetMousePositionInWorld() => mousePosInWorld;
@@ -35,9 +33,9 @@ public class InputManager : BaseSingleton<InputManager>
 
     protected override void OnDisable()
     {
-        base.OnDisable();
         if(!Application.isPlaying) return;
         
+        base.OnDisable();
         InputActions.Disable();
         DisableSlotbarHotkeys();
         InputActions.MouseControls.MousePosition.performed -= MousePositionPerformed;
@@ -73,7 +71,11 @@ public class InputManager : BaseSingleton<InputManager>
     {
         return InputActions.ComboKeys.AltComboKey.IsPressed();
     }
-    
+
+    public bool LeftClickWasPerformed()
+    {
+        return inputActions.MouseControls.Place.WasPerformedThisFrame();
+    }
     private void OnValidate()
     {
         mainCamera = Camera.main;

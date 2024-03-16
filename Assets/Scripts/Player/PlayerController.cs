@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         if(!Application.isPlaying) return;
+        if(!InputManager.Instance) return;
         
         InputManager.Instance.InputActions.PlayerControls.Walk.performed -= WalkPerformed;
         InputManager.Instance.InputActions.PlayerControls.Walk.canceled -= WalkCancelled;

@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "New StatefulTile", menuName = "Tiles/StatefulTile")]
 public class StatefulTile : Tile
 {
-    public bool canBuildOn;
-    public bool isArable;
+    [SerializeField] public bool CanBuildOn;
+    [SerializeField] public bool IsArable;
+    
 }

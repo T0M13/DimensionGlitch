@@ -82,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 427029401
   m_SortingLayer: 6
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1884706312, guid: 96329cbc00491c84aa8bf6a62d6ad04c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   HealhtPoints: 3
   MyFraction: 0
   InvincibilityTime: 1
-  buildingRadius: 1
+  placementRadius: 1
   TimesToBlink: 8
   SpriteRenderer: {fileID: 6946738078845725280}
 --- !u!114 &7147802832222152995

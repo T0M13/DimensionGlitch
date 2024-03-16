@@ -3,13 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Create/Useable/PlaceableSeed", fileName = "PlaceableSeed")]
 public class PlaceableSeed : UseableItem
 {
-    [SerializeField] GameObject CropPrefabToPlace;
+    [SerializeField] Crop CropPrefabToPlace;
 
-    public GameObject CropPrefab() => CropPrefabToPlace;
+    public Crop GetCropPrefab() => CropPrefabToPlace;
     public override void OnUseItem(GameObject User)
     {
-        //enter the farming mode
-        GameManager.Instance.GetPlacementSystemRef.EnterPlantingMode(this);
-        Debug.Log("Entered the mode");
+        //enter the planting mode
+       PlacementSystem.Instance.EnterPlantingMode(this);
     }
 }

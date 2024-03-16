@@ -5,11 +5,9 @@ using UnityEngine;
 public class PlayerStats : Stats
 {
     [SerializeField, Min(0.1f)] float InvincibilityTime = 0.2f;
-    [SerializeField, Min(0)] int placementRadius = 1;
     [SerializeField, Min(0), Tooltip("Needs to be a multiple of two")] private int TimesToBlink = 4;
     [SerializeField] SpriteRenderer SpriteRenderer;
-    public int PlacementRadius => placementRadius;
-
+    
     Color DefaultColor;
     private void OnValidate()
     {

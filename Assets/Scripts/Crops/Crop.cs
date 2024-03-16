@@ -51,7 +51,7 @@ public class Crop : MonoBehaviour
             return;
         }
 
-        cropStats.OnDeath += Harvest;
+        cropStats.OnDeath += SpawnCrops;
         UpdateSprite();
         StartCoroutine(UpdateStateCoroutine());
     }
@@ -93,12 +93,12 @@ public class Crop : MonoBehaviour
     }
 
 
-    public bool TryHarvesting()
+    public bool HarvestCrop()
     {
         return cropStats.RecieveDmg();
     }
 
-    private void Harvest()
+    private void SpawnCrops()
     {
         //Cooler if more, with distance, and animation for++
         if (currentState == CropState.Mature)

@@ -15,7 +15,6 @@ public class Tool : UseableItem
 
     public override void OnUseItem(GameObject User)
     {
-        //enter the farming mode
-        GameManager.Instance.GetPlacementSystemRef.EnterFarmingMode(this);
+        PlacementSystem.Instance.EnterHarvestingMode(this);
     }
 }
