@@ -16,7 +16,7 @@ namespace Manager
             CellIndicator CellIndicator = PlacementSystem.GetCellIndicator();
             Vector3 PositionToPlaceSeedAt = PlacementSystem.GetCurrentGridPosition();
             
-            if(!PlacementSystem.IsTileAdjacentOrDiagonalToPlayer() || !PlacementSystem.CanPlantCropsAtPosition(PositionToPlaceSeedAt))
+            if(!PlacementSystem.IsTileAdjacentToPlayer() || !PlacementSystem.CanPlantCropsAtPosition(PositionToPlaceSeedAt))
             {
                 CellIndicator.SetCellIndicatorColor(false, Color.red);
                 return;
@@ -41,9 +41,7 @@ namespace Manager
         void PlaceSeedAtPosition(Vector3 Position, PlacementSystem PlacementSystem)
         {
             HUDManager.Instance.GetPlayerInventory().RemoveAmountOfItems(ModeItem.GetItemData().ItemID, 1);
-            Debug.Log(Position);
             Crop PlacedCrop = Instantiate(ModeItem.GetCropPrefab(), Position, Quaternion.identity);
-            Debug.Log(PlacementSystem);
             PlacementSystem.AddCropAtPosition(Position, PlacedCrop);
         }
     }

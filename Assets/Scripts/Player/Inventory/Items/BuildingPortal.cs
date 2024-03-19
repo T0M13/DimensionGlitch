@@ -12,8 +12,7 @@ namespace Player.Inventory.Items
         public override void OnUseItem(GameObject User)
         {
             Debug.Log("Entered the building mode");
-            // PlacementSystem.Instance.EnterBuildingMode(this);
-
+            PlacementSystem.Instance.EnterBuildingMode(this);
         }
     }
 }

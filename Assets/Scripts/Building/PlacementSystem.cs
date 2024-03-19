@@ -14,9 +14,10 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     [SerializeField] Grid WorldGrid;
     [SerializeField] Tilemap DynamicTileMap;
     [SerializeField] CellIndicator CellIndicator;
-    [FormerlySerializedAs("harvestingMode")] [FormerlySerializedAs("HarvestinMode")] [SerializeField] HarvestingMode HarvestingMode;
+    [SerializeField] HarvestingMode HarvestingMode;
     [SerializeField] PlantingMode PlantingMode;
-
+    [SerializeField] BuildingMode BuildingMode;
+    
     [Header("Debug")] 
     [SerializeField] PlacementMode CurrentPlacementMode;
     [SerializeField, ShowOnly] Vector3 CurrentMousePosition;
@@ -26,6 +27,8 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     [SerializeField, ShowOnly] Tile CurrentlyHoveredTile;
 
     Dictionary<Vector3Int, Crop> AllPlacedCrops = new();
+    Dictionary<Vector3Int, Building.Building> AllPlacedBuildings = new();
+    HashSet<Vector3Int> AllBlockedTiles = new();
 
     public Vector3 GetCurrentGridPosition() => CurrentCellCenter; 
     public CellIndicator GetCellIndicator() => CellIndicator;
@@ -41,12 +44,11 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         CurrentGridPosition  = WorldGrid.WorldToCell(CurrentMousePosition);
         CurrentCellCenter = WorldGrid.GetCellCenterWorld(CurrentGridPosition);
         CurrentlyHoveredTile = DynamicTileMap.GetTile<Tile>(CurrentGridPosition);
-        
         TrySetCellIndicatorPosition();
         
         switch (CurrentPlacementMode)
         {
-            case PlacementMode.Farming:
+            case PlacementMode.Harvesting:
             {
                 HarvestingMode.UpdateMode(this);
                 break;
@@ -56,17 +58,32 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
                 PlantingMode.UpdateMode(this);
                 break;
             }
+            case PlacementMode.Building:
+            {
+                BuildingMode.UpdateMode(this);
+                break;
+            }
         }
 
     }
     
-   
     public void SetPlacementMode(PlacementMode NewMode)
     {
         CurrentPlacementMode = NewMode;
     }
+    public void EnterHarvestingMode(Tool tool)
+    {
+        //enter Harvesting mode here
+        SetPlacementMode(PlacementMode.Harvesting);
+        HarvestingMode.OnModeEntered(tool);
+    }
 
-
+    public void EnterBuildingMode(BuildingPortal BuildingPortal)
+    {
+        //enter the building mode
+        SetPlacementMode(PlacementMode.Building);
+        BuildingMode.OnModeEntered(BuildingPortal);
+    }
     public void ExitCurrentPlacementMode()
     {
         switch (CurrentPlacementMode)
@@ -76,7 +93,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
             case PlacementMode.Planting:
                 PlantingMode.OnModeExited();
                 break;
-            case PlacementMode.Farming:
+            case PlacementMode.Harvesting:
                 HarvestingMode.OnModeExited();
                 break;
             case PlacementMode.Building:
@@ -90,7 +107,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         CellIndicator.SetCellIndicatorActive(false);
     }
 
-    public bool IsTileAdjacentOrDiagonalToPlayer()
+    public bool IsTileAdjacentToPlayer()
     {
         Vector3 PlayerPosition = CachedPlayerController.transform.position;
         Vector3Int PlayerGridPosition = DynamicTileMap.WorldToCell(PlayerPosition);
@@ -108,19 +125,61 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         return AllPlacedCrops.ContainsKey(CurrentGridPosition);
     }
 
+    public void AddBuildingAtPosition(Vector3 Position, Building.Building Building)
+    {
+        Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
+       
+        //Get all tiles blocked by the building and add them to the all blocked tiles
+        Vector2Int BuildingGrid = Building.GetBuildingGrid();
+        int BuildingHeight = BuildingGrid.x;
+        int BuildingWidth = BuildingGrid.y;
+        
+        for (int x = 0; x < BuildingWidth; x++)
+        {
+            for (int y = 0; y < BuildingHeight; y++)
+            {
+                Vector3Int PositionToBlock = CellCoordinates + new Vector3Int(x, y);
+                AllBlockedTiles.Add(PositionToBlock);
+            }
+        }
+        
+        AllPlacedBuildings.TryAdd(CellCoordinates, Building);
+    }
+
+    public void RemoveBuildingAtPosition(Vector3 Position)
+    {
+        Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
+
+        Building.Building BuildingToRemove = AllPlacedBuildings[CellCoordinates];
+        
+        Vector2Int BuildingGrid = BuildingToRemove.GetBuildingGrid();
+        int BuildingHeight = BuildingGrid.x;
+        int BuildingWidth = BuildingGrid.y;
+        
+        for (int x = 0; x < BuildingWidth; x++)
+        {
+            for (int y = 0; y < BuildingHeight; y++)
+            {
+                Vector3Int PositionToBlock = CellCoordinates + new Vector3Int(x, y);
+                AllBlockedTiles.Remove(PositionToBlock);
+            }
+        }
+        
+        AllPlacedBuildings.Remove(CellCoordinates);
+    }
     public void AddCropAtPosition(Vector3 Position, Crop Crop)
     {
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
-        
-        if (!AllPlacedCrops.ContainsKey(CellCoordinates))
-        {
-            AllPlacedCrops.Add(CellCoordinates, Crop);
-        }
+       
+        AllBlockedTiles.Add(CellCoordinates);
+        AllPlacedCrops.TryAdd(CellCoordinates, Crop);
     }
     
     public void RemoveCropAtPosition(Vector3 Position)
     {
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
+       
+        AllBlockedTiles.Remove(CellCoordinates);
         AllPlacedCrops.Remove(CellCoordinates);
     }
     
@@ -146,138 +205,30 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         //Enter the planting mode here
         PlantingMode.OnModeEntered(seed);
     }
-
-  
-
     public bool CanPlantCropsAtPosition(Vector3 Position)
     {
-        StatefulTile tile = DynamicTileMap.GetTile<StatefulTile>(CurrentGridPosition);
+        StatefulTile StatefullTile = CurrentlyHoveredTile as StatefulTile;
        
-        if (!tile) 
+        if (!StatefullTile) 
             return false;
 
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
         
-        return tile.IsArable && !AllPlacedCrops.ContainsKey(CellCoordinates);
+        return StatefullTile.IsArable && !AllBlockedTiles.Contains(CellCoordinates);
     }
-  
-    
-    // #region Harvesting Mode
-    //
-    public void EnterHarvestingMode(Tool tool)
+
+    public bool CanPlaceBuildingAtCurrentlyHoveredPosition()
     {
-        SetPlacementMode(PlacementMode.Farming);
-        //enter Harvesting mode here
-        HarvestingMode.OnModeEntered(tool);
+        StatefulTile StatefullTile = CurrentlyHoveredTile as StatefulTile;
+       
+        if (!StatefullTile) 
+            return false;
+        
+        //In here we need to check all positions that this building would take in an place them in the building array
+        
+        return StatefullTile.CanBuildOn && !AllBlockedTiles.Contains(DynamicTileMap.WorldToCell(CurrentMousePosition));
     }
-    // private void FarmAtPosition(Vector3 position)
-    // {
-    //     Vector3Int gridPosition = WorldGrid.WorldToCell(position);
-    //     //Farm
-    //     if (farmableGameObjectsAtPositions.TryGetValue(gridPosition, out GameObject farmableObject))
-    //     {
-    //         switch (selectedTool.ResourceType)
-    //         {
-    //             case ResourceType.Crop:
-    //                 FarmCrop(farmableObject);
-    //                 break;
-    //             case ResourceType.Tree:
-    //                 break;
-    //             case ResourceType.Stone:
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    //
-    // }
-    //
-    // private void FarmCrop(GameObject cropGameObject)
-    // {
-    //     Crop cropTemp = cropGameObject.GetComponent<Crop>();
-    //
-    //     if (cropTemp.ResourceType == selectedTool.ResourceType)
-    //     {
-    //         if (!cropTemp.TryHarvesting()) return;
-    //         farmableGameObjectsAtPositions.Remove(gridPosition);
-    //     }
-    // }
-    // #endregion
-    //
-    //
-    // #region Building Mode
-    //
-    //
-    // public void EnterBuildingMode(BuildingPortal buildingToBuild)
-    // {
-    //     ChangePlacementMode(PlacementMode.Building);
-    //     SelectedBuildingPortal = buildingToBuild;
-    // }
-    //
-    //
-    // public void TryPlaceBuilding()
-    // {
-    //     if (isAdjacentOrDiagonal)
-    //     {
-    //         if (CanBuildAtPosition(gridPosition))
-    //         {
-    //             CellIndicator.SetActive(true);
-    //             redCellIndicator.SetActive(false);
-    //             if (Input.GetMouseButtonDown(0) && SelectedBuildingPortal)
-    //             {
-    //                 PlaceBuildAtPosition(mouseHoverCellPosition);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             CellIndicator.SetActive(false);
-    //             redCellIndicator.SetActive(true);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         CellIndicator.SetActive(false);
-    //         redCellIndicator.SetActive(false);
-    //     }
-    //
-    // }
-    //
-    // public bool CanBuildAtPosition(Vector3Int gridPosition)
-    // {
-    //     StatefulTile tile = tilemapBuildable.GetTile<StatefulTile>(gridPosition);
-    //
-    //     if (tile && tile.canBuildOn && !buildableGameObjectsAtPositions.ContainsKey(gridPosition))
-    //     {
-    //         return true;
-    //     }
-    //
-    //     return false;
-    // }
-    //
-    // private void PlaceBuildAtPosition(Vector3 position)
-    // {
-    //     Vector3Int gridPosition = WorldGrid.WorldToCell(position);
-    //     Building.Building newBuild = Instantiate(SelectedBuildingPortal.GetBuildingToSpawn(), position, Quaternion.identity);
-    //     newBuild.transform.SetParent(tilemapCrops.transform);
-    //     HUDManager.Instance.GetPlayerInventory().RemoveAmountOfItems(SelectedBuildingPortal.GetItemData().ItemID, 1);
-    //     buildableGameObjectsAtPositions.Add(gridPosition, newBuild.gameObject);
-    // }
-    // #endregion
-    //
-    // public string GetTileInfo(Vector3Int gridPosition)
-    // {
-    //     StatefulTile tile = tilemapBuildable.GetTile<StatefulTile>(gridPosition);
-    //     if (tile != null)
-    //     {
-    //         return $"StatefulTile at {gridPosition}, BuildOn: {tile.canBuildOn} , Arable: {tile.isArable}";
-    //     }
-    //     else
-    //     {
-    //         return $"No StatefulTile found at {gridPosition}.";
-    //     }
-    // }
-    //
-    //
+    
     private void OnDrawGizmos()
     {
         if(!CachedPlayerController) return;
@@ -289,7 +240,4 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(CurrentCellCenter, Vector3.one);
     }
-
-
-
 }

@@ -6,5 +6,4 @@ public class StatefulTile : Tile
 {
     [SerializeField] public bool CanBuildOn;
     [SerializeField] public bool IsArable;
-    
 }

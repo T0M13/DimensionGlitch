@@ -15,7 +15,7 @@ namespace Manager
         {
             CellIndicator CellIndicator = PlacementSystem.GetCellIndicator();
             
-            if (PlacementSystem.IsTileAdjacentOrDiagonalToPlayer())
+            if (PlacementSystem.IsTileAdjacentToPlayer())
             {
                 if (PlacementSystem.CanHarvestAtCurrentlyHoveredPosition())
                 {
@@ -24,14 +24,13 @@ namespace Manager
                     
                     if (InputManager.Instance.LeftClickWasPerformed())
                     {
-                       Debug.Log("Harvesting at position");
                         //harvest at given position
                         HarvestCropAtPosition(PlacementSystem);
                     }
                 }
                 else
                 {
-                    CellIndicator.SetCellIndicatorActive(false);
+                    CellIndicator.SetCellIndicatorColor(false, Color.red);
                 }
             }
             else
