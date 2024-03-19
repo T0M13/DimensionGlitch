@@ -27,6 +27,7 @@ public class InputManager : BaseSingleton<InputManager>
         
         InputActions.Enable();
         EnableSlotbarHotkeys();
+        
         InputActions.MouseControls.MousePosition.performed += MousePositionPerformed;
         InputActions.PlayerControls.OpenInventory.Enable();
     }
@@ -74,8 +75,19 @@ public class InputManager : BaseSingleton<InputManager>
 
     public bool LeftClickWasPerformed()
     {
-        return inputActions.MouseControls.Place.WasPerformedThisFrame();
+        return inputActions.MouseControls.LeftClick.WasPerformedThisFrame();
     }
+
+    public bool RightClickWasReleasedThisFrame()
+    {
+        return inputActions.MouseControls.RightClick.WasReleasedThisFrame();
+    }
+
+    public bool RightClickIsPressed()
+    {
+        return inputActions.MouseControls.RightClick.IsPressed();
+    }
+
     private void OnValidate()
     {
         mainCamera = Camera.main;

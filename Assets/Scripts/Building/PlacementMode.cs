@@ -4,4 +4,5 @@ public enum PlacementMode
     Planting = 100,
     Harvesting = 200,
     Building = 300,
+    Watering = 400
 }

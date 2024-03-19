@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Building;
 using Manager;
 using Player.Inventory.Items;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     [SerializeField] HarvestingMode HarvestingMode;
     [SerializeField] PlantingMode PlantingMode;
     [SerializeField] BuildingMode BuildingMode;
+    [SerializeField] WateringMode WateringMode;
     
     [Header("Debug")] 
     [SerializeField] PlacementMode CurrentPlacementMode;
@@ -27,7 +29,8 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     [SerializeField, ShowOnly] Tile CurrentlyHoveredTile;
 
     Dictionary<Vector3Int, Crop> AllPlacedCrops = new();
-    Dictionary<Vector3Int, Building.Building> AllPlacedBuildings = new();
+    Dictionary<Vector3Int, Building.BuilidngPositionsPair> AllPlacedBuildings = new();
+    HashSet<Vector3Int> AllWateredTiles = new();
     HashSet<Vector3Int> AllBlockedTiles = new();
 
     public Vector3 GetCurrentGridPosition() => CurrentCellCenter; 
@@ -63,6 +66,11 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
                 BuildingMode.UpdateMode(this);
                 break;
             }
+            case PlacementMode.Watering:
+            {
+                WateringMode.UpdateMode(this);
+                break;
+            }
         }
 
     }
@@ -84,6 +92,13 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         SetPlacementMode(PlacementMode.Building);
         BuildingMode.OnModeEntered(BuildingPortal);
     }
+    public void EnterWateringMode(WateringCan WateringCan)
+    {
+        SetPlacementMode(PlacementMode.Watering);
+        
+        //enter the watering mode
+    }
+    
     public void ExitCurrentPlacementMode()
     {
         switch (CurrentPlacementMode)
@@ -97,6 +112,10 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
                 HarvestingMode.OnModeExited();
                 break;
             case PlacementMode.Building:
+                BuildingMode.OnModeExited();
+                break;
+            case PlacementMode.Watering:
+                WateringMode.OnModeExited();
                 break;
             default:
                break;
@@ -128,7 +147,10 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     public void AddBuildingAtPosition(Vector3 Position, Building.Building Building)
     {
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
-       
+        Vector2Int BuildingMeasurements = Building.GetBuildingGrid();
+        BuilidngPositionsPair PlacedBuilding =
+            new BuilidngPositionsPair(BuildingMeasurements.x, BuildingMeasurements.y, Building);
+        
         //Get all tiles blocked by the building and add them to the all blocked tiles
         Vector2Int BuildingGrid = Building.GetBuildingGrid();
         int BuildingHeight = BuildingGrid.x;
@@ -139,33 +161,27 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
             for (int y = 0; y < BuildingHeight; y++)
             {
                 Vector3Int PositionToBlock = CellCoordinates + new Vector3Int(x, y);
+                PlacedBuilding.CellsThisBuildingIsBuiltOn.Add(PositionToBlock);
+                
+                AllPlacedBuildings.TryAdd(PositionToBlock, PlacedBuilding);
                 AllBlockedTiles.Add(PositionToBlock);
             }
         }
-        
-        AllPlacedBuildings.TryAdd(CellCoordinates, Building);
     }
 
     public void RemoveBuildingAtPosition(Vector3 Position)
     {
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
 
-        Building.Building BuildingToRemove = AllPlacedBuildings[CellCoordinates];
-        
-        Vector2Int BuildingGrid = BuildingToRemove.GetBuildingGrid();
-        int BuildingHeight = BuildingGrid.x;
-        int BuildingWidth = BuildingGrid.y;
-        
-        for (int x = 0; x < BuildingWidth; x++)
+        BuilidngPositionsPair BuildingToRemove = AllPlacedBuildings[CellCoordinates];
+
+        foreach (var CellThisBuildingIsBuiltOn in BuildingToRemove.CellsThisBuildingIsBuiltOn)
         {
-            for (int y = 0; y < BuildingHeight; y++)
-            {
-                Vector3Int PositionToBlock = CellCoordinates + new Vector3Int(x, y);
-                AllBlockedTiles.Remove(PositionToBlock);
-            }
+            AllPlacedBuildings.Remove(CellThisBuildingIsBuiltOn);
+            AllBlockedTiles.Remove(CellThisBuildingIsBuiltOn);
         }
-        
-        AllPlacedBuildings.Remove(CellCoordinates);
+        Debug.Log(BuildingToRemove.Building.gameObject);
+        Destroy(BuildingToRemove.Building.gameObject);
     }
     public void AddCropAtPosition(Vector3 Position, Crop Crop)
     {
@@ -186,6 +202,11 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     public Crop GetCropAtCurrentlyHoveredPosition()
     {
         return AllPlacedCrops.TryGetValue(CurrentGridPosition, out var crop) ? crop : null;
+    }
+
+    public Building.Building GetBuildingAtCurrentlyHoveredPosition()
+    {
+        return   AllPlacedBuildings.TryGetValue(CurrentGridPosition, out var Building) ? Building.Building : null;
     }
     private void TrySetCellIndicatorPosition()
     {
@@ -214,7 +235,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
 
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
         
-        return StatefullTile.IsArable && !AllBlockedTiles.Contains(CellCoordinates);
+        return StatefullTile.IsArable && AllWateredTiles.Contains(CellCoordinates) && !AllBlockedTiles.Contains(CellCoordinates);
     }
 
     public bool CanPlaceBuildingAtCurrentlyHoveredPosition()

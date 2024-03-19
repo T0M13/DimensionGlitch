@@ -340,9 +340,18 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Place"",
+                    ""name"": ""LeftClick"",
                     ""type"": ""Button"",
                     ""id"": ""4f4b1b9c-842a-4396-bae7-633608bbd48f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""17714e4e-f511-4d0b-a28c-13d08713931d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -368,7 +377,18 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Place"",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d5ee222-4932-4d7c-9c52-2cf4ac592a1e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -453,7 +473,8 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
         // MouseControls
         m_MouseControls = asset.FindActionMap("MouseControls", throwIfNotFound: true);
         m_MouseControls_MousePosition = m_MouseControls.FindAction("MousePosition", throwIfNotFound: true);
-        m_MouseControls_Place = m_MouseControls.FindAction("Place", throwIfNotFound: true);
+        m_MouseControls_LeftClick = m_MouseControls.FindAction("LeftClick", throwIfNotFound: true);
+        m_MouseControls_RightClick = m_MouseControls.FindAction("RightClick", throwIfNotFound: true);
         // ComboKeys
         m_ComboKeys = asset.FindActionMap("ComboKeys", throwIfNotFound: true);
         m_ComboKeys_ShiftComboKey = m_ComboKeys.FindAction("ShiftComboKey", throwIfNotFound: true);
@@ -654,13 +675,15 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_MouseControls;
     private List<IMouseControlsActions> m_MouseControlsActionsCallbackInterfaces = new List<IMouseControlsActions>();
     private readonly InputAction m_MouseControls_MousePosition;
-    private readonly InputAction m_MouseControls_Place;
+    private readonly InputAction m_MouseControls_LeftClick;
+    private readonly InputAction m_MouseControls_RightClick;
     public struct MouseControlsActions
     {
         private @IM_Player m_Wrapper;
         public MouseControlsActions(@IM_Player wrapper) { m_Wrapper = wrapper; }
         public InputAction @MousePosition => m_Wrapper.m_MouseControls_MousePosition;
-        public InputAction @Place => m_Wrapper.m_MouseControls_Place;
+        public InputAction @LeftClick => m_Wrapper.m_MouseControls_LeftClick;
+        public InputAction @RightClick => m_Wrapper.m_MouseControls_RightClick;
         public InputActionMap Get() { return m_Wrapper.m_MouseControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -673,9 +696,12 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
-            @Place.started += instance.OnPlace;
-            @Place.performed += instance.OnPlace;
-            @Place.canceled += instance.OnPlace;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
         }
 
         private void UnregisterCallbacks(IMouseControlsActions instance)
@@ -683,9 +709,12 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
-            @Place.started -= instance.OnPlace;
-            @Place.performed -= instance.OnPlace;
-            @Place.canceled -= instance.OnPlace;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
         }
 
         public void RemoveCallbacks(IMouseControlsActions instance)
@@ -775,7 +804,8 @@ public partial class @IM_Player: IInputActionCollection2, IDisposable
     public interface IMouseControlsActions
     {
         void OnMousePosition(InputAction.CallbackContext context);
-        void OnPlace(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
     }
     public interface IComboKeysActions
     {
