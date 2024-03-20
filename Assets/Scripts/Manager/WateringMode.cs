@@ -27,15 +27,30 @@ namespace Manager
             //Check if we can water the tile in fron of us meaning that it is an arable tile 
             if (PlacementSystem.IsTileAdjacentToPlayer())
             {
-                if (PlacementSystem.IsTileWaterable())
+                if (PlacementSystem.IsTileWaterable() && CanUseWaterCan())
                 {
                     CellIndicator.SetCellIndicatorActive(true);
                     CellIndicator.SetCellIndicatorColor(true);
                     
-                    if (CanUseWaterCan() && InputManager.Instance.LeftClickWasPerformed())
+                    if (InputManager.Instance.LeftClickWasPerformed())
                     {
+                       
                         WaterTile(PlacementSystem);
                         SetLastTimeWatered();
+                        
+                       
+                    }
+                }
+                else if (CanRefillWaterCan(PlacementSystem))
+                {
+                    CellIndicator.SetCellIndicatorActive(true);
+                    CellIndicator.SetCellIndicatorColor(true);
+                    
+                    if (InputManager.Instance.LeftClickWasPerformed())
+                    {
+                        Debug.Log("Refilled the watering can");
+                        RefillWateringCan();
+                        
                     }
                 }
                 else
@@ -58,6 +73,10 @@ namespace Manager
             ModeItem = null;
         }
 
+        void RefillWateringCan()
+        {
+            CurrentFillAmount = MaxFillAmount;
+        }
         void WaterTile(PlacementSystem PlacementSystem)
         {
             PlacementSystem.PaintTileAtPosition(PlacementSystem.GetCurrentGridPosition(), TileToPaintOnWatering);
@@ -71,6 +90,10 @@ namespace Manager
             LastTimeWatered = Time.time;
         }
 
+        bool CanRefillWaterCan(PlacementSystem PlacementSystem)
+        {
+            return PlacementSystem.IsHoveringWater();
+        }
         bool CanUseWaterCan()
         {
             float TimeDiff = Time.time - LastTimeWatered;

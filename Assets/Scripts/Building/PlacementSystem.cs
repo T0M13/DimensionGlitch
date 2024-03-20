@@ -147,6 +147,15 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         return IsAdjacentOrDiagonal;
     }
 
+    public bool IsHoveringWater()
+    {
+        StatefulTile StatefulTile = CurrentlyHoveredTile as StatefulTile;
+
+        if (!StatefulTile)
+            return false;
+
+        return StatefulTile.IsWater;
+    }
     public bool CanHarvestAtCurrentlyHoveredPosition()
     {
         return AllPlacedCrops.ContainsKey(CurrentGridPosition);
@@ -295,7 +304,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         if (!StatefullTile) 
             return false;
         
-        return true;
+        return StatefullTile.IsArable;
     }
     
     private void OnDrawGizmos()

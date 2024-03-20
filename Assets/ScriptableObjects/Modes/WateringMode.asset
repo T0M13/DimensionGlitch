@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: WateringMode
   m_EditorClassIdentifier: 
   ModeItem: {fileID: 0}
-  TileToPaintOnWatering: {fileID: 0}
-  WateringCooldown: 5
+  TileToPaintOnWatering: {fileID: 11400000, guid: 645649223d701e1468b37feb01a35d6b, type: 2}
+  MaxFillAmount: 100
+  CurrentFillAmount: 10
+  WateringCooldown: 0.5

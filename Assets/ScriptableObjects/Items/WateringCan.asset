@@ -16,7 +16,9 @@ MonoBehaviour:
     ItemName: Watering can
     ItemDescription: A can to water your seeds
     ItemValue: 10
-    ItemID: 0
+    ItemID: 7
     ItemSprite: {fileID: -273565216, guid: 7931af7531189174fa538be52f4d6a98, type: 3}
-  HashCode: 0
+  HashCode: 120260085
   RemoveOnIntialUse: 0
+  WateringAmountPerUse: 5
+  WaterCapacity: 100
