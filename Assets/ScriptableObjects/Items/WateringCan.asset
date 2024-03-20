@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f52b6695d48ddb6c0172e55161743, type: 3}
+  m_Name: WateringCan
+  m_EditorClassIdentifier: 
+  ItemData:
+    ItemName: Watering can
+    ItemDescription: A can to water your seeds
+    ItemValue: 10
+    ItemID: 0
+    ItemSprite: {fileID: -273565216, guid: 7931af7531189174fa538be52f4d6a98, type: 3}
+  HashCode: 0
+  RemoveOnIntialUse: 0

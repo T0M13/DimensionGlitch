@@ -18,6 +18,7 @@ namespace Manager
             
             if(!PlacementSystem.IsTileAdjacentToPlayer() || !PlacementSystem.CanPlantCropsAtPosition(PositionToPlaceSeedAt))
             {
+                CellIndicator.SetCellIndicatorActive(true);
                 CellIndicator.SetCellIndicatorColor(false, Color.red);
                 return;
             }

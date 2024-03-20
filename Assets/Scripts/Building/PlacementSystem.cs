@@ -19,6 +19,8 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     [SerializeField] PlantingMode PlantingMode;
     [SerializeField] BuildingMode BuildingMode;
     [SerializeField] WateringMode WateringMode;
+
+    [Header("Planting")] [SerializeField, Min(5)] float MinWateringAmountToPlant = 5.0f;
     
     [Header("Debug")] 
     [SerializeField] PlacementMode CurrentPlacementMode;
@@ -30,7 +32,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
 
     Dictionary<Vector3Int, Crop> AllPlacedCrops = new();
     Dictionary<Vector3Int, Building.BuilidngPositionsPair> AllPlacedBuildings = new();
-    HashSet<Vector3Int> AllWateredTiles = new();
+    Dictionary<Vector3Int, float> AllWateredTiles = new();
     HashSet<Vector3Int> AllBlockedTiles = new();
 
     public Vector3 GetCurrentGridPosition() => CurrentCellCenter; 
@@ -74,7 +76,13 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         }
 
     }
-    
+
+    public void PaintTileAtPosition(Vector3 Position ,Tile TileToPaint)
+    {
+        Vector3Int CellCoordinates = DynamicTileMap.WorldToCell(Position);
+        
+        DynamicTileMap.SetTile(CellCoordinates, TileToPaint);
+    }
     public void SetPlacementMode(PlacementMode NewMode)
     {
         CurrentPlacementMode = NewMode;
@@ -95,7 +103,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     public void EnterWateringMode(WateringCan WateringCan)
     {
         SetPlacementMode(PlacementMode.Watering);
-        
+        WateringMode.OnModeEntered(WateringCan);
         //enter the watering mode
     }
     
@@ -180,7 +188,7 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
             AllPlacedBuildings.Remove(CellThisBuildingIsBuiltOn);
             AllBlockedTiles.Remove(CellThisBuildingIsBuiltOn);
         }
-        Debug.Log(BuildingToRemove.Building.gameObject);
+        
         Destroy(BuildingToRemove.Building.gameObject);
     }
     public void AddCropAtPosition(Vector3 Position, Crop Crop)
@@ -216,6 +224,29 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         }
     }
 
+    public void WaterTileAtPosition(Vector3 Position, float WateringAmount)
+    {
+        Vector3Int CellCoordinates = DynamicTileMap.WorldToCell(Position);
+
+        //If there is already a watered tile at this position then just add water to it
+        if (AllWateredTiles.ContainsKey(CellCoordinates))
+        {
+            //Should clamp the max watering amount
+            AllWateredTiles[CellCoordinates] += WateringAmount;
+            Debug.Log(AllWateredTiles[CellCoordinates] + " Watered an already watered tile");
+            return;
+        }
+        
+        //If ther isnt add the cell and 
+        Debug.Log( " Watered an unwatered tile");
+        AllWateredTiles.Add(CellCoordinates, WateringAmount);
+    }
+
+    void RemoveWateredTileAtPosition(Vector3 Position)
+    {
+        Vector3Int CellCoordinates = DynamicTileMap.WorldToCell(Position);
+        AllWateredTiles.Remove(CellCoordinates);
+    }
     bool IsCurrentlyHoveringStateFullTile()
     {
         return CurrentlyHoveredTile as StatefulTile;
@@ -234,8 +265,15 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
             return false;
 
         Vector3Int CellCoordinates = WorldGrid.WorldToCell(Position);
-        
-        return StatefullTile.IsArable && AllWateredTiles.Contains(CellCoordinates) && !AllBlockedTiles.Contains(CellCoordinates);
+
+        if (AllWateredTiles.TryGetValue(CellCoordinates, out float WateringAmount))
+        {
+            return StatefullTile.IsArable 
+                   && WateringAmount >= MinWateringAmountToPlant 
+                   && !AllBlockedTiles.Contains(CellCoordinates);
+        }
+       
+        return false;
     }
 
     public bool CanPlaceBuildingAtCurrentlyHoveredPosition()
@@ -248,6 +286,16 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         //In here we need to check all positions that this building would take in an place them in the building array
         
         return StatefullTile.CanBuildOn && !AllBlockedTiles.Contains(DynamicTileMap.WorldToCell(CurrentMousePosition));
+    }
+
+    public bool IsTileWaterable()
+    {
+        StatefulTile StatefullTile = CurrentlyHoveredTile as StatefulTile;
+       
+        if (!StatefullTile) 
+            return false;
+        
+        return true;
     }
     
     private void OnDrawGizmos()
