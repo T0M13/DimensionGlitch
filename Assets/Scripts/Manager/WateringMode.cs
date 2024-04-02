@@ -6,7 +6,6 @@ namespace Manager
     [CreateAssetMenu(menuName = "NewMode/WateringMode", fileName = "NewWateringMode")]
     public class WateringMode : Mode<WateringCan>
     {
-        [SerializeField] StatefulTile TileToPaintOnWatering;
         [SerializeField] float MaxFillAmount = 100.0f;
         [SerializeField] float CurrentFillAmount = 100.0f;
         [SerializeField, Min(0.5f)] float WateringCooldown = 5.0f;
@@ -79,7 +78,6 @@ namespace Manager
         }
         void WaterTile(PlacementSystem PlacementSystem)
         {
-            PlacementSystem.PaintTileAtPosition(PlacementSystem.GetCurrentGridPosition(), TileToPaintOnWatering);
             PlacementSystem.WaterTileAtPosition(PlacementSystem.GetCurrentGridPosition(), ModeItem.GetWateringAmountPerUse());
             
             CurrentFillAmount -= ModeItem.GetWateringAmountPerUse();

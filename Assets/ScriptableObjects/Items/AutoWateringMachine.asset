@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58fe164c653540dca43633a64363b857, type: 3}
-  m_Name: WorkBench
+  m_Name: AutoWateringMachine
   m_EditorClassIdentifier: 
   ItemData:
-    ItemName: Work Bench Portal
-    ItemDescription: Glitches a work bench into the world
+    ItemName: AutoWateringMachine
+    ItemDescription: Glitches a Auto watering machine into the world
     ItemValue: 300
-    ItemID: 6
-    ItemSprite: {fileID: 21300000, guid: 56665eb3eadaccd42bf800f0a568197a, type: 3}
-  HashCode: 1436991432
+    ItemID: 8
+    ItemSprite: {fileID: 21300000, guid: ea8eeeef80bc26f48b66135c9183d30c, type: 3}
+  HashCode: -368127332
   RemoveOnIntialUse: 0
-  BuildingToBuild: {fileID: -4885610158933580841, guid: 7b64c0ce4f4e07147ad114a7eab8a180, type: 3}
+  BuildingToBuild: {fileID: 8554232292144269058, guid: 30742e229b7827c4fabbe47528c9d199, type: 3}

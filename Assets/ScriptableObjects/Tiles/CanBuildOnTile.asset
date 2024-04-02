@@ -34,6 +34,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  CanBuildOn: 0
+  CanBuildOn: 1
   IsArable: 0
   IsWater: 0

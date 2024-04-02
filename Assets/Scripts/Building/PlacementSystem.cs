@@ -20,6 +20,9 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
     [SerializeField] BuildingMode BuildingMode;
     [SerializeField] WateringMode WateringMode;
 
+    [Header("Tiles")]
+    [SerializeField] StatefulTile TileToPaintOnWatering;
+    
     [Header("Planting")] [SerializeField, Min(5)] float MinWateringAmountToPlant = 5.0f;
     
     [Header("Debug")] 
@@ -77,6 +80,22 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
 
     }
 
+    public bool TryGetStatefullTileAtCellCoordinates(Vector3Int CellCoordinates, out StatefulTile Tile, out Vector3 TilePosition)
+    {
+        Tile = DynamicTileMap.GetTile<StatefulTile>(CellCoordinates);
+        TilePosition = DynamicTileMap.GetCellCenterWorld(CellCoordinates);
+        
+        return Tile;
+    }
+
+    public Vector3 GetCellCenterPosition(Vector3Int CellCoordinates)
+    {
+        return WorldGrid.GetCellCenterWorld(CellCoordinates);
+    }
+    public Vector3Int GetCellCoordinatesForPosition(Vector3 Position)
+    {
+        return WorldGrid.WorldToCell(Position);
+    }
     public void PaintTileAtPosition(Vector3 Position ,Tile TileToPaint)
     {
         Vector3Int CellCoordinates = DynamicTileMap.WorldToCell(Position);
@@ -143,7 +162,6 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
        
         bool IsAdjacentOrDiagonal = Mathf.Abs(GridPositionDifference.x) <= PlacementRadius 
                                     && Mathf.Abs(GridPositionDifference.y) <= PlacementRadius;
-        
         return IsAdjacentOrDiagonal;
     }
 
@@ -242,12 +260,11 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
         {
             //Should clamp the max watering amount
             AllWateredTiles[CellCoordinates] += WateringAmount;
-            Debug.Log(AllWateredTiles[CellCoordinates] + " Watered an already watered tile");
             return;
         }
         
         //If ther isnt add the cell and 
-        Debug.Log( " Watered an unwatered tile");
+        PaintTileAtPosition(Position, TileToPaintOnWatering);
         AllWateredTiles.Add(CellCoordinates, WateringAmount);
     }
 
@@ -293,7 +310,6 @@ public class PlacementSystem : BaseSingleton<PlacementSystem>
             return false;
         
         //In here we need to check all positions that this building would take in an place them in the building array
-        
         return StatefullTile.CanBuildOn && !AllBlockedTiles.Contains(DynamicTileMap.WorldToCell(CurrentMousePosition));
     }
 

@@ -28,6 +28,7 @@ public class HUDManager : BaseSingleton<HUDManager>
    private void OnDisable()
    { 
       UnbindEvents();
+      base.OnDisable();
    }
 
    void OpenInventory(InputAction.CallbackContext _)

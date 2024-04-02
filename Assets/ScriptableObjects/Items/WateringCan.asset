@@ -18,7 +18,7 @@ MonoBehaviour:
     ItemValue: 10
     ItemID: 7
     ItemSprite: {fileID: -273565216, guid: 7931af7531189174fa538be52f4d6a98, type: 3}
-  HashCode: 120260085
+  HashCode: 120254547
   RemoveOnIntialUse: 0
   WateringAmountPerUse: 5
   WaterCapacity: 100
